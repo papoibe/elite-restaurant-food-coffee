@@ -1,9 +1,9 @@
-# 🍽️ Elite Restaurant — ĐỀ02: Website Nhà Hàng / Ẩm Thực
+#  Elite Restaurant — ĐỀ02: Website Nhà Hàng / Ẩm Thực
 
 > **Môn học:** THIẾT KẾ WEB (INTE03010) — ĐH Mở TP.HCM  
 > **Figma:** [Elite — Food Restaurant & Coffee Free Template](https://www.figma.com/design/8SfLwyfu5cKVMFrUN3ETvm)
 
-## 👥 Thành viên nhóm (Phân công 6-5-5)
+## Thành viên nhóm (Phân công 6-5-5)
 
 | STT | Họ và Tên | Vai trò | Phụ trách chính (Trang) |
 |-----|-----------|---------|-----------------|
@@ -11,7 +11,7 @@
 | 2 | Kiệt | Thành viên | **5 Trang:** Shop List, Shop Details, Blog, Blog Details, FAQ |
 | 3 | Thuận | Thành viên | **5 Trang:** Cart, Checkout, Sign In, Sign Up, 404 |
 
-## 🚀 Hướng dẫn cài đặt & Chạy dự án
+##  Hướng dẫn cài đặt & Chạy dự án
 
 ```bash
 # 1. Clone dự án về máy
@@ -37,7 +37,7 @@ npm run build
 - **Vite** (Build tool)
 - **TheMealDB API** (REST API công khai)
 
-## 🌳 Sơ đồ cấu trúc dự án
+##  Sơ đồ cấu trúc dự án
 
 ```text
 elite-restaurant/
@@ -68,7 +68,7 @@ elite-restaurant/
 └── README.md               
 ```
 
-## 📌 Hướng dẫn dành cho Team
+##  Hướng dẫn dành cho Team
 
 ### 1. Quy tắc làm việc với Page
 - **Của ai nấy làm:** Tuyệt đối chỉ viết code trên các trang `.html` mà mình được phân công.
