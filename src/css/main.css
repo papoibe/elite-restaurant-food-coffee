@@ -1,0 +1,219 @@
+/* ============================================================
+   ELITE RESTAURANT — Main CSS Entry
+   Import Tailwind CSS v4 + Custom Design Tokens từ Figma
+   ============================================================ */
+
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — Trích xuất từ Figma "Elite" Template
+   Bảng màu chủ đạo: Dark Navy + Gold/Orange accent
+   ============================================================ */
+
+@theme {
+  /* === PRIMARY COLORS === */
+  --color-primary: #FF9F0D;          /* Cam vàng chủ đạo (accent/CTA) */
+  --color-primary-hover: #E88E00;    /* Hover state cho primary */
+  --color-primary-light: #FFF5E6;    /* Nền nhạt của primary */
+
+  /* === BACKGROUND COLORS === */
+  --color-bg-dark: #0D0D0D;          /* Nền chính dark (header, footer, hero) */
+  --color-bg-dark-2: #1A1A1A;        /* Nền dark phụ (sections xen kẽ) */
+  --color-bg-dark-3: #252525;        /* Nền dark card/hover */
+  --color-bg-light: #FFFFFF;         /* Nền sáng (light mode / body chính) */
+  --color-bg-section: #F9F9F9;       /* Nền section phụ (light mode) */
+
+  /* === TEXT COLORS === */
+  --color-text-white: #FFFFFF;       /* Text trắng trên nền dark */
+  --color-text-light: #BCBCBC;       /* Text xám nhạt (mô tả, sub) */
+  --color-text-dark: #333333;        /* Text đen chính (light mode) */
+  --color-text-muted: #828282;       /* Text xám (meta, caption) */
+
+  /* === FONT FAMILIES === */
+  --font-heading: 'Helvetica Neue', 'Inter', sans-serif;  /* Font heading */
+  --font-body: 'Inter', 'Segoe UI', sans-serif;           /* Font body */
+  --font-script: 'Great Vibes', cursive;                   /* Font chữ viết tay trang trí */
+
+  /* === SPACING — Hệ thống spacing theo Figma === */
+  --spacing-section: 120px;    /* Khoảng cách giữa các section */
+  --spacing-container: 80px;   /* Padding container */
+
+  /* === BORDER RADIUS === */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* === SHADOWS === */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+  /* === CONTAINER === */
+  --container-max: 1320px;
+}
+
+/* ============================================================
+   GLOBAL STYLES — Reset & Base
+   ============================================================ */
+
+/* Google Fonts — Inter (body) + Great Vibes (script decoration) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap');
+
+html {
+  scroll-behavior: smooth;          /* Cuộn mượt cho anchor links */
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-dark);
+  background-color: var(--color-bg-light);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   COMMON COMPONENTS — Dùng chung cho tất cả các trang
+   ============================================================ */
+
+/* Page Banner — Banner đầu trang phụ (Menu, Shop, About...) */
+.page-banner {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('/assets/images/banner-bg.jpg') center/cover no-repeat;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.page-banner h1 {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-text-white);
+}
+
+/* Breadcrumb — Đường dẫn trang */
+.breadcrumb {
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.breadcrumb a {
+  color: var(--color-text-white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumb .current {
+  color: var(--color-primary);
+}
+
+/* Script text — Chữ viết tay trang trí (dùng nhiều trong Figma) */
+.script-text {
+  font-family: var(--font-script);
+  color: var(--color-primary);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+/* Section heading — Tiêu đề section */
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Primary Button — Nút CTA chính */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Outline Button — Nút viền */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+/* ============================================================
+   DARK MODE — Toggle bằng class "dark" trên <html>
+   Lưu trạng thái vào localStorage qua theme.js
+   ============================================================ */
+
+.dark body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-white);
+}
+
+.dark .page-banner {
+  background-color: var(--color-bg-dark-2);
+}
+
+/* ============================================================
+   ANIMATIONS — Hiệu ứng chung
+   ============================================================ */
+
+/* Fade in từ dưới lên — dùng cho scroll reveal */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Hover scale cho card */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS — 3 breakpoints theo yêu cầu
+   Mobile: < 768px | Tablet: 768-1024px | Desktop: > 1024px
+   Tailwind mặc định: sm(640) md(768) lg(1024) xl(1280)
+   ============================================================ */

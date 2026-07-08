@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Elite Restaurant — Nhà hàng ẩm thực cao cấp với thực đơn đa dạng" />
+  <meta property="og:title" content="Elite Restaurant — Foodtuck" />
+  <meta property="og:description" content="Trải nghiệm ẩm thực đẳng cấp tại Elite Restaurant" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Foodtuck — Elite Restaurant</title>
+</head>
+<body class="bg-bg-dark text-text-white">
+
+  <!-- ========== HEADER — Thịnh ========== -->
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="text-2xl font-bold font-heading">
+        Food<span class="text-primary">tuck</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="text-primary font-semibold">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
+        <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">Pages</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
+        <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">Contact</a></li>
+      </ul>
+
+      <!-- Icons -->
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"></button>
+        <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full items-center justify-center hidden">0</span>
+        </a>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="text-primary">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary">Shop</a></li>
+        <li><a href="/src/pages/faq.html" class="hover:text-primary">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========== HERO SECTION ========== -->
+    <section class="min-h-screen flex items-center pt-20 px-6">
+      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
+        <div data-reveal>
+          <p class="script-text text-xl mb-2">Its all about Good Food</p>
+          <h1 class="section-heading text-text-white leading-tight">
+            <span class="text-primary">Th</span>e Art of speed<br/>food Quality
+          </h1>
+          <p class="text-text-light mt-4 mb-8 max-w-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius sed pharetra dictum neque massa congue.</p>
+          <a href="/src/pages/menu.html" class="btn-primary">See Menu</a>
+        </div>
+        <div class="relative" data-reveal>
+          <!-- TODO: Thay bằng ảnh hero từ Figma -->
+          <div class="w-full aspect-square bg-bg-dark-2 rounded-full flex items-center justify-center text-text-muted">
+            [Hero Image]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT SECTION ========== -->
+    <section class="py-24 px-6" data-reveal>
+      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="script-text mb-2">About us</p>
+          <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-6">
+            We Create the best foody product
+          </h2>
+          <p class="text-text-light mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <a href="/src/pages/about.html" class="btn-primary">Read More</a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-bg-dark-2 aspect-square rounded-lg"></div>
+          <div class="bg-bg-dark-2 aspect-square rounded-lg"></div>
+          <div class="bg-bg-dark-2 aspect-[2/1] rounded-lg col-span-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOD CATEGORY ========== -->
+    <section class="py-24 px-6 text-center" data-reveal>
+      <div class="max-w-[1320px] mx-auto">
+        <p class="script-text mb-2">Food Category</p>
+        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-12">
+          <span class="text-primary">Ch</span>oose Food Item
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="bg-bg-dark-2 aspect-square rounded-lg card-hover"></div>
+          <div class="bg-bg-dark-2 aspect-square rounded-lg card-hover"></div>
+          <div class="bg-bg-dark-2 aspect-square rounded-lg card-hover"></div>
+          <div class="bg-bg-dark-2 aspect-square rounded-lg card-hover"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STATS COUNTER ========== -->
+    <section class="py-16 px-6 bg-bg-dark-2">
+      <div class="max-w-[1320px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div><p class="text-4xl font-bold text-text-white">420</p><p class="text-text-light mt-2">Professional Chefs</p></div>
+        <div><p class="text-4xl font-bold text-text-white">320</p><p class="text-text-light mt-2">Items Of Food</p></div>
+        <div><p class="text-4xl font-bold text-text-white">30+</p><p class="text-text-light mt-2">Years Of Experienced</p></div>
+        <div><p class="text-4xl font-bold text-text-white">220</p><p class="text-text-light mt-2">Happy Customers</p></div>
+      </div>
+    </section>
+
+    <!-- ========== MENU PREVIEW (Tabs) ========== -->
+    <section class="py-24 px-6 text-center" data-reveal>
+      <div class="max-w-[1320px] mx-auto">
+        <p class="script-text mb-2">Choose & Pick</p>
+        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-8">
+          <span class="text-primary">Fr</span>om Our Menu
+        </h2>
+        <!-- Tabs — Nhóm món -->
+        <div class="tabs-container">
+          <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button data-tab="breakfast" class="px-5 py-2 rounded-full bg-primary text-text-white font-semibold text-sm transition-colors">Breakfast</button>
+            <button data-tab="lunch" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors">Lunch</button>
+            <button data-tab="dinner" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors">Dinner</button>
+            <button data-tab="dessert" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors">Dessert</button>
+          </div>
+          <!-- Panel content — TODO: Điền dữ liệu thực đơn -->
+          <div data-panel="breakfast" class="grid md:grid-cols-2 gap-4 text-left">
+            <p class="text-text-muted col-span-full text-center py-8">[Danh sách món Breakfast — sẽ thêm sau]</p>
+          </div>
+          <div data-panel="lunch" class="hidden grid md:grid-cols-2 gap-4 text-left">
+            <p class="text-text-muted">[Lunch items]</p>
+          </div>
+          <div data-panel="dinner" class="hidden grid md:grid-cols-2 gap-4 text-left">
+            <p class="text-text-muted">[Dinner items]</p>
+          </div>
+          <div data-panel="dessert" class="hidden grid md:grid-cols-2 gap-4 text-left">
+            <p class="text-text-muted">[Dessert items]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== MÓN MỚI KHÁM PHÁ — TheMealDB API ========== -->
+    <section class="py-24 px-6 bg-bg-dark-2" data-reveal>
+      <div class="max-w-[1320px] mx-auto text-center">
+        <p class="script-text mb-2">Discover</p>
+        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-4">
+          Món Mới <span class="text-primary">Khám Phá</span>
+        </h2>
+        <p class="text-text-light mb-10">Gợi ý món ăn từ khắp nơi trên thế giới — powered by TheMealDB API</p>
+        <!-- Grid chứa card món từ API — render bởi JS -->
+        <div id="discover-meals" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <p class="text-text-muted col-span-full py-8">Đang tải...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CHEFS ========== -->
+    <section class="py-24 px-6 text-center" data-reveal>
+      <div class="max-w-[1320px] mx-auto">
+        <p class="script-text mb-2">Chefs</p>
+        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-12">
+          <span class="text-primary">Me</span>et Our Chef
+        </h2>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
+          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
+          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
+          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
+        </div>
+        <a href="/src/pages/chefs.html" class="btn-outline mt-10 inline-block">See More</a>
+      </div>
+    </section>
+
+    <!-- ========== BLOG PREVIEW ========== -->
+    <section class="py-24 px-6" data-reveal>
+      <div class="max-w-[1320px] mx-auto text-center">
+        <p class="script-text mb-2">Blog Post</p>
+        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-12">
+          <span class="text-primary">La</span>test News & Blog
+        </h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <div class="aspect-video bg-bg-dark-3"></div>
+            <div class="p-5 text-left"><h3 class="text-text-white font-semibold mb-2">[Blog Post Title]</h3><p class="text-text-muted text-sm">Lorem ipsum...</p></div>
+          </div>
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <div class="aspect-video bg-bg-dark-3"></div>
+            <div class="p-5 text-left"><h3 class="text-text-white font-semibold mb-2">[Blog Post Title]</h3><p class="text-text-muted text-sm">Lorem ipsum...</p></div>
+          </div>
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <div class="aspect-video bg-bg-dark-3"></div>
+            <div class="p-5 text-left"><h3 class="text-text-white font-semibold mb-2">[Blog Post Title]</h3><p class="text-text-muted text-sm">Lorem ipsum...</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
+    <div class="max-w-[1320px] mx-auto">
+      <!-- CTA Subscribe -->
+      <div class="bg-primary/10 rounded-lg p-8 mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-2xl font-bold text-text-white"><span class="text-primary">St</span>ill You Need Our Support ?</h3>
+          <p class="text-text-light text-sm mt-1">Don't wait make a smart & logical quote here. Its pretty easy.</p>
+        </div>
+        <div class="flex gap-2">
+          <input type="email" placeholder="Enter Your Email" class="px-4 py-3 bg-primary rounded-l-full text-white placeholder-white/70 outline-none" />
+          <button class="px-6 py-3 bg-white text-primary font-semibold rounded-r-full hover:bg-gray-100 transition-colors">Subscribe Now</button>
+        </div>
+      </div>
+
+      <!-- Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <div>
+          <h4 class="text-text-white font-bold mb-4">About Us.</h4>
+          <p class="text-text-light">Corporate clients and leisure travelers hasbeen relying on Groundlink for dependablesafe.</p>
+          <div class="flex items-center gap-3 mt-4">
+            <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white font-bold">⏰</div>
+            <div><p class="text-text-white text-xs font-semibold">Opening Hours</p><p class="text-text-muted text-xs">Mon - Sat(8:00 - 6:00) · Sunday - Closed</p></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4">Useful Links</h4>
+          <ul class="space-y-2 text-text-light">
+            <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+            <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">News</a></li>
+            <li><a href="/src/pages/chefs.html" class="hover:text-primary transition-colors">Team</a></li>
+            <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4">Help?</h4>
+          <ul class="space-y-2 text-text-light">
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Term & Condition</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Reporting</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Documentation</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Support Policy</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Privacy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4">Recent Post</h4>
+          <div class="space-y-4">
+            <div class="flex gap-3"><div class="w-16 h-12 bg-bg-dark-2 rounded flex-shrink-0"></div><div><p class="text-text-white text-xs font-semibold">[Blog title]</p><p class="text-text-muted text-xs">February 28, 2022</p></div></div>
+            <div class="flex gap-3"><div class="w-16 h-12 bg-bg-dark-2 rounded flex-shrink-0"></div><div><p class="text-text-white text-xs font-semibold">[Blog title]</p><p class="text-text-muted text-xs">February 28, 2022</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
+        <p>Copyright © 2026 by Elite Restaurant. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Entry -->
+  <script type="module" src="/src/js/main.js"></script>
+  <!-- Trang chủ: load API cho section "Món Mới Khám Phá" -->
+  <script type="module">
+    import { initTabs, initScrollReveal } from '/src/js/dom.js'
+    import { fetchRandomMeals, renderMealCard } from '/src/js/api.js'
+    import { updateCartBadge } from '/src/js/cart.js'
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTabs()           // Khởi tạo tab Menu preview
+      initScrollReveal()   // Khởi tạo scroll animations
+      updateCartBadge()    // Cập nhật badge giỏ hàng
+
+      // Fetch món từ TheMealDB API và render vào section "Món Mới Khám Phá"
+      const container = document.getElementById('discover-meals')
+      const meals = await fetchRandomMeals(6)  // Lấy 6 món ngẫu nhiên
+      if (meals.length) {
+        container.innerHTML = meals.map(renderMealCard).join('')
+      } else {
+        container.innerHTML = '<p class="text-text-muted col-span-full">Không thể tải dữ liệu. Vui lòng thử lại.</p>'
+      }
+    })
+  </script>
+</body>
+</html>
