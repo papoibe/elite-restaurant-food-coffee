@@ -29,7 +29,7 @@ npm run dev
 npm run build
 ```
 
-## 🛠️ Công nghệ sử dụng
+## Công nghệ sử dụng
 
 - **HTML5** (Semantic)
 - **Tailwind CSS v4** (via Vite plugin)
