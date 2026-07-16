@@ -6,16 +6,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Đăng ký tài khoản Elite Restaurant" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Sign Up — Foodtuck</title>
+  <title>Sign Up – Foodtuck</title>
 </head>
 <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
   <header><!-- HEADER --></header>
+
   <main>
-    <section class="page-banner"><h1>Sign Up</h1><nav class="breadcrumb">Home > <span class="current">Sign up</span></nav></section>
-    <section class="py-24 px-6"><div class="max-w-md mx-auto">
-      <p class="text-text-muted text-center py-20">[Thuận — Dựng Sign Up form tại đây — dùng validate.js]</p>
-    </div></section>
+    <section class="page-banner">
+      <h1>Sign Up</h1>
+      <nav class="breadcrumb">Home > <span class="current">Sign up</span></nav>
+    </section>
+
+    <section class="py-24 px-6">
+      <div class="max-w-md mx-auto bg-white dark:bg-bg-dark-2 text-gray-800 dark:text-text-white p-8 rounded-lg shadow-[0_4px_25px_rgba(0,0,0,0.15)]">
+        <h2 class="text-xl font-bold mb-6 text-left text-gray-900 dark:text-text-white">Sign Up</h2>
+        
+        <form class="space-y-4">
+          <div>
+            <label for="username" class="block text-xs font-semibold mb-1 text-gray-600 dark:text-text-light">Name</label>
+            <input type="text" id="username" placeholder="Enter your name" required
+                   class="w-full px-4 py-2 border border-gray-300 dark:border-white/10 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900 dark:text-white">
+          </div>
+
+          <div>
+            <label for="email" class="block text-xs font-semibold mb-1 text-gray-600 dark:text-text-light">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required
+                   class="w-full px-4 py-2 border border-gray-300 dark:border-white/10 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900 dark:text-white">
+          </div>
+          
+          <div>
+            <label for="password" class="block text-xs font-semibold mb-1 text-gray-600 dark:text-text-light">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required
+                   class="w-full px-4 py-2 border border-gray-300 dark:border-white/10 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900 dark:text-white">
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <div class="flex items-center">
+              <input type="checkbox" id="remember" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary accent-primary">
+              <label for="remember" class="ml-2 text-xs text-gray-600 dark:text-text-light cursor-pointer">Remember me?</label>
+            </div>
+            <a href="#" class="text-xs text-gray-400 hover:text-primary transition-colors">Forgot password?</a>
+          </div>
+
+          <!-- Nút Submit -->
+          <button type="submit" class="w-full bg-primary hover:bg-amber-600 text-white font-semibold py-2.5 rounded text-sm transition duration-200 mt-2">
+            Sign Up
+          </button>
+        </form>
+
+        <p class="text-center text-xs text-gray-500 dark:text-text-light mt-6">
+          Already have an account? <a href="signin.html" class="text-primary hover:underline font-medium">Sign In here</a>
+        </p>
+      </div>
+    </section>
   </main>
+
   <footer><!-- FOOTER --></footer>
   <script type="module" src="/src/js/main.js"></script>
 </body>
