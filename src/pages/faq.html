@@ -1,23 +1,231 @@
-<!-- ===== TRANG FAQ — PHỤ TRÁCH: KIỆT (Thành viên 2) ===== -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Câu hỏi thường gặp về Elite Restaurant" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>FAQ — Foodtuck</title>
-</head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
-  <header><!-- HEADER --></header>
-  <main>
-    <section class="page-banner"><h1>FAQ Page</h1><nav class="breadcrumb">Home > <span class="current">FAQ</span></nav></section>
-    <section class="py-24 px-6"><div class="max-w-[1320px] mx-auto">
-      <!-- TODO: Thuận — Accordion FAQ 2 cột theo Figma -->
-      <p class="text-text-muted text-center py-20">[Kiệt — Dựng FAQ Accordion tại đây]</p>
-    </div></section>
-  </main>
-  <footer><!-- FOOTER --></footer>
-  <script type="module" src="/src/js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Các câu hỏi thường gặp từ Foodtuck" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>FAQ Page — Foodtuck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#FF9F0D',
+              'bg-dark': '#0D0D0D',
+              'bg-light': '#FFFFFF',
+              'text-dark': '#1E1E1E',
+              'text-white': '#FFFFFF',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              cursive: ['Great Vibes', 'cursive'],
+              heading: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .faq-answer {
+        display: none;
+      }
+      .faq-item.active .faq-answer {
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-sans antialiased">
+
+    <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+      <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="text-2xl font-bold font-heading text-white">
+          Food<span class="text-primary">tuck</span>
+        </a>
+        <ul class="hidden lg:flex items-center gap-8 text-sm text-white/90">
+          <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+          <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+          <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
+          <li><a href="/src/pages/faq.html" class="text-primary font-semibold">Pages</a></li>
+          <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+          <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
+          <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">Contact</a></li>
+        </ul>
+
+        <div class="flex items-center gap-2">
+          <button type="button" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Search">
+            <img src="/public/assets/images/search.svg" alt="" class="w-5 h-5" />
+          </button>
+          <button type="button" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="User">
+            <img src="/public/assets/images/User.svg" alt="" class="w-5 h-5" />
+          </button>
+          <button type="button" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Tote">
+            <img src="/public/assets/images/Tote.svg" alt="" class="w-5 h-5" />
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="pt-16">
+      <section class="relative">
+        <img src="/public/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" />
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+          <h1 class="text-5xl font-bold">FAQ Page</h1>
+          <nav class="mt-3 text-sm">
+            <a href="/" class="hover:text-primary transition">Home</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-primary">faq</span>
+          </nav>
+        </div>
+      </section>
+
+      <section class="py-16 md:py-24 px-4 sm:px-6">
+        <div class="max-w-[1320px] mx-auto">
+          
+          <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">Questions Looks Here</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</p>
+          </div>
+
+          <div id="faq-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-bg-dark text-gray-400 text-sm pt-16 font-sans">
+      <div class="max-w-[1320px] mx-auto px-6 pb-12 border-b border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div>
+          <h4 class="text-white text-xl font-bold mb-2 font-heading">
+            <span class="text-primary">St</span>ill You Need Our Support ?
+          </h4>
+          <p class="text-xs text-gray-400">
+            Don't wait make a smart & logical quote here. Its pretty easy.
+          </p>
+        </div>
+        <div class="flex w-full md:w-auto max-w-md">
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            class="w-full bg-primary text-white placeholder-white/80 px-4 py-3 rounded-r-none rounded-l-md focus:outline-none text-xs"
+          />
+          <button class="bg-white text-primary px-6 py-3 rounded-l-none rounded-r-md font-semibold whitespace-nowrap text-xs hover:bg-gray-100 transition">
+            Subscribe Now
+          </button>
+        </div>
+      </div>
+
+      <div class="max-w-[1320px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="space-y-4">
+          <h5 class="text-white font-bold text-base font-heading">About Us.</h5>
+          <p class="text-xs leading-relaxed text-gray-400">
+            orporate clients and leisure travelers hasbeen relying on Groundlink
+            for dependablesafe, and professional chauffeured carservice in major
+            cities across World.
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="bg-primary text-white p-3 rounded-md flex items-center justify-center w-10 h-10 flex-shrink-0">
+              <img src="/public/assets/images/Clock.svg" alt="" class="w-full h-full" />
+            </div>
+            <div>
+              <p class="text-white text-xs font-semibold">Opening Houres</p>
+              <p class="text-xs text-gray-400">Mon - Sat(8.00 - 6.00)</p>
+              <p class="text-xs text-gray-400">Sunday - Closed</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-base mb-4 font-heading">Useful Links</h5>
+          <ul class="space-y-2 text-xs">
+            <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+            <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">News</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Patners</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Team</a></li>
+            <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-base mb-4 font-heading">Help?</h5>
+          <ul class="space-y-2 text-xs">
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Term & Condition</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Reporting</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Documentation</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Support Policy</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Privacy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-base mb-4 font-heading">Recent Post</h5>
+          <div class="space-y-4">
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-gray-700 flex-shrink-0 rounded overflow-hidden">
+                <img src="./assets/images/recent_post.jpg" alt="" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-gray-800')" />
+              </div>
+              <div>
+                <a href="/src/pages/blog.html" class="text-white text-xs hover:text-primary transition block line-clamp-2">Is fastfood good for your body?</a>
+                <span class="text-xs text-gray-500">February 28,2022</span>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-gray-700 flex-shrink-0 rounded overflow-hidden">
+                <img src="./assets/images/recent_post.jpg" alt="" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-gray-800')" />
+              </div>
+              <div>
+                <a href="/src/pages/blog.html" class="text-white text-xs hover:text-primary transition block line-clamp-2">Change your food habit With organic food</a>
+                <span class="text-xs text-gray-500">February 28,2022</span>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-gray-700 flex-shrink-0 rounded overflow-hidden">
+                <img src="./assets/images/recent_post.jpg" alt="" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-gray-800')" />
+              </div>
+              <div>
+                <a href="/src/pages/blog.html" class="text-white text-xs hover:text-primary transition block line-clamp-2">Do you like fastfood for your life?</a>
+                <span class="text-xs text-gray-500">February 28,2022</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#1F1F1F] py-4 text-gray-400 text-xs">
+        <div class="max-w-[1320px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p>Copyright © 2022 by Ayeman. All Rights Reserved.</p>
+          <div class="flex space-x-3">
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/facebook.svg" alt="fb" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'f';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/twitter.svg" alt="tw" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 't';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/instagram.svg" alt="ins" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'i';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/youtube.svg" alt="yt" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'y';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/pinterest.svg" alt="pin" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'p';" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/faq/faq.js" defer></script>
+  </body>
 </html>
