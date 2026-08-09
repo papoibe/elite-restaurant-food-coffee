@@ -4,6 +4,7 @@
    ============================================================ */
 
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap');
 
 /* ============================================================
    DESIGN TOKENS — Trích xuất từ Figma "Elite" Template
@@ -57,7 +58,6 @@
    ============================================================ */
 
 /* Google Fonts — Inter (body) + Great Vibes (script decoration) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap');
 
 html {
   scroll-behavior: smooth;          /* Cuộn mượt cho anchor links */

@@ -10,16 +10,14 @@
  */
 export function validateForm(form) {
   let isValid = true
-  const fields = form.querySelectorAll('[data-validate]')  // Chỉ validate trường có data-validate
+  const fields = form.querySelectorAll('[data-validate]')
 
   fields.forEach(field => {
-    const rules = field.dataset.validate.split(',')  // Nhiều rule cách bằng dấu phẩy
-    const errorEl = field.parentElement.querySelector('.error-message')  // Phần tử hiển thị lỗi
+    const rules = field.dataset.validate.split(',')
+    const errorEl = field.parentElement.querySelector('.error-message')
 
-    // Xóa lỗi cũ
     clearError(field, errorEl)
 
-    // Kiểm tra từng rule
     for (const rule of rules) {
       const trimmedRule = rule.trim()
       const errorMsg = checkRule(field, trimmedRule)
@@ -27,7 +25,7 @@ export function validateForm(form) {
       if (errorMsg) {
         showError(field, errorEl, errorMsg)
         isValid = false
-        break  // Chỉ hiện lỗi đầu tiên
+        break
       }
     }
   })
@@ -37,35 +35,28 @@ export function validateForm(form) {
 
 /**
  * checkRule — Kiểm tra 1 rule validation
- * @param {HTMLInputElement} field - Trường cần check
- * @param {string} rule - Tên rule (required, email, phone, minLength:N)
- * @returns {string|null} Thông báo lỗi hoặc null nếu hợp lệ
  */
 function checkRule(field, rule) {
   const value = field.value.trim()
 
-  // Rule: bắt buộc nhập
   if (rule === 'required' && !value) {
     return 'Vui lòng nhập thông tin này'
   }
 
-  // Rule: định dạng email
   if (rule === 'email' && value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/  // Regex kiểm tra email cơ bản
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(value)) {
       return 'Email không hợp lệ'
     }
   }
 
-  // Rule: định dạng số điện thoại
   if (rule === 'phone' && value) {
-    const phoneRegex = /^[\d\s\-\+\(\)]{8,15}$/  // Cho phép số, dấu cách, dấu gạch, +, ()
+    const phoneRegex = /^[\d\s\-\+\(\)]{8,15}$/
     if (!phoneRegex.test(value)) {
       return 'Số điện thoại không hợp lệ'
     }
   }
 
-  // Rule: độ dài tối thiểu (vd: minLength:6)
   if (rule.startsWith('minLength:') && value) {
     const minLen = parseInt(rule.split(':')[1])
     if (value.length < minLen) {
@@ -73,7 +64,6 @@ function checkRule(field, rule) {
     }
   }
 
-  // Rule: số lượng (vd: min:1, max:20)
   if (rule.startsWith('min:') && value) {
     const min = parseInt(rule.split(':')[1])
     if (parseInt(value) < min) {
@@ -88,15 +78,12 @@ function checkRule(field, rule) {
     }
   }
 
-  return null  // Không có lỗi
+  return null
 }
 
-/**
- * showError — Hiển thị thông báo lỗi cho field
- */
 function showError(field, errorEl, message) {
-  field.classList.add('border-red-500')       // Viền đỏ
-  field.classList.remove('border-gray-300')   // Xóa viền mặc định
+  field.classList.add('border-red-500')
+  field.classList.remove('border-gray-300')
 
   if (errorEl) {
     errorEl.textContent = message
@@ -104,9 +91,6 @@ function showError(field, errorEl, message) {
   }
 }
 
-/**
- * clearError — Xóa thông báo lỗi
- */
 function clearError(field, errorEl) {
   field.classList.remove('border-red-500')
   field.classList.add('border-gray-300')
@@ -119,11 +103,8 @@ function clearError(field, errorEl) {
 
 /**
  * showSuccessToast — Hiển thị thông báo thành công (toast notification)
- * @param {string} message - Nội dung thông báo
- * @param {number} duration - Thời gian hiển thị (ms)
  */
 export function showSuccessToast(message = 'Thành công!', duration = 3000) {
-  // Tạo toast element
   const toast = document.createElement('div')
   toast.className = 'fixed top-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[100] flex items-center gap-2 animate-fade-in-up'
   toast.innerHTML = `
@@ -134,7 +115,6 @@ export function showSuccessToast(message = 'Thành công!', duration = 3000) {
   `
   document.body.appendChild(toast)
 
-  // Tự động ẩn sau duration
   setTimeout(() => {
     toast.style.opacity = '0'
     toast.style.transition = 'opacity 0.3s ease'

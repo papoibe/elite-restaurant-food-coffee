@@ -1,14 +1,9 @@
 /* ============================================================
    cart.js — Logic Giỏ hàng (Shopping Cart)
-   CRUD giỏ hàng bằng localStorage
    ============================================================ */
 
-const CART_KEY = 'elite-cart'  // Key lưu trong localStorage
+const CART_KEY = 'elite-cart'
 
-/**
- * getCart — Lấy giỏ hàng từ localStorage
- * @returns {Array} Danh sách sản phẩm trong giỏ
- */
 export function getCart() {
   try {
     return JSON.parse(localStorage.getItem(CART_KEY)) || []
@@ -17,63 +12,41 @@ export function getCart() {
   }
 }
 
-/**
- * saveCart — Lưu giỏ hàng vào localStorage
- * @param {Array} cart - Danh sách sản phẩm
- */
 function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart))
-  // Dispatch custom event để các component khác lắng nghe cập nhật
   window.dispatchEvent(new CustomEvent('cart-updated', { detail: { cart } }))
 }
 
-/**
- * addToCart — Thêm sản phẩm vào giỏ
- * Nếu sản phẩm đã có, tăng số lượng
- * @param {Object} product - { id, name, price, image, quantity }
- */
 export function addToCart(product) {
   const cart = getCart()
-  const existingIndex = cart.findIndex(item => item.id === product.id)
+  const existingIndex = cart.findIndex(item => String(item.id) === String(product.id))
 
   if (existingIndex > -1) {
-    // Sản phẩm đã có → tăng số lượng
     cart[existingIndex].quantity += (product.quantity || 1)
   } else {
-    // Sản phẩm mới → thêm vào giỏ
     cart.push({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
+      rating: product.rating || 4,
       quantity: product.quantity || 1
     })
   }
-
   saveCart(cart)
 }
 
-/**
- * removeFromCart — Xóa sản phẩm khỏi giỏ theo ID
- * @param {string|number} productId
- */
 export function removeFromCart(productId) {
-  const cart = getCart().filter(item => item.id !== productId)
+  const cart = getCart().filter(item => String(item.id) !== String(productId))
   saveCart(cart)
 }
 
-/**
- * updateQuantity — Cập nhật số lượng sản phẩm
- * @param {string|number} productId
- * @param {number} quantity - Số lượng mới (nếu ≤ 0 thì xóa)
- */
 export function updateQuantity(productId, quantity) {
   const cart = getCart()
-  const item = cart.find(item => item.id === productId)
+  const item = cart.find(item => String(item.id) === String(productId))
 
   if (item) {
     if (quantity <= 0) {
-      // Số lượng ≤ 0 → xóa khỏi giỏ
       removeFromCart(productId)
       return
     }
@@ -82,38 +55,130 @@ export function updateQuantity(productId, quantity) {
   }
 }
 
-/**
- * getCartTotal — Tính tổng tiền giỏ hàng
- * @returns {number} Tổng tiền
- */
 export function getCartTotal() {
   return getCart().reduce((total, item) => total + (item.price * item.quantity), 0)
 }
 
-/**
- * getCartCount — Đếm tổng số sản phẩm trong giỏ
- * @returns {number} Tổng số lượng
- */
-export function getCartCount() {
-  return getCart().reduce((count, item) => count + item.quantity, 0)
-}
+let discountRate = 0
 
-/**
- * clearCart — Xóa toàn bộ giỏ hàng
- */
-export function clearCart() {
-  saveCart([])
-}
-
-/**
- * updateCartBadge — Cập nhật số hiển thị trên icon giỏ hàng (header)
- * Tìm phần tử #cart-count và cập nhật text
- */
-export function updateCartBadge() {
-  const badge = document.getElementById('cart-count')
-  if (badge) {
-    const count = getCartCount()
-    badge.textContent = count
-    badge.style.display = count > 0 ? 'flex' : 'none'
+function renderStars(rating = 4) {
+  let starsHtml = ''
+  for (let i = 1; i <= 5; i++) {
+    starsHtml += `<span class="${i <= rating ? 'text-[#FF9F0D]' : 'text-gray-300'} text-xs">★</span>`
   }
+  return `<div class="flex gap-0.5 mt-1">${starsHtml}</div>`
 }
+
+function renderCartPage() {
+  const cartTableBody = document.getElementById('cart-table-body')
+  if (!cartTableBody) return
+
+  const cart = getCart()
+  cartTableBody.innerHTML = ''
+
+  if (cart.length === 0) {
+    cartTableBody.innerHTML = `
+      <tr>
+        <td colspan="5" class="py-12 text-center text-gray-500 font-medium">Giỏ hàng của bạn đang trống.</td>
+      </tr>`
+    calculateTotal(0)
+    return
+  }
+
+  cart.forEach((item) => {
+    const row = document.createElement('tr')
+    row.className = 'border-b border-gray-200 dark:border-gray-800'
+    row.innerHTML = `
+      <td class="py-5 flex items-center gap-4">
+        <img src="${item.image || 'https://via.placeholder.com/80'}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg" />
+        <div>
+          <h4 class="font-bold text-gray-900 dark:text-white">${item.name}</h4>
+          ${renderStars(item.rating)}
+        </div>
+      </td>
+      <td class="py-5 font-medium text-gray-700 dark:text-gray-300">$${Number(item.price).toFixed(2)}</td>
+      <td class="py-5">
+        <div class="flex items-center border border-gray-200 dark:border-gray-700 rounded-full w-fit px-3 py-1 gap-3">
+          <button class="btn-minus text-gray-400 hover:text-[#FF9F0D] px-1 cursor-pointer" data-id="${item.id}">-</button>
+          <span class="font-semibold text-sm w-4 text-center">${item.quantity}</span>
+          <button class="btn-plus text-gray-400 hover:text-[#FF9F0D] px-1 cursor-pointer" data-id="${item.id}">+</button>
+        </div>
+      </td>
+      <td class="py-5 font-bold text-gray-900 dark:text-white">$${(item.price * item.quantity).toFixed(2)}</td>
+      <td class="py-5 text-center">
+        <button class="btn-remove text-gray-400 hover:text-red-500 text-lg cursor-pointer" data-id="${item.id}">✕</button>
+      </td>
+    `
+    cartTableBody.appendChild(row)
+  })
+
+  calculateTotal(getCartTotal())
+  attachCartEvents(cart)
+}
+
+function calculateTotal(subtotal) {
+  const discount = subtotal * discountRate
+  const shipping = subtotal > 0 ? 0.0 : 0.0
+  const total = subtotal - discount + shipping
+
+  const subtotalEl = document.getElementById('cart-subtotal')
+  const discountEl = document.getElementById('cart-discount')
+  const shippingEl = document.getElementById('cart-shipping')
+  const totalEl = document.getElementById('cart-total')
+
+  if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`
+  if (discountEl) discountEl.textContent = `-$${discount.toFixed(2)}`
+  if (shippingEl) shippingEl.textContent = `$${shipping.toFixed(2)}`
+  if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`
+}
+
+function attachCartEvents(cart) {
+  document.querySelectorAll('.btn-plus').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const id = e.target.dataset.id
+      const item = cart.find((i) => String(i.id) === String(id))
+      if (item) updateQuantity(item.id, item.quantity + 1)
+    })
+  })
+
+  document.querySelectorAll('.btn-minus').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const id = e.target.dataset.id
+      const item = cart.find((i) => String(i.id) === String(id))
+      if (item) updateQuantity(item.id, item.quantity - 1)
+    })
+  })
+
+  document.querySelectorAll('.btn-remove').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const id = e.target.dataset.id
+      removeFromCart(id)
+    })
+  })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCartPage()
+
+  const applyBtn = document.getElementById('apply-coupon-btn')
+  if (applyBtn) {
+    applyBtn.addEventListener('click', () => {
+      const input = document.getElementById('coupon-input')
+      const msg = document.getElementById('coupon-message')
+      if (input && input.value.trim().toUpperCase() === 'FOODTUCK10') {
+        discountRate = 0.1
+        if (msg) {
+          msg.textContent = 'Áp dụng mã giảm 10% thành công!'
+          msg.className = 'text-sm mt-2 text-green-500 block'
+        }
+      } else if (msg) {
+        discountRate = 0
+        msg.textContent = 'Mã không hợp lệ!'
+        msg.className = 'text-sm mt-2 text-red-500 block'
+      }
+      renderCartPage()
+    })
+  }
+})
+
+window.addEventListener('cart-updated', renderCartPage)

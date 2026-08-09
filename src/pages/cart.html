@@ -7,17 +7,85 @@
   <meta name="description" content="Giỏ hàng — Xem và quản lý sản phẩm đã chọn" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Shopping Cart — Foodtuck</title>
+  <!-- Nhúng CSS chính để nhận màu sắc & layout Tailwind -->
+  <link rel="stylesheet" href="/src/css/main.css" />
 </head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
+<body class="bg-white dark:bg-bg-dark text-text-dark dark:text-text-white transition-colors duration-300">
   <header><!-- HEADER --></header>
+
   <main>
-    <section class="page-banner"><h1>Shopping Cart</h1><nav class="breadcrumb">Home > <span class="current">Shopping cart</span></nav></section>
-    <section class="py-24 px-6"><div class="max-w-[1320px] mx-auto">
-      <!-- TODO: Thuận — Bảng giỏ hàng + Coupon + Total Bill theo Figma -->
-      <p class="text-text-muted text-center py-20">[Thuận — Dựng Shopping Cart tại đây — dùng cart.js]</p>
-    </div></section>
+    <!-- Page Banner -->
+    <section class="page-banner bg-gray-900 text-white py-16 text-center">
+      <h1 class="text-4xl font-bold mb-2">Shopping Cart</h1>
+      <nav class="breadcrumb text-sm text-gray-400">Home > <span class="text-[#FF9F0D] font-semibold">Shopping cart</span></nav>
+    </section>
+
+    <section class="py-16 px-4 md:px-6">
+      <div class="max-w-[1320px] mx-auto space-y-10">
+      
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[650px]">
+            <thead>
+              <tr class="border-b border-gray-200 dark:border-gray-700 text-lg font-bold pb-4">
+                <th class="py-4 w-2/5">Product</th>
+                <th class="py-4">Price</th>
+                <th class="py-4">Quantity</th>
+                <th class="py-4">Total</th>
+                <th class="py-4 text-center">Remove</th>
+              </tr>
+            </thead>
+            <tbody id="cart-table-body" class="divide-y divide-gray-100 dark:divide-gray-800">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Khối Mã giảm giá & Total Bill -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
+          
+          <div>
+            <h3 class="text-xl font-bold mb-4">Coupon Code</h3>
+            <p class="text-gray-500 text-sm mb-4">Nhập mã giảm giá của bạn nếu có (Mã dùng thử: <span class="font-bold text-[#FF9F0D]">FOODTUCK10</span> để giảm 10%).</p>
+            <div class="flex gap-2 max-w-md">
+              <input type="text" id="coupon-input" placeholder="Enter code" class="flex-1 px-4 py-3 border rounded-lg dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#FF9F0D]" />
+              <button id="apply-coupon-btn" class="bg-[#FF9F0D] text-white font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition cursor-pointer">Apply</button>
+            </div>
+            <p id="coupon-message" class="text-sm mt-2 hidden"></p>
+          </div>
+
+          <!-- Total Bill -->
+          <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 space-y-4">
+            <h3 class="text-xl font-bold pb-2 border-b border-gray-200 dark:border-gray-700">Total Bill</h3>
+            <div class="flex justify-between text-gray-600 dark:text-gray-300">
+              <span>Cart Subtotal</span>
+              <span id="cart-subtotal" class="font-semibold">$0.00</span>
+            </div>
+            <div class="flex justify-between text-gray-600 dark:text-gray-300">
+              <span>Discount</span>
+              <span id="cart-discount" class="font-semibold text-green-500">-$0.00</span>
+            </div>
+            <div class="flex justify-between text-gray-600 dark:text-gray-300">
+              <span>Shipping Charge</span>
+              <span id="cart-shipping" class="font-semibold">$0.00</span>
+            </div>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <div class="flex justify-between text-lg font-bold">
+              <span>Total Amount</span>
+              <span id="cart-total" class="text-[#FF9F0D]">$0.00</span>
+            </div>
+            <a href="/src/pages/checkout.html" class="block text-center w-full bg-[#FF9F0D] text-white font-bold py-3.5 rounded-lg hover:bg-opacity-90 transition mt-4">
+              Proceed to Checkout
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
   </main>
+
   <footer><!-- FOOTER --></footer>
+
   <script type="module" src="/src/js/main.js"></script>
+  <script type="module" src="/src/js/cart.js"></script>
 </body>
 </html>
