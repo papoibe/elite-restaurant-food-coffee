@@ -1,20 +1,305 @@
-<!-- ===== TRANG BLOG DETAILS — PHỤ TRÁCH: KIỆT ===== -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Chi tiết bài viết blog từ Elite Restaurant" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Blog Details — Foodtuck</title>
-</head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
-  <header><!-- HEADER --></header>
-  <main>
-    <section class="page-banner"><h1>Blog Details</h1><nav class="breadcrumb">Home > Blog > <span class="current">Details</span></nav></section>
-    <section class="py-24 px-6"><div class="max-w-[1320px] mx-auto"><p class="text-text-muted text-center py-20">[Kiệt — Dựng Blog Details tại đây]</p></div></section>
-  </main>
-  <footer><!-- FOOTER --></footer>
-  <script type="module" src="/src/js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Chi tiết bài viết tin tức từ Foodtuck" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Blog Details — Foodtuck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#FF9F0D',
+              'bg-dark': '#0D0D0D',
+              'bg-light': '#FFFFFF',
+              'text-dark': '#1E1E1E',
+              'text-white': '#FFFFFF',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              cursive: ['Great Vibes', 'cursive'],
+              heading: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-sans antialiased">
+
+    <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+      <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="text-2xl font-bold font-heading text-white">
+          Food<span class="text-primary">tuck</span>
+        </a>
+        <ul class="hidden lg:flex items-center gap-8 text-sm text-white/90">
+          <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+          <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+          <li><a href="/src/pages/blog.html" class="text-primary font-semibold">Blog</a></li>
+          <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">Pages</a></li>
+          <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+          <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
+          <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">Contact</a></li>
+        </ul>
+
+        <div class="flex items-center gap-2">
+          <button type="button" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Search">
+            <img src="/public/assets/images/search.svg" alt="" class="w-5 h-5" />
+          </button>
+          <button type="button" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="User">
+            <img src="/public/assets/images/User.svg" alt="" class="w-5 h-5" />
+          </button>
+          <button type="button" class="p-2 rounded-full hover:bg-white/10 transition" aria-label="Tote">
+            <img src="/public/assets/images/Tote.svg" alt="" class="w-5 h-5" />
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="pt-16">
+      <section class="relative">
+        <img src="/public/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" />
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+          <h1 class="text-5xl font-bold">Blog Details</h1>
+          <nav class="mt-3 text-sm">
+            <a href="/" class="hover:text-primary transition">Home</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-primary">Blog details</span>
+          </nav>
+        </div>
+      </section>
+
+      <section class="py-12 md:py-20 px-4 sm:px-6">
+        <div class="max-w-[1320px] mx-auto">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8 space-y-8">
+              
+              <div class="space-y-6">
+                <img src="/public/assets/images/recent_post.jpg" alt="Blog Main" class="w-full h-[450px] object-cover rounded-lg" />
+                
+                <div class="flex items-center gap-6 text-xs text-gray-400">
+                  <span class="flex items-center gap-2"><i class="fa-regular fa-calendar text-primary"></i> Feb 14, 2022</span>
+                  <span class="flex items-center gap-2"><i class="fa-regular fa-comments text-primary"></i> 3 Comments</span>
+                  <span class="flex items-center gap-2"><i class="fa-regular fa-user text-primary"></i> Admin</span>
+                </div>
+
+                <h2 class="text-3xl font-bold">10 Reasons To Do A Digital Detox Challenge</h2>
+                
+                <p class="text-xs leading-relaxed text-gray-400">Netus et malesuada fames ac turpis egestas integer eget. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Senectus et netus et malesuada fames ac turpis egestas. Pellentesque elit eget gravida cum sociis natoque penatibus et. Turpis cursus in hac habitasse platea dictumst quisque.</p>
+                <p class="text-xs leading-relaxed text-gray-400">Aliquam etiam erat velit scelerisque in dictum non consectetur a. Sagittis orci a scelerisque purus semper eget duis at. Ut tellus elementum sagittis vitae et leo duis ut. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam.</p>
+
+                <div class="bg-primary p-8 rounded-lg text-white font-semibold text-sm leading-relaxed relative overflow-hidden">
+                  <i class="fa-solid fa-quote-left text-5xl absolute top-4 left-4 opacity-20"></i>
+                  <p class="relative z-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center pt-4">
+                  <p class="text-xs leading-relaxed text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+                  <img src="/public/assets/images/recent_post.jpg" alt="Detail Content" class="w-full h-60 object-cover rounded-lg" />
+                </div>
+
+                <div class="flex flex-wrap justify-between items-center border-t border-b border-gray-200 dark:border-gray-800 py-4 gap-4 text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold">Tags:</span>
+                    <a href="#" class="text-gray-400 hover:text-primary">Restaurant,</a>
+                    <a href="#" class="text-gray-400 hover:text-primary">Dinner,</a>
+                    <a href="#" class="text-gray-400 hover:text-primary">Pizza</a>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="font-bold">Share:</span>
+                    <div class="flex gap-2">
+                      <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary"><i class="fa-brands fa-facebook-f text-[10px]"></i></a>
+                      <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary"><i class="fa-brands fa-twitter text-[10px]"></i></a>
+                      <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary"><i class="fa-brands fa-instagram text-[10px]"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-6 pt-6">
+                <h3 class="text-2xl font-bold">Comments - 03</h3>
+                <div class="space-y-6">
+                  <div class="flex gap-4 p-4 border border-gray-200 dark:border-gray-800 rounded-lg">
+                    <img src="/public/assets/images/recent_post.jpg" alt="User Avatar" class="w-12 h-12 rounded-full object-cover shrink-0" />
+                    <div class="space-y-1 flex-1">
+                      <div class="flex justify-between items-center">
+                        <h5 class="font-bold text-sm">MD Razu Islam</h5>
+                        <button class="text-xs text-primary font-semibold hover:underline"><i class="fa-solid fa-reply text-[10px]"></i> Reply</button>
+                      </div>
+                      <p class="text-[10px] text-gray-400">June 22, 2020</p>
+                      <p class="text-xs text-gray-400 leading-relaxed pt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
+                    </div>
+                  </div>
+
+                  <div class="flex gap-4 p-4 border border-gray-200 dark:border-gray-800 rounded-lg ml-8">
+                    <img src="/public/assets/images/recent_post.jpg" alt="User Avatar" class="w-12 h-12 rounded-full object-cover shrink-0" />
+                    <div class="space-y-1 flex-1">
+                      <div class="flex justify-between items-center">
+                        <h5 class="font-bold text-sm">MD Mamun Khan</h5>
+                        <button class="text-xs text-primary font-semibold hover:underline"><i class="fa-solid fa-reply text-[10px]"></i> Reply</button>
+                      </div>
+                      <p class="text-[10px] text-gray-400">June 22, 2020</p>
+                      <p class="text-xs text-gray-400 leading-relaxed pt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-6 pt-6">
+                <h3 class="text-2xl font-bold">Post a comment</h3>
+                <form class="space-y-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Name *" class="w-full bg-transparent border border-gray-300 dark:border-gray-700 rounded px-4 py-3 text-xs focus:outline-none focus:border-primary" />
+                    <input type="email" placeholder="Email *" class="w-full bg-transparent border border-gray-300 dark:border-gray-700 rounded px-4 py-3 text-xs focus:outline-none focus:border-primary" />
+                  </div>
+                  <textarea rows="5" placeholder="Write a comment" class="w-full bg-transparent border border-gray-300 dark:border-gray-700 rounded px-4 py-3 text-xs focus:outline-none focus:border-primary"></textarea>
+                  <button type="submit" class="bg-primary hover:bg-amber-600 text-white font-semibold px-8 py-3 rounded text-xs transition">Post comment</button>
+                </form>
+              </div>
+
+            </div>
+
+            <aside id="sidebar-container" class="lg:col-span-4 space-y-8"></aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-bg-dark text-gray-400 text-sm pt-16 font-sans">
+      <div class="max-w-[1320px] mx-auto px-6 pb-12 border-b border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div>
+          <h4 class="text-white text-xl font-bold mb-2 font-heading">
+            <span class="text-primary">St</span>ill You Need Our Support ?
+          </h4>
+          <p class="text-xs text-gray-400">
+            Don't wait make a smart & logical quote here. Its pretty easy.
+          </p>
+        </div>
+        <div class="flex w-full md:w-auto max-w-md">
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            class="w-full bg-primary text-white placeholder-white/80 px-4 py-3 rounded-r-none rounded-l-md focus:outline-none text-xs"
+          />
+          <button class="bg-white text-primary px-6 py-3 rounded-l-none rounded-r-md font-semibold whitespace-nowrap text-xs hover:bg-gray-100 transition">
+            Subscribe Now
+          </button>
+        </div>
+      </div>
+
+      <div class="max-w-[1320px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="space-y-4">
+          <h5 class="text-white font-bold text-base font-heading">About Us.</h5>
+          <p class="text-xs leading-relaxed text-gray-400">
+            orporate clients and leisure travelers hasbeen relying on Groundlink
+            for dependablesafe, and professional chauffeured carservice in major
+            cities across World.
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="bg-primary text-white p-3 rounded-md flex items-center justify-center w-10 h-10 flex-shrink-0">
+              <img src="/public/assets/images/Clock.svg" alt="" class="w-full h-full" />
+            </div>
+            <div>
+              <p class="text-white text-xs font-semibold">Opening Houres</p>
+              <p class="text-xs text-gray-400">Mon - Sat(8.00 - 6.00)</p>
+              <p class="text-xs text-gray-400">Sunday - Closed</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-base mb-4 font-heading">Useful Links</h5>
+          <ul class="space-y-2 text-xs">
+            <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+            <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">News</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Patners</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Team</a></li>
+            <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-base mb-4 font-heading">Help?</h5>
+          <ul class="space-y-2 text-xs">
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Term & Condition</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Reporting</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Documentation</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Support Policy</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Privacy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-white font-bold text-base mb-4 font-heading">Recent Post</h5>
+          <div class="space-y-4">
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-gray-700 flex-shrink-0 rounded overflow-hidden">
+                <img src="./assets/images/recent_post.jpg" alt="" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-gray-800')" />
+              </div>
+              <div>
+                <a href="/src/pages/blog.html" class="text-white text-xs hover:text-primary transition block line-clamp-2">Is fastfood good for your body?</a>
+                <span class="text-xs text-gray-500">February 28,2022</span>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-gray-700 flex-shrink-0 rounded overflow-hidden">
+                <img src="./assets/images/recent_post.jpg" alt="" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-gray-800')" />
+              </div>
+              <div>
+                <a href="/src/pages/blog.html" class="text-white text-xs hover:text-primary transition block line-clamp-2">Change your food habit With organic food</a>
+                <span class="text-xs text-gray-500">February 28,2022</span>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="w-12 h-12 bg-gray-700 flex-shrink-0 rounded overflow-hidden">
+                <img src="./assets/images/recent_post.jpg" alt="" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-gray-800')" />
+              </div>
+              <div>
+                <a href="/src/pages/blog.html" class="text-white text-xs hover:text-primary transition block line-clamp-2">Do you like fastfood for your life?</a>
+                <span class="text-xs text-gray-500">February 28,2022</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#1F1F1F] py-4 text-gray-400 text-xs">
+        <div class="max-w-[1320px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p>Copyright © 2022 by Ayeman. All Rights Reserved.</p>
+          <div class="flex space-x-3">
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/facebook.svg" alt="fb" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'f';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/twitter.svg" alt="tw" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 't';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/instagram.svg" alt="ins" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'i';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/youtube.svg" alt="yt" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'y';" />
+            </a>
+            <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group">
+              <img src="/public/assets/images/pinterest.svg" alt="pin" class="w-3 h-3 text-gray-700 group-hover:invert" onerror="this.style.display = 'none'; this.parentElement.innerText = 'p';" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/js/blog/blog.js"></script>
+  </body>
 </html>
