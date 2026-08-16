@@ -70,9 +70,10 @@
           <a href="/src/pages/menu.html" class="btn-primary">See Menu</a>
         </div>
         <div class="relative" data-reveal>
-          <!-- TODO: Thay bằng ảnh hero từ Figma -->
-          <div class="w-full aspect-square bg-bg-dark-2 rounded-full flex items-center justify-center text-text-muted">
-            [Hero Image]
+          <!-- Ảnh hero chính: món ăn trong đĩa tròn, viền trắng trang trí -->
+          <div class="w-full aspect-square relative">
+            <div class="absolute inset-4 rounded-full border border-white/20"></div>
+            <img src="/assets/images/hero-food.png" alt="Món ăn đặc trưng Elite Restaurant" class="w-full h-full object-cover rounded-full" />
           </div>
         </div>
       </div>
@@ -90,9 +91,9 @@
           <a href="/src/pages/about.html" class="btn-primary">Read More</a>
         </div>
         <div class="grid grid-cols-2 gap-4">
-          <div class="bg-bg-dark-2 aspect-square rounded-lg"></div>
-          <div class="bg-bg-dark-2 aspect-square rounded-lg"></div>
-          <div class="bg-bg-dark-2 aspect-[2/1] rounded-lg col-span-2"></div>
+          <img src="/assets/images/about-tacos.jpg" alt="Tacos" class="rounded-lg object-cover h-full" />
+          <img src="/assets/images/about-juice.jpg" alt="Fresh juice" class="rounded-lg object-cover h-full" />
+          <img src="/assets/images/about-salad.jpg" alt="Salad" class="rounded-lg object-cover col-span-2 h-48" />
         </div>
       </div>
     </section>
@@ -138,18 +139,73 @@
             <button data-tab="dinner" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors">Dinner</button>
             <button data-tab="dessert" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors">Dessert</button>
           </div>
-          <!-- Panel content — TODO: Điền dữ liệu thực đơn -->
-          <div data-panel="breakfast" class="grid md:grid-cols-2 gap-4 text-left">
-            <p class="text-text-muted col-span-full text-center py-8">[Danh sách món Breakfast — sẽ thêm sau]</p>
+
+          <!-- Breakfast Panel -->
+          <div data-panel="breakfast" class="grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
+            <img src="/assets/images/menu-starter.jpg" alt="Breakfast feature" class="rounded-lg w-full h-80 object-cover" />
+            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/1529444830.jpg" alt="Lettuce Leaf" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Lettuce Leaf</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">12.5$</p></div>
+              </div>
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg" alt="Glow Cheese" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Glow Cheese</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">12.5$</p></div>
+              </div>
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg" alt="Fresh Breakfast" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Fresh Breakfast</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">14.5$</p></div>
+              </div>
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/svprys1511176755.jpg" alt="Italian Pizza" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Italian Pizza</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">14.5$</p></div>
+              </div>
+            </div>
           </div>
-          <div data-panel="lunch" class="hidden grid md:grid-cols-2 gap-4 text-left">
-            <p class="text-text-muted">[Lunch items]</p>
+
+          <!-- Lunch Panel -->
+          <div data-panel="lunch" class="hidden grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
+            <img src="/assets/images/menu-burger.jpg" alt="Lunch feature" class="rounded-lg w-full h-80 object-cover" />
+            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/58oia61564916529.jpg" alt="Grilled Chicken" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Grilled Chicken</h4><p class="text-text-muted text-sm">Herbs, lemon butter sauce</p><p class="text-primary font-bold">18.5$</p></div>
+              </div>
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/urzj1d1587066726.jpg" alt="Steak Frites" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Steak Frites</h4><p class="text-text-muted text-sm">Premium beef, truffle fries</p><p class="text-primary font-bold">24.0$</p></div>
+              </div>
+            </div>
           </div>
-          <div data-panel="dinner" class="hidden grid md:grid-cols-2 gap-4 text-left">
-            <p class="text-text-muted">[Dinner items]</p>
+
+          <!-- Dinner Panel -->
+          <div data-panel="dinner" class="hidden grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
+            <img src="/assets/images/about-salad.jpg" alt="Dinner feature" class="rounded-lg w-full h-80 object-cover" />
+            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/ysxwuq1487323065.jpg" alt="Salmon Teriyaki" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Salmon Teriyaki</h4><p class="text-text-muted text-sm">Fresh Atlantic salmon</p><p class="text-primary font-bold">32.0$</p></div>
+              </div>
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg" alt="Lamb Chops" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Lamb Chops</h4><p class="text-text-muted text-sm">Rosemary, mint jus</p><p class="text-primary font-bold">28.5$</p></div>
+              </div>
+            </div>
           </div>
-          <div data-panel="dessert" class="hidden grid md:grid-cols-2 gap-4 text-left">
-            <p class="text-text-muted">[Dessert items]</p>
+
+          <!-- Dessert Panel -->
+          <div data-panel="dessert" class="hidden grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
+            <img src="/assets/images/about-juice.jpg" alt="Dessert feature" class="rounded-lg w-full h-80 object-cover" />
+            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg" alt="Tiramisu" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Tiramisu</h4><p class="text-text-muted text-sm">Classic Italian dessert</p><p class="text-primary font-bold">9.5$</p></div>
+              </div>
+              <div class="flex items-start gap-3 border-b border-white/10 pb-4">
+                <img src="https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg" alt="Chocolate Lava" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
+                <div><h4 class="text-text-white font-semibold">Chocolate Lava</h4><p class="text-text-muted text-sm">Warm, gooey center</p><p class="text-primary font-bold">11.0$</p></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -178,10 +234,23 @@
           <span class="text-primary">Me</span>et Our Chef
         </h2>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
-          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
-          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
-          <div class="bg-bg-dark-2 aspect-[3/4] rounded-lg card-hover"></div>
+          <!-- Chef card theo layout Figma: ảnh + tên + chức danh -->
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="D.Estwood" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="text-text-white font-semibold">D.Estwood</h4><p class="text-text-muted text-sm">Chief Chef</p></div>
+          </div>
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="D.Scotter" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="text-text-white font-semibold">D.Scotter</h4><p class="text-text-muted text-sm">Assistant Chef</p></div>
+          </div>
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="M.William" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="text-text-white font-semibold">M.William</h4><p class="text-text-muted text-sm">Advertising Chef</p></div>
+          </div>
+          <div class="bg-bg-dark-2 rounded-lg overflow-hidden card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="W.Readfrog" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="text-text-white font-semibold">W.Readfrog</h4><p class="text-text-muted text-sm">Chef</p></div>
+          </div>
         </div>
         <a href="/src/pages/chefs.html" class="btn-outline mt-10 inline-block">See More</a>
       </div>

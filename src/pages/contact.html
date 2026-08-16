@@ -1,6 +1,6 @@
 <!-- ===== TRANG CONTACT — PHỤ TRÁCH: THỊNH (Nhóm trưởng) ===== -->
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,18 +8,191 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Contact — Foodtuck</title>
 </head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
-  <header><!-- HEADER — Copy từ index.html --></header>
-  <main>
-    <section class="page-banner"><h1>Contact Us</h1><nav class="breadcrumb">Home > <span class="current">Contact</span></nav></section>
-    <section class="py-24 px-6">
+<body class="bg-bg-dark text-text-white">
+
+  <!-- ========== HEADER ========== -->
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="text-primary font-semibold">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"></button>
+        <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </a>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary">Menu</a></li>
+        <li><a href="/src/pages/contact.html" class="text-primary">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <!-- ========== PAGE BANNER ========== -->
+    <section class="page-banner" style="background-image:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),url('/assets/images/banner-bg.jpg');background-size:cover;background-position:center;padding:80px 0;text-align:center;">
+      <h1 class="text-5xl font-bold text-white font-heading">Contact Us</h1>
+      <nav class="breadcrumb mt-3"><a href="/">Home</a> &gt; <span class="current">Contact</span></nav>
+    </section>
+
+    <!-- ========== CONTACT FORM + INFO ========== -->
+    <section class="py-20 px-6 bg-white" data-reveal>
       <div class="max-w-[1320px] mx-auto">
-        <!-- TODO: Thịnh — Form liên hệ + Google Map + Thông tin liên hệ -->
-        <p class="text-text-muted text-center py-20">[Thịnh — Dựng nội dung Contact tại đây — dùng validate.js]</p>
+        <!-- Tiêu đề -->
+        <div class="text-center mb-12">
+          <p class="script-text text-xl mb-2">Get in Touch</p>
+          <h2 class="text-4xl font-bold text-text-dark font-heading">Contact Us</h2>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12">
+          <!-- Form liên hệ — sẽ dùng validate.js để kiểm tra -->
+          <form id="contact-form" class="space-y-5">
+            <div class="grid md:grid-cols-2 gap-5">
+              <div>
+                <label for="contact-name" class="block text-sm font-semibold text-text-dark mb-1">Name</label>
+                <input type="text" id="contact-name" name="name" placeholder="Your name" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-text-dark focus:outline-none focus:border-primary transition-colors" />
+              </div>
+              <div>
+                <label for="contact-email" class="block text-sm font-semibold text-text-dark mb-1">Email</label>
+                <input type="email" id="contact-email" name="email" placeholder="your@email.com" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-text-dark focus:outline-none focus:border-primary transition-colors" />
+              </div>
+            </div>
+            <div>
+              <label for="contact-subject" class="block text-sm font-semibold text-text-dark mb-1">Subject</label>
+              <input type="text" id="contact-subject" name="subject" placeholder="Subject"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-text-dark focus:outline-none focus:border-primary transition-colors" />
+            </div>
+            <div>
+              <label for="contact-message" class="block text-sm font-semibold text-text-dark mb-1">Message</label>
+              <textarea id="contact-message" name="message" rows="6" placeholder="Write your message..." required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-text-dark focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full justify-center">Send Message</button>
+            <!-- Thông báo gửi thành công -->
+            <p id="form-success" class="hidden text-green-600 font-semibold text-center mt-2">Message sent successfully!</p>
+          </form>
+
+          <!-- Thông tin liên hệ -->
+          <div class="space-y-8">
+            <div class="flex items-start gap-4">
+              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-primary text-2xl">&#x1F4CD;</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-text-dark text-lg">Address</h4>
+                <p class="text-text-muted">97 Man Thiện, Hiệp Phú, Thủ Đức, TP.HCM</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-primary text-2xl">&#x1F4DE;</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-text-dark text-lg">Phone</h4>
+                <p class="text-text-muted">+84 123 456 789</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-primary text-2xl">&#x2709;</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-text-dark text-lg">Email</h4>
+                <p class="text-text-muted">info@eliterestaurant.com</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-primary text-2xl">&#x1F552;</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-text-dark text-lg">Opening Hours</h4>
+                <p class="text-text-muted">Mon - Sat: 8:00 AM - 10:00 PM<br/>Sunday: Closed</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <!-- ========== GOOGLE MAP ========== -->
+    <section class="bg-bg-section">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.485398611089!2d106.78491007583857!3d10.848133657737925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752772b245dff1%3A0xb838977f3d419d!2zOTcgTWFuIFRoaeG7h24sIEhp4buHcCBQaMO6LCBUaOG7pyDEkOG7qWMsIEjhu5MgQ2jDrSBNaW5o!5e0!3m2!1svi!2svn!4v1700000000000!5m2!1svi!2svn"
+        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+        title="Bản đồ Elite Restaurant"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </section>
   </main>
-  <footer><!-- FOOTER --></footer>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
+    <div class="max-w-[1320px] mx-auto">
+      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
+        <p>Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
   <script type="module" src="/src/js/main.js"></script>
+  <script type="module">
+    // Import các module cần thiết cho trang Contact
+    import { initScrollReveal } from '/src/js/dom.js'
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initScrollReveal()
+
+      // Xử lý form submit — validate cơ bản và hiển thị thông báo
+      const form = document.getElementById('contact-form')
+      const successMsg = document.getElementById('form-success')
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault() // Ngăn reload trang
+
+          // Lấy giá trị các trường
+          const name = document.getElementById('contact-name').value.trim()
+          const email = document.getElementById('contact-email').value.trim()
+          const message = document.getElementById('contact-message').value.trim()
+
+          // Validate: kiểm tra không để trống
+          if (!name || !email || !message) {
+            alert('Please fill in all required fields.')
+            return
+          }
+
+          // Validate email đơn giản bằng regex
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.')
+            return
+          }
+
+          // Hiển thị thông báo thành công (vì không có backend thật)
+          successMsg.classList.remove('hidden')
+          form.reset()
+
+          // Ẩn thông báo sau 3 giây
+          setTimeout(() => { successMsg.classList.add('hidden') }, 3000)
+        })
+      }
+    })
+  </script>
 </body>
 </html>

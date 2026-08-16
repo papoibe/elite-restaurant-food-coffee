@@ -1,6 +1,6 @@
 <!-- ===== TRANG ABOUT US — PHỤ TRÁCH: THỊNH (Nhóm trưởng) ===== -->
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,17 +8,154 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>About Us — Foodtuck</title>
 </head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
-  <header><!-- HEADER --></header>
-  <main>
-    <section class="page-banner"><h1>About Us</h1><nav class="breadcrumb">Home > <span class="current">About</span></nav></section>
-    <section class="py-24 px-6">
-      <div class="max-w-[1320px] mx-auto">
-        <p class="text-text-muted text-center py-20">[Thịnh — Dựng nội dung About Us tại đây]</p>
+<body class="bg-bg-dark text-text-white">
+
+  <!-- ========== HEADER (Copy từ index.html) ========== -->
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="text-primary font-semibold">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"></button>
+        <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </a>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="text-primary">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary">Shop</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <!-- ========== PAGE BANNER ========== -->
+    <section class="page-banner" style="background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('/assets/images/banner-bg.jpg'); background-size:cover; background-position:center; padding:80px 0; text-align:center;">
+      <h1 class="text-5xl font-bold text-white font-heading">About Us</h1>
+      <nav class="breadcrumb mt-3">
+        <a href="/">Home</a> &gt; <span class="current">About</span>
+      </nav>
+    </section>
+
+    <!-- ========== ABOUT INTRO — Ảnh trái + text phải (theo Figma About Us) ========== -->
+    <section class="py-20 px-6 bg-white" data-reveal>
+      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Grid 2 ảnh giống Figma -->
+        <div class="grid grid-cols-2 gap-4">
+          <img src="/assets/images/about-tacos.jpg" alt="Tacos ngon" class="rounded-lg object-cover w-full h-64" />
+          <img src="/assets/images/about-juice.jpg" alt="Nước ép tươi" class="rounded-lg object-cover w-full h-64" />
+          <img src="/assets/images/about-salad.jpg" alt="Salad tươi" class="rounded-lg object-cover w-full h-48 col-span-2" />
+        </div>
+        <!-- Nội dung giới thiệu -->
+        <div>
+          <p class="script-text text-xl mb-2">About us</p>
+          <h2 class="text-4xl font-bold text-text-dark font-heading mb-6 leading-tight">
+            Food is an important part Of a balanced Diet
+          </h2>
+          <p class="text-text-muted mb-6 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum. Urna, elit augue urna, vitae feugiat pretium donec id elementum. Ultrices mattis vitae mus risus. Lacus nisi, et ac dapibus sit eu velit in consequat.
+          </p>
+          <div class="flex items-center gap-4">
+            <a href="/src/pages/menu.html" class="btn-primary">Show more</a>
+            <!-- Nút xem video theo Figma -->
+            <button class="flex items-center gap-2 text-primary font-semibold hover:underline">
+              <span class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white">
+                <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+              </span>
+              Watch video
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WHY CHOOSE US ========== -->
+    <section class="py-20 px-6 bg-bg-section" data-reveal>
+      <div class="max-w-[1320px] mx-auto text-center">
+        <h2 class="text-4xl font-bold text-text-dark font-heading mb-4">Why Choose us</h2>
+        <p class="text-text-muted max-w-2xl mx-auto mb-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum.</p>
+        <!-- Ảnh lớn full width -->
+        <img src="/assets/images/banner-bg.jpg" alt="Why choose us" class="w-full h-64 md:h-96 object-cover rounded-lg mb-12" />
+        <!-- 3 features nổi bật -->
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+              <span class="text-primary text-3xl">&#x1F468;&#x200D;&#x1F373;</span>
+            </div>
+            <h4 class="font-bold text-text-dark text-lg mb-2">Best Chef</h4>
+            <p class="text-text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque.</p>
+          </div>
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+              <span class="text-primary text-3xl">&#x1F355;</span>
+            </div>
+            <h4 class="font-bold text-text-dark text-lg mb-2">120 Item food</h4>
+            <p class="text-text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque.</p>
+          </div>
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+              <span class="text-primary text-3xl">&#x2728;</span>
+            </div>
+            <h4 class="font-bold text-text-dark text-lg mb-2">Clean Environment</h4>
+            <p class="text-text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TEAM MEMBERS ========== -->
+    <section class="py-20 px-6 bg-white" data-reveal>
+      <div class="max-w-[1320px] mx-auto text-center">
+        <h2 class="text-4xl font-bold text-text-dark font-heading mb-12">Team Member</h2>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="Mark Henry" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="font-bold text-text-dark">Mark Henry</h4><p class="text-text-muted text-sm">Owner</p></div>
+          </div>
+          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="Lucky Helen" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="font-bold text-text-dark">Lucky Helen</h4><p class="text-text-muted text-sm">Chef</p></div>
+          </div>
+          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="Moon Henry" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="font-bold text-text-dark">Moon Henry</h4><p class="text-text-muted text-sm">Founder</p></div>
+          </div>
+          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover">
+            <img src="/assets/images/chef-1.jpg" alt="Tom Mondan" class="w-full aspect-[3/4] object-cover"/>
+            <div class="p-4"><h4 class="font-bold text-text-dark">Tom Mondan</h4><p class="text-text-muted text-sm">Specialist</p></div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
-  <footer><!-- FOOTER --></footer>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
+    <div class="max-w-[1320px] mx-auto">
+      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
+        <p>Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
   <script type="module" src="/src/js/main.js"></script>
+  <script type="module">
+    import { initScrollReveal } from '/src/js/dom.js'
+    document.addEventListener('DOMContentLoaded', () => { initScrollReveal() })
+  </script>
 </body>
 </html>

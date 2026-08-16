@@ -1,105 +1,150 @@
-// Dữ liệu mẫu (Database)
-const mockProducts = [
-  { id: 1, name: "Fresh Lime Drink", price: 38.00, oldPrice: 45.00, category: "Drink", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800", desc: "Fresh refreshing lime drink made with organic limes and mint leaves." },
-  { id: 2, name: "Chocolate Muffin", price: 28.00, oldPrice: null, category: "Dessert", image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800", desc: "Delicious rich chocolate muffin baked fresh daily." },
-  { id: 3, name: "Classic Burger", price: 21.00, oldPrice: 30.00, category: "Burger", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800", desc: "Juicy beef patty served with fresh lettuce, tomato, and special sauce." },
-  { id: 4, name: "Country Burger", price: 45.00, oldPrice: null, category: "Burger", image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=800", desc: "Double patty country-style burger with crispy bacon and melted cheese." },
-  { id: 5, name: "Cheese Pizza", price: 43.00, oldPrice: null, category: "Pizza", image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=800", desc: "Classic Italian cheese pizza with mozzarella and freshly picked basil." },
-  { id: 6, name: "Chicken Chup", price: 12.00, oldPrice: 18.00, category: "Chicken", image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?q=80&w=800", desc: "Crispy fried chicken chops served with tangy dipping sauces." }
-];
+/* ============================================================
+   shop-details.js — Logic trang chi tiết sản phẩm
+   Đọc dữ liệu từ menu.json, kết nối cart.js module chung
+   ============================================================ */
+import { addToCart } from '/src/js/cart.js' // Import hàm thêm giỏ hàng
+import { showSuccessToast } from '/src/js/validate.js' // Toast thông báo
 
-// Trích xuất id từ đường dẫn URL (?id=...)
+/**
+ * getProductIdFromUrl — Lấy id sản phẩm từ URL query string (?id=SP01)
+ */
 function getProductIdFromUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return parseInt(urlParams.get('id')) || 1;
+  const urlParams = new URLSearchParams(window.location.search)
+  return urlParams.get('id') || 'SP01' // Trả về string vì menu.json dùng "SP01"
 }
 
-// Hàm khởi tạo trang chi tiết
+/**
+ * initShopDetails — Khởi tạo trang chi tiết sản phẩm
+ * Fetch từ menu.json thay vì dùng mockProducts
+ */
 async function initShopDetails() {
-  const productId = getProductIdFromUrl();
-  const container = document.getElementById('product-detail-container');
+  const productId = getProductIdFromUrl()
+  const container = document.getElementById('product-detail-container')
+  if (!container) return
 
-  if (!container) return;
+  try {
+    const response = await fetch('/src/data/menu.json')
+    const menuData = await response.json()
 
-  // Lấy dữ liệu sản phẩm tương ứng ID
-  const product = mockProducts.find(p => p.id === productId);
+    // Tìm sản phẩm theo ID
+    const product = menuData.find(p => String(p.id) === String(productId))
 
-  if (!product) {
+    if (!product) {
+      container.innerHTML = `
+        <div class="text-center py-20">
+          <p class="text-red-500 font-bold mb-4">Product not found!</p>
+          <a href="/src/pages/shop-list.html" class="text-xs bg-primary text-white px-4 py-2 rounded shadow hover:bg-amber-600 transition">Back to Shop</a>
+        </div>`
+      return
+    }
+
+    // Render chi tiết sản phẩm theo layout Figma
     container.innerHTML = `
-      <div class="text-center py-20">
-        <p class="text-red-500 font-bold mb-4">Product not found!</p>
-        <a href="/src/pages/shop-list.html" class="text-xs bg-primary text-white px-4 py-2 rounded shadow hover:bg-amber-600 transition">Back to Shop</a>
-      </div>
-    `;
-    return;
-  }
-
-  // Render chi tiết
-  container.innerHTML = `
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
-      <div class="lg:col-span-6">
-        <img src="${product.image}" alt="${product.name}" class="w-full h-[400px] object-cover rounded-xl shadow-md mb-4">
-        <div class="flex gap-4">
-          <img src="${product.image}" class="w-20 h-20 object-cover rounded-lg cursor-pointer border-2 border-primary">
-        </div>
-      </div>
-
-      <div class="lg:col-span-6 space-y-4">
-        <span class="bg-amber-100 text-amber-700 font-semibold px-3 py-1 rounded-full text-xs">In stock</span>
-        <h2 class="text-3xl font-bold text-gray-900">${product.name}</h2>
-        <p class="text-sm text-gray-500 leading-relaxed">${product.desc}</p>
-        
-        <div class="text-3xl font-bold text-primary">
-          $${product.price.toFixed(2)}
-          ${product.oldPrice ? `<span class="text-gray-400 line-through text-sm font-normal ml-2">$${product.oldPrice.toFixed(2)}</span>` : ''}
-        </div>
-
-        <div class="flex items-center gap-4 pt-4">
-          <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden h-11">
-            <button id="btn-minus" class="px-4 text-gray-600 hover:bg-gray-100 font-bold">-</button>
-            <input id="input-qty" type="text" value="1" readonly class="w-12 text-center text-sm font-bold text-gray-800 focus:outline-none">
-            <button id="btn-plus" class="px-4 text-gray-600 hover:bg-gray-100 font-bold">+</button>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
+        <!-- Ảnh sản phẩm lớn + thumbnail -->
+        <div class="lg:col-span-6">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-[400px] object-cover rounded-xl shadow-md mb-4">
+          <div class="flex gap-4">
+            <img src="${product.image}" class="w-20 h-20 object-cover rounded-lg cursor-pointer border-2 border-primary">
           </div>
-          <button id="btn-add-to-cart" class="bg-primary text-white font-semibold px-8 h-11 rounded-lg hover:bg-amber-600 transition shadow-md shadow-amber-500/20 flex items-center gap-2 text-sm">
-            <i class="fa-solid fa-bag-shopping"></i> Add to Cart
-          </button>
         </div>
 
-        <div class="pt-6 border-t border-gray-100 text-xs text-gray-500 space-y-2">
-          <div><span class="font-semibold text-gray-800">Category:</span> ${product.category}</div>
-          <div><span class="font-semibold text-gray-800">Tag:</span> Foodtuck Special</div>
-        </div>
-      </div>
-    </div>
-  `;
+        <!-- Thông tin sản phẩm -->
+        <div class="lg:col-span-6 space-y-4">
+          <span class="bg-amber-100 text-amber-700 font-semibold px-3 py-1 rounded-full text-xs">In stock</span>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">${product.name}</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">${product.description}</p>
+          
+          <!-- Rating (sao) dựa trên trường rating trong JSON -->
+          <div class="flex items-center gap-1">
+            ${Array.from({length: 5}, (_, i) => 
+              `<span class="${i < Math.round(product.rating) ? 'text-primary' : 'text-gray-300'} text-sm">★</span>`
+            ).join('')}
+            <span class="text-xs text-gray-500 ml-2">(${product.rating})</span>
+          </div>
+          
+          <div class="text-3xl font-bold text-primary">
+            $${product.price.toFixed(2)}
+          </div>
 
-  setupQuantityControls();
-  
-  // Gán sự kiện click Add To Cart
-  document.getElementById('btn-add-to-cart')?.addEventListener('click', () => {
-    const qty = document.getElementById('input-qty')?.value || 1;
-    alert(`Thêm thành công ${qty} sản phẩm (ID: ${product.id}) vào giỏ hàng!`);
-  });
+          <!-- Nút tăng/giảm số lượng + Add to Cart -->
+          <div class="flex items-center gap-4 pt-4">
+            <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden h-11">
+              <button id="btn-minus" class="px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 font-bold cursor-pointer">-</button>
+              <input id="input-qty" type="text" value="1" readonly class="w-12 text-center text-sm font-bold text-gray-800 dark:text-white bg-transparent focus:outline-none">
+              <button id="btn-plus" class="px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 font-bold cursor-pointer">+</button>
+            </div>
+            <button id="btn-add-to-cart" class="bg-primary text-white font-semibold px-8 h-11 rounded-lg hover:bg-amber-600 transition shadow-md shadow-amber-500/20 flex items-center gap-2 text-sm cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Metadata -->
+          <div class="pt-6 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-500 space-y-2">
+            <div><span class="font-semibold text-gray-800 dark:text-gray-300">Category:</span> ${product.category}</div>
+            <div><span class="font-semibold text-gray-800 dark:text-gray-300">Tag:</span> Foodtuck Special</div>
+          </div>
+        </div>
+      </div>`
+
+    setupQuantityControls()
+    
+    // Gắn sự kiện Add To Cart — dùng cart.js module chung
+    document.getElementById('btn-add-to-cart')?.addEventListener('click', () => {
+      const qty = parseInt(document.getElementById('input-qty')?.value) || 1
+      addToCart({ ...product, quantity: qty }) // Truyền sản phẩm + số lượng
+      showSuccessToast(`Đã thêm ${qty}x "${product.name}" vào giỏ hàng!`)
+    })
+
+    // Render thêm sản phẩm liên quan (cùng category)
+    renderRelatedProducts(menuData, product)
+  } catch (error) {
+    console.error('Lỗi khi tải chi tiết sản phẩm:', error)
+  }
 }
 
-// Xử lý nút tăng giảm số lượng
+/**
+ * renderRelatedProducts — Hiển thị sản phẩm liên quan (cùng category)
+ */
+function renderRelatedProducts(allProducts, currentProduct) {
+  const relatedGrid = document.getElementById('related-products-grid')
+  if (!relatedGrid) return
+
+  // Lọc 4 sản phẩm cùng category, bỏ sản phẩm hiện tại
+  const related = allProducts
+    .filter(p => p.category === currentProduct.category && p.id !== currentProduct.id)
+    .slice(0, 4)
+
+  relatedGrid.innerHTML = related.map(item => `
+    <a href="/src/pages/shop-details.html?id=${item.id}" class="group">
+      <div class="bg-gray-200 aspect-square overflow-hidden rounded">
+        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      </div>
+      <h4 class="mt-2 font-bold text-sm text-gray-800 dark:text-white group-hover:text-primary transition-colors">${item.name}</h4>
+      <span class="text-primary font-semibold text-sm">$${item.price.toFixed(2)}</span>
+    </a>
+  `).join('')
+}
+
+/**
+ * setupQuantityControls — Xử lý nút +/- số lượng
+ */
 function setupQuantityControls() {
-  const btnMinus = document.getElementById('btn-minus');
-  const btnPlus = document.getElementById('btn-plus');
-  const inputQty = document.getElementById('input-qty');
+  const btnMinus = document.getElementById('btn-minus')
+  const btnPlus = document.getElementById('btn-plus')
+  const inputQty = document.getElementById('input-qty')
 
   if (btnMinus && btnPlus && inputQty) {
     btnMinus.addEventListener('click', () => {
-      let val = parseInt(inputQty.value) || 1;
-      if (val > 1) inputQty.value = val - 1;
-    });
-
+      let val = parseInt(inputQty.value) || 1
+      if (val > 1) inputQty.value = val - 1
+    })
     btnPlus.addEventListener('click', () => {
-      let val = parseInt(inputQty.value) || 1;
-      inputQty.value = val + 1;
-    });
+      let val = parseInt(inputQty.value) || 1
+      inputQty.value = val + 1
+    })
   }
 }
 
-// Khởi chạy khi load trang
-document.addEventListener('DOMContentLoaded', initShopDetails);
+document.addEventListener('DOMContentLoaded', initShopDetails)

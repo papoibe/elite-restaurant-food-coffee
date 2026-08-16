@@ -1,6 +1,6 @@
 <!-- ===== TRANG COFFEE SHOP — PHỤ TRÁCH: THỊNH (Nhóm trưởng) ===== -->
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,18 +8,147 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Coffee Shop — Foodtuck</title>
 </head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
-  <header><!-- HEADER — Copy từ index.html --></header>
-  <main>
-    <section class="page-banner"><h1>Coffee Shop</h1><nav class="breadcrumb">Home > <span class="current">Coffee Shop</span></nav></section>
-    <section class="py-24 px-6">
-      <div class="max-w-[1320px] mx-auto">
-        <!-- TODO: Thịnh — Layout Coffee Shop theo Figma frame 3: Hero, Menu đồ uống, Không gian -->
-        <p class="text-text-muted text-center py-20">[Thịnh — Dựng nội dung Coffee Shop tại đây]</p>
+<body class="bg-bg-dark text-text-white">
+
+  <!-- ========== HEADER ========== -->
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"></button>
+        <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </a>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <!-- ========== HERO COFFEE ========== -->
+    <section class="min-h-[70vh] flex items-center px-6 bg-gradient-to-br from-bg-dark via-bg-dark-2 to-bg-dark">
+      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center w-full" data-reveal>
+        <div>
+          <p class="script-text text-xl mb-2">Our Coffee</p>
+          <h1 class="text-5xl lg:text-6xl font-bold font-heading leading-tight mb-6">
+            <span class="text-primary">Premium</span> Coffee<br/>Experience
+          </h1>
+          <p class="text-text-light mb-8 max-w-lg">Tận hưởng hương vị cà phê thượng hạng từ những hạt cà phê được chọn lọc kỹ lưỡng, rang xay thủ công mỗi ngày.</p>
+          <a href="/src/pages/menu.html" class="btn-primary">View Full Menu</a>
+        </div>
+        <!-- Ảnh minh họa cà phê -->
+        <div class="relative">
+          <img src="/assets/images/about-juice.jpg" alt="Premium Coffee" class="w-full h-96 object-cover rounded-2xl shadow-hover" />
+          <!-- Badge nổi bật -->
+          <div class="absolute -bottom-4 -left-4 bg-primary text-white px-6 py-3 rounded-xl font-bold shadow-lg">
+            Since 2010
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== COFFEE MENU — Grid 3 cột ========== -->
+    <section class="py-20 px-6 bg-bg-dark-2" data-reveal>
+      <div class="max-w-[1320px] mx-auto text-center">
+        <p class="script-text mb-2">Our Drinks</p>
+        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-12">Coffee <span class="text-primary">Menu</span></h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Card cà phê: tên + mô tả + giá -->
+          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <h4 class="text-text-white font-bold text-lg">Espresso</h4>
+              <span class="text-primary font-bold">3.5$</span>
+            </div>
+            <p class="text-text-muted text-sm">Cà phê nguyên chất, đậm đà, pha máy áp suất cao.</p>
+          </div>
+          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <h4 class="text-text-white font-bold text-lg">Cappuccino</h4>
+              <span class="text-primary font-bold">4.5$</span>
+            </div>
+            <p class="text-text-muted text-sm">Espresso, sữa nóng tạo bọt, rắc bột cacao.</p>
+          </div>
+          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <h4 class="text-text-white font-bold text-lg">Cafe Latte</h4>
+              <span class="text-primary font-bold">5.0$</span>
+            </div>
+            <p class="text-text-muted text-sm">Espresso, sữa tươi steamed, lớp foam mỏng nhẹ.</p>
+          </div>
+          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <h4 class="text-text-white font-bold text-lg">Mocha</h4>
+              <span class="text-primary font-bold">5.5$</span>
+            </div>
+            <p class="text-text-muted text-sm">Espresso, chocolate nóng, sữa tươi, whipped cream.</p>
+          </div>
+          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <h4 class="text-text-white font-bold text-lg">Cold Brew</h4>
+              <span class="text-primary font-bold">4.0$</span>
+            </div>
+            <p class="text-text-muted text-sm">Cà phê ủ lạnh 12 tiếng, vị mượt mà thanh nhẹ.</p>
+          </div>
+          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <h4 class="text-text-white font-bold text-lg">Vietnamese Coffee</h4>
+              <span class="text-primary font-bold">3.0$</span>
+            </div>
+            <p class="text-text-muted text-sm">Cà phê phin truyền thống Việt Nam, sữa đặc.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== KHÔNG GIAN CÀ PHÊ ========== -->
+    <section class="py-20 px-6 bg-bg-dark" data-reveal>
+      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="script-text text-xl mb-2">Our Space</p>
+          <h2 class="section-heading text-text-white text-3xl mb-6">Không gian <span class="text-primary">ấm cúng</span></h2>
+          <p class="text-text-light mb-4">Thiết kế hiện đại pha lẫn nét truyền thống, mang đến không gian thư giãn lý tưởng cho những buổi hẹn bạn bè hay làm việc yên tĩnh.</p>
+          <ul class="space-y-3 text-text-light">
+            <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Wi-Fi miễn phí tốc độ cao</li>
+            <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Ổ cắm điện tại mỗi bàn</li>
+            <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Sách và tạp chí miễn phí</li>
+            <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Mở cửa từ 7:00 - 22:00 hàng ngày</li>
+          </ul>
+        </div>
+        <img src="/assets/images/about-salad.jpg" alt="Không gian cà phê" class="w-full h-80 object-cover rounded-2xl" />
       </div>
     </section>
   </main>
-  <footer><!-- FOOTER --></footer>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
+    <div class="max-w-[1320px] mx-auto">
+      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
+        <p>Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
   <script type="module" src="/src/js/main.js"></script>
+  <script type="module">
+    import { initScrollReveal } from '/src/js/dom.js'
+    document.addEventListener('DOMContentLoaded', () => { initScrollReveal() })
+  </script>
 </body>
 </html>
