@@ -1,13 +1,17 @@
 import { sidebarData } from './data.js';
+import { getLang } from '../i18n.js';
 
 export function renderSidebar() {
   const container = document.getElementById('sidebar-container');
   if (!container) return;
 
+  const lang = getLang();
+  const bio = lang === 'vi' ? sidebarData.author.bio : (sidebarData.author.bio_en || sidebarData.author.bio);
+
   container.innerHTML = `
     <div class="space-y-8 text-[#333333]">
       <div class="flex">
-        <input type="text" placeholder="Search Your Keyword..." class="w-full px-4 py-3 border border-gray-200 text-sm focus:outline-primary">
+        <input type="text" placeholder="${lang === 'vi' ? 'Tìm kiếm từ khoá...' : 'Search Your Keyword...'}" class="w-full px-4 py-3 border border-gray-200 text-sm focus:outline-primary">
         <button class="bg-primary text-white px-5 flex items-center justify-center hover:bg-amber-600 transition">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         </button>
@@ -21,7 +25,7 @@ export function renderSidebar() {
           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6L12 2z"/></svg><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6L12 2z"/></svg><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6L12 2z"/></svg><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6L12 2z"/></svg><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6L12 2z"/></svg>
           <span class="text-gray-400 ml-1">(5 Reviews)</span>
         </div>
-        <p class="text-xs text-gray-500 leading-relaxed mb-4">${sidebarData.author.bio}</p>
+        <p class="text-xs text-gray-500 leading-relaxed mb-4">${bio}</p>
         <div class="flex justify-center gap-4 text-gray-700 text-sm">
           <a href="#" class="hover:text-primary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
           <a href="#" class="hover:text-primary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
@@ -38,7 +42,7 @@ export function renderSidebar() {
               <img src="${post.image}" class="w-16 h-16 object-cover rounded-sm flex-shrink-0">
               <div>
                 <span class="text-[11px] text-gray-400 block">${post.date}</span>
-                <h4 class="text-xs font-semibold text-gray-700 group-hover:text-primary transition line-clamp-2">${post.title}</h4>
+                <h4 class="text-xs font-semibold text-gray-700 group-hover:text-primary transition line-clamp-2">${lang === 'vi' ? (post.title_vi || post.title) : post.title}</h4>
               </div>
             </a>
           `).join('')}

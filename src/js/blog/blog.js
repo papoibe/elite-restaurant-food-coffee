@@ -1,5 +1,6 @@
 import { blogPostsData } from './data.js';
 import { renderSidebar } from './sidebar.js';
+import { getLang, t } from '../i18n.js'; // Hỗ trợ đa ngôn ngữ
 
 document.addEventListener('DOMContentLoaded', () => {
   renderSidebar();
@@ -7,11 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('blog-posts-container');
   if (!container) return;
 
-  container.innerHTML = blogPostsData.map(post => `
+  const lang = getLang(); // Lấy ngôn ngữ hiện tại (vi hoặc en)
+
+  container.innerHTML = blogPostsData.map(post => {
+    // Chọn tiêu đề, mô tả theo ngôn ngữ hiện tại
+    const title = lang === 'vi' ? (post.title_vi || post.title) : post.title;
+    const excerpt = lang === 'vi' ? (post.excerpt_vi || post.excerpt) : post.excerpt;
+    const readMoreText = t('common.readMore');
+
+    return `
     <article class="mb-12">
       <div class="relative overflow-hidden rounded-md mb-6">
         <a href="/src/pages/blog-details.html?id=${post.id}">
-          <img src="${post.image}" class="w-full h-[350px] md:h-[450px] object-cover hover:scale-105 transition duration-500" alt="${post.title}">
+          <img src="${post.image}" class="w-full h-[350px] md:h-[450px] object-cover hover:scale-105 transition duration-500" alt="${title}">
         </a>
         <div class="absolute left-6 top-6 w-[55px] h-[55px] bg-primary rounded-sm flex flex-col items-center justify-center text-white font-bold shadow-md pointer-events-none">
           <span class="text-base leading-tight">${post.day}</span>
@@ -28,14 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <h2 class="text-xl md:text-2xl font-bold text-[#333333] dark:text-white hover:text-primary transition mb-3 leading-snug">
-        <a href="/src/pages/blog-details.html?id=${post.id}">${post.title}</a>
+        <a href="/src/pages/blog-details.html?id=${post.id}">${title}</a>
       </h2>
 
-      <p class="text-sm text-gray-500 leading-relaxed mb-6">${post.excerpt}</p>
+      <p class="text-sm text-gray-500 leading-relaxed mb-6">${excerpt}</p>
 
       <a href="/src/pages/blog-details.html?id=${post.id}" class="inline-flex items-center px-6 py-2.5 border border-primary text-primary font-semibold text-xs rounded-sm hover:bg-primary hover:text-white transition gap-2">
-        Read More <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        ${readMoreText} <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </article>
-  `).join('');
+  `}).join('');
 });

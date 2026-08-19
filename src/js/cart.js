@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyBtn.addEventListener('click', () => {
       const input = document.getElementById('coupon-input')
       const msg = document.getElementById('coupon-message')
-      if (input && input.value.trim().toUpperCase() === 'FOODTUCK10') {
+      if (input && input.value.trim().toUpperCase() === 'Savoria10') {
         discountRate = 0.1
         if (msg) {
           msg.textContent = t('cart.couponSuccess')
