@@ -1,4 +1,4 @@
-# Elite Restaurant — ĐỀ02: Website Nhà Hàng / Ẩm Thực
+# Elite Restaurant — ĐỀ01: Website Nhà Hàng / Ẩm Thực
 
 > **Môn học:** THIẾT KẾ WEB (INTE03010) — ĐH Mở TP.HCM  
 > **Figma:** [Elite — Food Restaurant & Coffee Free Template](https://www.figma.com/design/8SfLwyfu5cKVMFrUN3ETvm)
