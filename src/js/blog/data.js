@@ -168,6 +168,9 @@ export const sidebarData = {
 
 export const commentsData = [
   {
+    id: 'seed-1',
+    postId: 'post-1',
+    parentId: null,
     name: 'Nguyễn Minh Tuấn',
     date: 'Feb 15, 2022',
     avatar: 'https://i.pravatar.cc/150?img=33',
@@ -175,14 +178,19 @@ export const commentsData = [
     comment_en: 'Great article! I did a digital detox challenge for a whole week and I have to say meals became so much more enjoyable without distractions.'
   },
   {
+    id: 'seed-2',
+    postId: 'post-1',
+    parentId: 'seed-1',
     name: 'Trần Phương Anh',
-    isReply: true,
     date: 'Feb 16, 2022',
     avatar: 'https://i.pravatar.cc/150?img=11',
     comment: 'Đồng ý luôn! Mình cũng hay vừa ăn vừa xem YouTube, thử bỏ đi một bữa thấy khác biệt rõ rệt. Cảm ơn Savoria đã truyền cảm hứng!',
     comment_en: 'Totally agree! I used to eat while watching YouTube too. Trying to stop for just one meal made a noticeable difference. Thanks Savoria for the inspiration!'
   },
   {
+    id: 'seed-3',
+    postId: 'post-1',
+    parentId: null,
     name: 'Lê Hoàng Khôi',
     date: 'Feb 17, 2022',
     avatar: 'https://i.pravatar.cc/150?img=60',
