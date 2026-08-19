@@ -2,6 +2,7 @@
    validate.js — Kiểm tra hợp lệ Form
    Dùng cho: Reservation (Đặt bàn), Checkout, Contact, Sign up
    ============================================================ */
+import { t } from './i18n.js' // Chuyển ngôn ngữ VN/EN
 
 /**
  * validateForm — Kiểm tra hợp lệ tất cả các trường trong form
@@ -40,41 +41,41 @@ function checkRule(field, rule) {
   const value = field.value.trim()
 
   if (rule === 'required' && !value) {
-    return 'Vui lòng nhập thông tin này'
+    return t('validate.required')
   }
 
   if (rule === 'email' && value) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(value)) {
-      return 'Email không hợp lệ'
+      return t('validate.email')
     }
   }
 
   if (rule === 'phone' && value) {
     const phoneRegex = /^[\d\s\-\+\(\)]{8,15}$/
     if (!phoneRegex.test(value)) {
-      return 'Số điện thoại không hợp lệ'
+      return t('validate.phone')
     }
   }
 
   if (rule.startsWith('minLength:') && value) {
     const minLen = parseInt(rule.split(':')[1])
     if (value.length < minLen) {
-      return `Tối thiểu ${minLen} ký tự`
+      return t('validate.minLength', { min: minLen })
     }
   }
 
   if (rule.startsWith('min:') && value) {
     const min = parseInt(rule.split(':')[1])
     if (parseInt(value) < min) {
-      return `Giá trị tối thiểu là ${min}`
+      return t('validate.min', { min })
     }
   }
 
   if (rule.startsWith('max:') && value) {
     const max = parseInt(rule.split(':')[1])
     if (parseInt(value) > max) {
-      return `Giá trị tối đa là ${max}`
+      return t('validate.max', { max })
     }
   }
 
@@ -104,7 +105,7 @@ function clearError(field, errorEl) {
 /**
  * showSuccessToast — Hiển thị thông báo thành công (toast notification)
  */
-export function showSuccessToast(message = 'Thành công!', duration = 3000) {
+export function showSuccessToast(message = t('validate.success'), duration = 3000) {
   const toast = document.createElement('div')
   toast.className = 'fixed top-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[100] flex items-center gap-2 animate-fade-in-up'
   toast.innerHTML = `

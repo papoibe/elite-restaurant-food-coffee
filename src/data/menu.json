@@ -2,20 +2,22 @@
   {
     "id": "SP01",
     "name": "Prawn Tempura",
-    "price": 6.0,
+    "price": 6,
     "category": "Appetizers",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278989/photo-1579887829114-282b4fa31072_1.avif",
     "description": "Tôm chiên xù kiểu Nhật kèm sốt chấm đặc biệt.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Japanese-style crispy fried prawns served with a special dipping sauce."
   },
   {
     "id": "SP02",
     "name": "Crispy Calamari Rings",
-    "price": 6.0,
+    "price": 6,
     "category": "Appetizers",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278710/premium_photo-1668995975042-6344a48aef90.avif",
     "description": "Mực chiên xù giòn rụm kèm sốt chấm ngậy vị.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Crispy fried calamari rings served with a rich dipping sauce."
   },
   {
     "id": "SP03",
@@ -24,52 +26,58 @@
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278710/premium_photo-1674327105074-46dd8319164b_-_Copy.avif",
     "description": "Cà phê Cappuccino pha máy đậm đà với lớp bọt kem tạo hình tinh tế.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Rich machine-brewed cappuccino with delicately crafted latte art foam."
   },
   {
     "id": "SP04",
     "name": "Grilled Tomahawk Steak",
-    "price": 18.0,
+    "price": 18,
     "category": "Main Course",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278710/premium_photo-1723478557023-1f739ec06671.avif",
     "description": "Bò bít tết nướng đá thơm lừng trang trí cùng lá hương thảo.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Fragrant grilled tomahawk steak garnished with rosemary."
   },
   {
     "id": "SP05",
     "name": "Honey Glazed Chicken Wings",
-    "price": 7.0,
+    "price": 7,
     "category": "Main Course",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278710/premium_photo-1669742928112-19364a33b530_-_Copy.avif",
     "description": "Cánh gà nướng sốt mật ong rắc mè thơm lừng đậm đà.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Grilled chicken wings glazed with honey sauce and sprinkled with fragrant sesame."
   },
   {
     "id": "SP06",
     "name": "Classic Boba Milk Tea",
-    "price": 2.0,
+    "price": 2,
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/bubble_tea_recipe_062817_-_Copy.webp",
     "description": "Trà sữa truyền thống béo ngậy kết hợp trân châu đen giòn dẻo.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Classic creamy milk tea with chewy black tapioca pearls."
   },
   {
     "id": "SP07",
     "name": "Tropical Mango Smoothie",
-    "price": 3.0,
+    "price": 3,
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278710/premium_photo-1663091544172-794c537af00c.avif",
     "description": "Sinh tố xoài nhiệt đới mát lạnh trang trí chanh và dâu tươi.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Cool tropical mango smoothie garnished with lime and fresh strawberries."
   },
   {
     "id": "SP08",
     "name": "Crispy Spring Rolls",
-    "price": 5.0,
+    "price": 5,
     "category": "Appetizers",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1732869931523-8fd0437da0f1.avif",
     "description": "Chả giò chiên giòn ăn kèm phồng tôm và sốt chanh ớt ngọt.",
-    "rating": 4.7
+    "rating": 4.7,
+    "description_en": "Crispy fried spring rolls served with prawn crackers and sweet chili-lime sauce."
   },
   {
     "id": "SP09",
@@ -78,7 +86,8 @@
     "category": "Desserts",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1710683994911-c59ddf25c5c0.avif",
     "description": "Bánh Tiramisu vị trà xanh thanh mát rắc bột cacao cao cấp.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Refreshing matcha tiramisu dusted with premium cocoa powder."
   },
   {
     "id": "SP10",
@@ -87,7 +96,8 @@
     "category": "Desserts",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1708175313856-8573b2bf8a3a.avif",
     "description": "Kem vani xốt caramel ngậy béo phủ bánh quy nghiền và quả anh đào.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Vanilla ice cream with rich caramel sauce, topped with crushed cookies and a cherry."
   },
   {
     "id": "SP11",
@@ -96,43 +106,48 @@
     "category": "Desserts",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1679310290259-78d9eaa32700.avif",
     "description": "Bánh phô mai nướng xốt Biscoff béo ngậy kèm bánh quy Lotus.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Baked cheesecake with rich Biscoff sauce and Lotus biscuits."
   },
   {
     "id": "SP12",
     "name": "Grilled Chicken Caesar Salad",
-    "price": 8.0,
+    "price": 8,
     "category": "Appetizers",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1669283714145-f97867f6c238.avif",
     "description": "Salad gà nướng sốt Caesar kèm trứng lòng đào, bánh mì giòn và cà chua bi.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Grilled chicken Caesar salad with a soft-boiled egg, crispy croutons, and cherry tomatoes."
   },
   {
     "id": "SP13",
     "name": "Creamy Mushroom Fettuccine",
-    "price": 11.0,
+    "price": 11,
     "category": "Main Course",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1664214649076-7b17006db5b5.avif",
     "description": "Mì Ý Fettuccine sốt kem nấm kết hợp ô liu đen và thảo mộc thơm lừng.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Fettuccine pasta in creamy mushroom sauce with black olives and fragrant herbs."
   },
   {
     "id": "SP14",
     "name": "Pan-Seared Salmon Steak",
-    "price": 16.0,
+    "price": 16,
     "category": "Main Course",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278709/photo-1641898378716-1f38ec04bb0f_-_Copy.avif",
     "description": "Cá hồi áp chảo áp vàng giòn da, trang trí cùng lá hương thảo thơm ngậy.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Pan-seared salmon steak with golden crispy skin, garnished with fragrant rosemary."
   },
   {
     "id": "SP15",
     "name": "Fresh Lime Soda",
-    "price": 3.0,
+    "price": 3,
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278708/photo-1619032580077-6160b89e2398.avif",
     "description": "Nước chanh tươi mát lạnh ngâm lát chanh tươi sảng khoái.",
-    "rating": 4.7
+    "rating": 4.7,
+    "description_en": "Refreshing cold lime soda infused with fresh lime slices."
   },
   {
     "id": "SP16",
@@ -141,7 +156,8 @@
     "category": "Main Course",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278708/photo-1586190848861-99aa4a171e90_-_Copy.avif",
     "description": "Bánh mì burger nhân thịt bò nướng, phô mai tan chảy, thịt xông khói giòn và rau xà lách tươi.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Classic burger with a grilled beef patty, melted cheese, crispy bacon, and fresh lettuce."
   },
   {
     "id": "SP17",
@@ -150,16 +166,18 @@
     "category": "Desserts",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278708/photo-1614707267537-b85aaf00c4b7.avif",
     "description": "Bánh kem nhung đỏ mềm mịn phủ lớp kem phô mai béo ngậy và vụn bánh trang trí.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Soft red velvet cupcake topped with rich cream cheese frosting and cake crumbs."
   },
   {
     "id": "SP18",
     "name": "Margherita Pizza",
-    "price": 12.0,
+    "price": 12,
     "category": "Main Course",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278708/photo-1574071318508-1cdbab80d002_-_Copy.avif",
     "description": "Pizza kiểu Ý truyền thống với sốt cà chua, phô mai Mozzarella tan chảy và lá húng tây tươi.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Traditional Italian pizza with tomato sauce, melted mozzarella, and fresh basil."
   },
   {
     "id": "SP19",
@@ -168,16 +186,18 @@
     "category": "Appetizers",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278708/photo-1573140401552-3fab0b24306f.avif",
     "description": "Bánh mì nướng bơ tỏi giòn rụm rắc ngò tây, ăn kèm sốt tương ớt đậm đà.",
-    "rating": 4.7
+    "rating": 4.7,
+    "description_en": "Crispy garlic butter toast sprinkled with parsley, served with a bold chili sauce."
   },
   {
     "id": "SP20",
     "name": "Crispy French Fries",
-    "price": 4.0,
+    "price": 4,
     "category": "Appetizers",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278708/photo-1518013431117-eb1465fa5752_-_Copy.avif",
     "description": "Khoai tây chiên vàng giòn rắc chút thảo mộc, phục vụ kèm sốt cà chua.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Golden crispy french fries sprinkled with herbs, served with tomato ketchup."
   },
   {
     "id": "SP21",
@@ -186,25 +206,28 @@
     "category": "Desserts",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278707/photo-1611614010348-7df489604fe3.avif",
     "description": "Bánh muffin sô-cô-la đậm vị xốp mềm, kết hợp cùng chip sô-cô-la tan chảy.",
-    "rating": 4.8
+    "rating": 4.8,
+    "description_en": "Rich, fluffy double chocolate muffins loaded with melting chocolate chips."
   },
   {
     "id": "SP22",
     "name": "Strawberry Milkshake",
-    "price": 4.0,
+    "price": 4,
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278707/photo-1611928237590-087afc90c6fd.avif",
     "description": "Đá xay dâu tây ngọt ngào phủ lớp kem tươi béo ngậy và xốt dâu.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Sweet blended strawberry shake topped with rich whipped cream and strawberry sauce."
   },
   {
     "id": "SP23",
     "name": "French Croissant & Pain au Chocolat",
-    "price": 3.0,
+    "price": 3,
     "category": "Desserts",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278707/photo-1589007797526-ed40d157365d_-_Copy.avif",
     "description": "Bánh sừng bò bơ Pháp giòn rụm nhiều lớp ăn kèm bánh sừng bò nhân sô-cô-la.",
-    "rating": 4.7
+    "rating": 4.7,
+    "description_en": "Flaky, buttery French croissant served alongside a chocolate-filled pain au chocolat."
   },
   {
     "id": "SP24",
@@ -213,7 +236,8 @@
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278707/photo-1517701550927-30cf4ba1dba5.avif",
     "description": "Cà phê Latte đá mát lạnh hòa quyện giữa Espresso và sữa tươi thơm béo.",
-    "rating": 5.0
+    "rating": 5,
+    "description_en": "Chilled vanilla latte blending espresso with rich fresh milk."
   },
   {
     "id": "SP25",
@@ -222,6 +246,7 @@
     "category": "Drinks",
     "image": "https://res.cloudinary.com/bikhennh/image/upload/v1786278707/photo-1515823064-d6e0c04616a7_-_Copy.avif",
     "description": "Trà xanh Matcha Nhật Bản nóng tạo hình Latte Art đẹp mắt, vị đậm đà thanh mát.",
-    "rating": 4.9
+    "rating": 4.9,
+    "description_en": "Hot Japanese matcha latte with beautiful latte art, rich and refreshing."
   }
 ]

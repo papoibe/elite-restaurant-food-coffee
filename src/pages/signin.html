@@ -16,47 +16,65 @@
     <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
       <ul class="hidden lg:flex items-center gap-8 text-sm">
-        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
-        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
-        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+        <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
       </ul>
       <div class="flex items-center gap-4">
+        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </a>
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
         <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
         </a>
+        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
     </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
   </header>
 
-  <main class="pt-20">
+  <main>
     <!-- Banner -->
     <section class="page-banner" style="background-image:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),url('/assets/images/banner-bg.jpg');background-size:cover;background-position:center;padding:80px 0;text-align:center;">
-      <h1 class="text-5xl font-bold text-white font-heading">Sign In</h1>
-      <nav class="breadcrumb mt-3"><a href="/">Home</a> &gt; <span class="current">Sign In</span></nav>
+      <h1 class="text-5xl font-bold text-white font-heading" data-i18n="page.signin.title">Sign In</h1>
+      <nav class="breadcrumb mt-3"><a href="/" data-i18n="page.home.tab">Home</a> &gt; <span class="current" data-i18n="page.signin.title">Sign In</span></nav>
     </section>
 
     <!-- FORM ĐĂNG NHẬP — Kết nối auth.js -->
     <section class="py-24 px-6 bg-white">
       <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-[0_4px_25px_rgba(0,0,0,0.15)]">
-        <h2 class="text-xl font-bold mb-6 text-left text-gray-900">Sign In</h2>
-        
+        <h2 class="text-xl font-bold mb-6 text-left text-gray-900" data-i18n="page.signin.title">Sign In</h2>
+
         <!-- Thông báo lỗi/thành công -->
         <div id="signin-alert" class="hidden mb-4 p-3 rounded text-sm font-medium"></div>
-        
+
         <form id="signin-form" class="space-y-4">
           <!-- Email -->
           <div>
-            <label for="signin-email" class="block text-xs font-semibold mb-1 text-gray-600">Email</label>
-            <input type="email" id="signin-email" placeholder="Enter your email" required
+            <label for="signin-email" class="block text-xs font-semibold mb-1 text-gray-600" data-i18n="common.email">Email</label>
+            <input type="email" id="signin-email" placeholder="Enter your email" data-i18n-placeholder="auth.emailPlaceholder" required
                    class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900">
           </div>
 
           <!-- Mật khẩu -->
           <div>
-            <label for="signin-password" class="block text-xs font-semibold mb-1 text-gray-600">Password</label>
-            <input type="password" id="signin-password" placeholder="Enter your password" required
+            <label for="signin-password" class="block text-xs font-semibold mb-1 text-gray-600" data-i18n="common.password">Password</label>
+            <input type="password" id="signin-password" placeholder="Enter your password" data-i18n-placeholder="auth.passwordPlaceholder" required
                    class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900">
           </div>
 
@@ -64,19 +82,19 @@
           <div class="flex items-center justify-between pt-1">
             <div class="flex items-center">
               <input type="checkbox" id="remember" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary accent-primary">
-              <label for="remember" class="ml-2 text-xs text-gray-600 cursor-pointer">Remember me?</label>
+              <label for="remember" class="ml-2 text-xs text-gray-600 cursor-pointer" data-i18n="common.remember">Remember me?</label>
             </div>
-            <a href="#" class="text-xs text-gray-400 hover:text-primary transition-colors">Forgot password?</a>
+            <a href="#" class="text-xs text-gray-400 hover:text-primary transition-colors" data-i18n="common.forgotPassword">Forgot password?</a>
           </div>
 
           <!-- Nút Submit -->
-          <button type="submit" class="w-full bg-primary hover:bg-amber-600 text-white font-semibold py-2.5 rounded text-sm transition duration-200 mt-2 cursor-pointer">
+          <button type="submit" class="w-full bg-primary hover:bg-amber-600 text-white font-semibold py-2.5 rounded text-sm transition duration-200 mt-2 cursor-pointer" data-i18n="page.signin.title">
             Sign In
           </button>
         </form>
 
         <p class="text-center text-xs text-gray-500 mt-6">
-          Don't have an account? <a href="signup.html" class="text-primary hover:underline font-medium">Sign Up here</a>
+          <span data-i18n="auth.noAccount">Don't have an account?</span> <a href="signup.html" class="text-primary hover:underline font-medium" data-i18n="auth.signupHere">Sign Up here</a>
         </p>
       </div>
     </section>
@@ -86,7 +104,7 @@
   <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
     <div class="max-w-[1320px] mx-auto">
       <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
-        <p>Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+        <p data-i18n="footer.copyright">Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
@@ -96,9 +114,20 @@
     // Import module auth để xử lý đăng nhập bằng localStorage JSON
     import { login } from '/src/js/auth.js'
 
+    // Đọc ?redirect=... (vd. từ checkout.html bắt đăng nhập) — đăng nhập xong
+    // quay lại đúng trang đó thay vì luôn về trang chủ.
+    const redirectParam = new URLSearchParams(window.location.search).get('redirect')
+
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('signin-form')
       const alertBox = document.getElementById('signin-alert')
+
+      // Giữ nguyên ?redirect=... khi bấm sang trang Đăng ký, để đăng ký xong
+      // quay lại Đăng nhập vẫn còn redirect, rồi đăng nhập xong về đúng chỗ cũ.
+      if (redirectParam) {
+        const signupLink = document.querySelector('a[href="signup.html"]')
+        if (signupLink) signupLink.href = `signup.html?redirect=${encodeURIComponent(redirectParam)}`
+      }
 
       form.addEventListener('submit', (e) => {
         e.preventDefault() // Ngăn reload trang
@@ -114,8 +143,9 @@
         if (result.success) {
           alertBox.className = 'mb-4 p-3 rounded text-sm font-medium bg-green-100 text-green-700'
           alertBox.textContent = result.message
-          // Chuyển hướng về trang chủ sau 1.5s
-          setTimeout(() => { window.location.href = '/' }, 1500)
+          // Đăng nhập xong: quay lại trang đã yêu cầu đăng nhập (nếu có), không thì về trang chủ
+          const destination = redirectParam ? decodeURIComponent(redirectParam) : '/'
+          setTimeout(() => { window.location.href = destination }, 1500)
         } else {
           alertBox.className = 'mb-4 p-3 rounded text-sm font-medium bg-red-100 text-red-700'
           alertBox.textContent = result.message

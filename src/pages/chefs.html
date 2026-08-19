@@ -1,32 +1,37 @@
 <!-- ===== TRANG CHEFS — PHỤ TRÁCH: THỊNH (Nhóm trưởng) ===== -->
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Đội ngũ đầu bếp tài năng của Elite Restaurant" />
+  <meta name="description" content="Đội ngũ đầu bếp tài năng gắn liền với ẩm thực Việt Nam" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Our Chefs — Foodtuck</title>
 </head>
-<body class="bg-bg-dark text-text-white">
+<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
 
   <!-- ========== HEADER ========== -->
   <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
     <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
       <ul class="hidden lg:flex items-center gap-8 text-sm">
-        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
-        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
-        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
-        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+        <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
       </ul>
       <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"></button>
+        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </a>
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
         <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
         </a>
+        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
         <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -34,115 +39,122 @@
     </nav>
     <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
       <ul class="flex flex-col gap-3 text-sm">
-        <li><a href="/" class="hover:text-primary">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary">Menu</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary">About</a></li>
+        <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
       </ul>
     </div>
   </header>
 
-  <main class="pt-20">
+  <main>
     <!-- ========== PAGE BANNER ========== -->
     <section class="page-banner" style="background-image:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),url('/assets/images/banner-bg.jpg');background-size:cover;background-position:center;padding:80px 0;text-align:center;">
-      <h1 class="text-5xl font-bold text-white font-heading">Our Chefs</h1>
-      <nav class="breadcrumb mt-3"><a href="/">Home</a> &gt; <span class="current">Chefs</span></nav>
+      <h1 class="text-5xl font-bold text-white font-heading" data-i18n="page.chefs.title">Our Chefs</h1>
+      <nav class="breadcrumb mt-3"><a href="/" data-i18n="page.home.tab">Home</a> &gt; <span class="current" data-i18n="page.chefs.crumb">Chefs</span></nav>
     </section>
 
-    <!-- ========== GRID CHEFS — 12 card đầu bếp theo Figma (3 hàng x 4 cột) ========== -->
-    <section class="py-20 px-6 bg-white" data-reveal>
+    <!-- ========== GRID CHEFS — render động từ chefs.json (12 đầu bếp thật gắn với ẩm thực Việt) ========== -->
+    <section class="py-20 px-6 bg-white dark:bg-bg-dark" data-reveal>
       <div class="max-w-[1320px] mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <!-- Mỗi card: ảnh đầu bếp + tên + chức danh + social icons -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden">
-              <img src="/assets/images/chef-1.jpg" alt="D.Estwood" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/>
-              <!-- Social icons hiện khi hover -->
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <div class="flex gap-3 justify-center">
-                  <span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">f</span>
-                  <span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">in</span>
-                  <span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">tw</span>
-                </div>
-              </div>
-            </div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">D.Estwood</h4><p class="text-text-muted text-sm">Chief Chef</p></div>
-          </div>
-
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden">
-              <img src="/assets/images/chef-1.jpg" alt="D.Scotter" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/>
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <div class="flex gap-3 justify-center"><span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">f</span><span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">in</span></div>
-              </div>
-            </div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">D.Scotter</h4><p class="text-text-muted text-sm">Assistant Chef</p></div>
-          </div>
-
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden">
-              <img src="/assets/images/chef-1.jpg" alt="M.William" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/>
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <div class="flex gap-3 justify-center"><span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">f</span><span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">in</span></div>
-              </div>
-            </div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">M.William</h4><p class="text-text-muted text-sm">Advertising Chef</p></div>
-          </div>
-
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden">
-              <img src="/assets/images/chef-1.jpg" alt="W.Readfrog" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/>
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <div class="flex gap-3 justify-center"><span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">f</span><span class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white text-xs hover:bg-primary transition-colors cursor-pointer">in</span></div>
-              </div>
-            </div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">W.Readfrog</h4><p class="text-text-muted text-sm">Chef</p></div>
-          </div>
-
-          <!-- Hàng 2 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Marco Pierre" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Marco Pierre</h4><p class="text-text-muted text-sm">Head Chef</p></div>
-          </div>
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Julia Romano" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Julia Romano</h4><p class="text-text-muted text-sm">Pastry Chef</p></div>
-          </div>
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Robert Chen" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Robert Chen</h4><p class="text-text-muted text-sm">Sous Chef</p></div>
-          </div>
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Elena Vasquez" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Elena Vasquez</h4><p class="text-text-muted text-sm">Grill Master</p></div>
-          </div>
-
-          <!-- Hàng 3 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Andre Moreau" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Andre Moreau</h4><p class="text-text-muted text-sm">Wine Chef</p></div>
-          </div>
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Sato Takeshi" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Sato Takeshi</h4><p class="text-text-muted text-sm">Sushi Master</p></div>
-          </div>
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="Lisa Thompson" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">Lisa Thompson</h4><p class="text-text-muted text-sm">Dessert Chef</p></div>
-          </div>
-          <div class="bg-white rounded-lg overflow-hidden shadow-card card-hover group">
-            <div class="relative overflow-hidden"><img src="/assets/images/chef-1.jpg" alt="James Oliver" class="w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105"/></div>
-            <div class="p-4 text-center"><h4 class="font-bold text-text-dark">James Oliver</h4><p class="text-text-muted text-sm">Executive Chef</p></div>
-          </div>
+        <!-- Khung skeleton phải khớp CẢ số lượng (12, không phải 4) LẪN chiều cao mỗi thẻ với
+             renderChefCard() thật (ảnh aspect-[3/4] + khối chữ tên/chức danh bên dưới). Ban đầu chỉ
+             để 4 khối bare aspect-[3/4] (không có khối chữ) — lúc fetch chefs.json xong, DOM thấp hơn
+             thật một khoảng bằng đúng chiều cao khối chữ, đẩy Footer nhảy lên rồi lại xuống.
+             Đo bằng Lighthouse (khổ điện thoại 412px, layout-shifts audit): CLS ban đầu 0.221,
+             thủ phạm đúng là <footer> dịch chuyển — xem mục 5.3 báo cáo. -->
+        <div id="chefs-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
+          <div class="bg-gray-100 dark:bg-bg-dark-2 rounded-lg overflow-hidden animate-pulse"><div class="aspect-[3/4] bg-gray-200 dark:bg-bg-dark-3"></div><div class="p-4 space-y-2"><div class="h-4 bg-gray-200 dark:bg-bg-dark-3 rounded w-3/4"></div><div class="h-3 bg-gray-200 dark:bg-bg-dark-3 rounded w-1/2"></div></div></div>
         </div>
+        <p class="text-text-muted text-xs mt-8 text-center">Thông tin đầu bếp được tổng hợp từ nguồn công khai (Wikipedia, MICHELIN Guide, báo chí). Xem nguồn ở footer trang.</p>
       </div>
     </section>
   </main>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6 text-text-white">
     <div class="max-w-[1320px] mx-auto">
-      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
-        <p>Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+      <!-- CTA Subscribe -->
+      <div class="bg-primary/10 rounded-lg p-8 mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-2xl font-bold text-text-white"><span class="text-primary" data-i18n="footer.supportTitle1">St</span><span data-i18n="footer.supportTitle2">ill You Need Our Support ?</span></h3>
+          <p class="text-text-light text-sm mt-1" data-i18n="footer.supportDesc">Don't wait make a smart & logical quote here. Its pretty easy.</p>
+        </div>
+        <div class="flex gap-2">
+          <input type="email" placeholder="Enter Your Email" data-i18n-placeholder="footer.emailPlaceholder" class="px-4 py-3 bg-primary rounded-l-full text-white placeholder-white/70 outline-none" />
+          <button class="px-6 py-3 bg-white text-primary font-semibold rounded-r-full hover:bg-gray-100 transition-colors" data-i18n="footer.subscribe">Subscribe Now</button>
+        </div>
+      </div>
+
+      <!-- Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.aboutTitle">About Us.</h4>
+          <p class="text-text-light" data-i18n="footer.aboutDesc">Corporate clients and leisure travelers hasbeen relying on Groundlink for dependablesafe.</p>
+          <div class="flex items-center gap-3 mt-4">
+            <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white font-bold">⏰</div>
+            <div><p class="text-text-white text-xs font-semibold" data-i18n="footer.hours">Opening Hours</p><p class="text-text-muted text-xs" data-i18n="footer.hoursValue">Mon - Sat(8:00 - 6:00) · Sunday - Closed</p></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.usefulLinks">Useful Links</h4>
+          <ul class="space-y-2 text-text-light">
+            <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="footer.link.about">About</a></li>
+            <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="footer.link.news">News</a></li>
+            <li><a href="/src/pages/chefs.html" class="hover:text-primary transition-colors" data-i18n="footer.link.team">Team</a></li>
+            <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="footer.link.menu">Menu</a></li>
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors" data-i18n="footer.link.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.help">Help?</h4>
+          <ul class="space-y-2 text-text-light">
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors" data-i18n="footer.link.faq">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.terms">Term & Condition</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.reporting">Reporting</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.docs">Documentation</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.support">Support Policy</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.privacy">Privacy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.recentPost">Recent Post</h4>
+          <div id="footer-recent-posts" class="space-y-4">
+            <!-- render động bởi main.js (renderFooterRecentPosts), dùng blogPostsData thật -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-text-muted text-xs">
+        <p data-i18n="footer.copyright">Copyright © 2026 by Elite Restaurant. All Rights Reserved.</p>
+        <div class="flex gap-2">
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Facebook">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Twitter">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Instagram">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="YouTube">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Pinterest">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 17c.7-2 1.2-4 1.8-6.3M12.2 7.2c2.4 0 4 1.4 4 3.5 0 2.6-1.5 4.6-3.7 4.6-1 0-1.8-.5-2-1.2"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </footer>
@@ -150,7 +162,15 @@
   <script type="module" src="/src/js/main.js"></script>
   <script type="module">
     import { initScrollReveal } from '/src/js/dom.js'
-    document.addEventListener('DOMContentLoaded', () => { initScrollReveal() })
+    import { fetchChefs, renderChefCardFull } from '/src/js/chefs.js'
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initScrollReveal()
+
+      const grid = document.getElementById('chefs-grid')
+      const chefs = await fetchChefs()
+      grid.innerHTML = chefs.map(renderChefCardFull).join('')
+    })
   </script>
 </body>
 </html>

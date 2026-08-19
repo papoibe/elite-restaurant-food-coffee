@@ -6,6 +6,11 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap');
 
+/* Tailwind v4 đổi cách bật dark mode: mặc định "dark:" chạy theo prefers-color-scheme.
+   Khai báo dòng dưới để "dark:" bám theo class .dark trên <html> mà theme.js đang toggle,
+   thay vì bám theo cài đặt hệ điều hành. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ============================================================
    DESIGN TOKENS — Trích xuất từ Figma "Elite" Template
    Bảng màu chủ đạo: Dark Navy + Gold/Orange accent
@@ -63,11 +68,19 @@ html {
   scroll-behavior: smooth;          /* Cuộn mượt cho anchor links */
 }
 
-body {
-  font-family: var(--font-body);
-  color: var(--color-text-dark);
-  background-color: var(--color-bg-light);
-  line-height: 1.6;
+/* @layer base: đặt màu mặc định của body vào layer "base" của Tailwind.
+   CSS viết thường (không nằm trong @layer) luôn thắng CSS trong bất kỳ @layer nào —
+   kể cả layer "utilities" — bất kể specificity. Trước đây rule body{} này nằm ngoài
+   @layer nên nó đè mất các class Tailwind gắn thẳng trên <body> (vd bg-bg-dark,
+   text-text-white ở index.html), khiến trang có thể hiện chữ trắng trên nền trắng
+   khi thiếu class "dark". Đưa vào @layer base để utility class luôn thắng đúng ý đồ. */
+@layer base {
+  body {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+    background-color: var(--color-bg-light);
+    line-height: 1.6;
+  }
 }
 
 /* ============================================================
@@ -173,9 +186,11 @@ body {
    Lưu trạng thái vào localStorage qua theme.js
    ============================================================ */
 
-.dark body {
-  background-color: var(--color-bg-dark);
-  color: var(--color-text-white);
+@layer base {
+  .dark body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-white);
+  }
 }
 
 .dark .page-banner {

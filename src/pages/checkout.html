@@ -9,15 +9,65 @@
   <title>Checkout — Foodtuck</title>
 </head>
 <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
-  <header><!-- HEADER --></header>
-  
-  <main>
+  <!-- ========== HEADER (đồng bộ với index.html) ========== -->
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm text-text-white">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </a>
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
+        <a href="/src/pages/cart.html" class="relative p-2 text-primary transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+        </a>
+        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-16">
     <section class="page-banner">
-      <h1>Checkout Page</h1>
-      <nav class="breadcrumb">Home &gt; <span class="current">Checkout</span></nav>
+      <h1 data-i18n="page.checkout.title">Checkout Page</h1>
+      <nav class="breadcrumb"><span data-i18n="page.home.tab">Home</span> &gt; <span class="current" data-i18n="page.checkout.crumb">Checkout</span></nav>
     </section>
 
-    <section class="py-24 px-6">
+    <!-- Chặn thanh toán nếu chưa đăng nhập — chỉ hiện khi checkout.js xác nhận isLoggedIn() === false -->
+    <section id="checkout-login-required" class="hidden py-24 px-6">
+      <div class="max-w-md mx-auto text-center bg-white dark:bg-bg-dark-2 border border-gray-200 dark:border-gray-700 rounded-lg p-10">
+        <svg class="w-12 h-12 mx-auto mb-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l-1 10H6L5 11z"/></svg>
+        <h2 class="text-xl font-bold mb-2" data-i18n="checkout.loginRequiredTitle">Please Sign In to Continue</h2>
+        <p class="text-text-muted text-sm mb-6" data-i18n="checkout.loginRequiredDesc">You need to sign in to your account before completing payment.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a id="checkout-signin-link" href="/src/pages/signin.html" class="btn-primary justify-center" data-i18n="auth.signin">Sign In</a>
+          <a id="checkout-signup-link" href="/src/pages/signup.html" class="btn-outline justify-center" data-i18n="auth.signup">Sign Up</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="checkout-content" class="py-24 px-6">
       <div class="max-w-[1320px] mx-auto">
         <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8" novalidate>
           
@@ -26,72 +76,72 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium mb-1">First name</label>
-                <input type="text" name="firstName" data-validate="required" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
+                <label for="checkout-firstName" class="block text-sm font-medium mb-1">First name</label>
+                <input id="checkout-firstName" type="text" name="firstName" autocomplete="given-name" required data-validate="required" aria-describedby="err-firstName" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <p id="err-firstName" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-1">Last name</label>
-                <input type="text" name="lastName" data-validate="required" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium mb-1">Email address</label>
-                <input type="email" name="email" data-validate="required,email" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-1">Phone number</label>
-                <input type="tel" name="phone" data-validate="required,phone" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
+                <label for="checkout-lastName" class="block text-sm font-medium mb-1">Last name</label>
+                <input id="checkout-lastName" type="text" name="lastName" autocomplete="family-name" required data-validate="required" aria-describedby="err-lastName" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <p id="err-lastName" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium mb-1">Company</label>
-                <input type="text" name="company" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <label for="checkout-email" class="block text-sm font-medium mb-1">Email address</label>
+                <input id="checkout-email" type="email" name="email" autocomplete="email" required data-validate="required,email" aria-describedby="err-email" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <p id="err-email" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-1">Country</label>
-                <select name="country" data-validate="required" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2 text-text-muted">
+                <label for="checkout-phone" class="block text-sm font-medium mb-1">Phone number</label>
+                <input id="checkout-phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" required data-validate="required,phone" aria-describedby="err-phone" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <p id="err-phone" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="checkout-company" class="block text-sm font-medium mb-1">Company</label>
+                <input id="checkout-company" type="text" name="company" autocomplete="organization" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+              </div>
+              <div>
+                <label for="checkout-country" class="block text-sm font-medium mb-1">Country</label>
+                <select id="checkout-country" name="country" autocomplete="country" required data-validate="required" aria-describedby="err-country" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2 text-text-muted">
                   <option value="">Choose country</option>
                   <option value="VN">Vietnam</option>
                   <option value="US">United States</option>
                 </select>
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
+                <p id="err-country" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium mb-1">City</label>
-                <select name="city" data-validate="required" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2 text-text-muted">
+                <label for="checkout-city" class="block text-sm font-medium mb-1">City</label>
+                <select id="checkout-city" name="city" autocomplete="address-level2" required data-validate="required" aria-describedby="err-city" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2 text-text-muted">
                   <option value="">Choose city</option>
                   <option value="HCM">Ho Chi Minh</option>
                   <option value="HN">Ha Noi</option>
                 </select>
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
+                <p id="err-city" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-1">Zip code</label>
-                <input type="text" name="zipCode" data-validate="required" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
+                <label for="checkout-zipCode" class="block text-sm font-medium mb-1">Zip code</label>
+                <input id="checkout-zipCode" type="text" name="zipCode" autocomplete="postal-code" required data-validate="required" aria-describedby="err-zipCode" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <p id="err-zipCode" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium mb-1">Address 1</label>
-                <input type="text" name="address1" data-validate="required" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p class="error-message text-red-500 text-xs mt-1 hidden"></p>
+                <label for="checkout-address1" class="block text-sm font-medium mb-1">Address 1</label>
+                <input id="checkout-address1" type="text" name="address1" autocomplete="address-line1" required data-validate="required" aria-describedby="err-address1" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <p id="err-address1" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-1">Address 2</label>
-                <input type="text" name="address2" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <label for="checkout-address2" class="block text-sm font-medium mb-1">Address 2</label>
+                <input id="checkout-address2" type="text" name="address2" autocomplete="address-line2" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
               </div>
             </div>
 
@@ -159,7 +209,14 @@
     </section>
   </main>
 
-  <footer><!-- FOOTER --></footer>
+  <!-- ========== FOOTER (đồng bộ với index.html) ========== -->
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6 text-text-white">
+    <div class="max-w-[1320px] mx-auto">
+      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
+        <p data-i18n="footer.copyright">Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
 
   <script type="module" src="../js/main.js"></script>
   <script type="module" src="../js/checkout.js"></script>

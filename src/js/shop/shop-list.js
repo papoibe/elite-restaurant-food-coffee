@@ -4,6 +4,8 @@
    ============================================================ */
 import { addToCart } from '/src/js/cart.js' // Import hàm thêm giỏ hàng từ module chung
 import { showSuccessToast } from '/src/js/validate.js' // Toast thông báo
+import { isWishlisted, toggleWishlist } from '/src/js/wishlist.js' // Yêu thích (localStorage)
+import { t, getLang } from '/src/js/i18n.js' // Chuyển ngôn ngữ VN/EN
 
 let productsData = [] // Mảng chứa toàn bộ sản phẩm sau khi fetch
 
@@ -24,14 +26,26 @@ async function initShopList() {
       oldPrice: null, // menu.json không có giá cũ, để null
       category: item.category,
       image: item.image, // Ảnh từ Cloudinary
-      description: item.description,
+      description: getLang() === 'en' ? (item.description_en || item.description) : item.description,
       rating: item.rating,
       tag: item.rating >= 5.0 ? 'Hot' : null // Đánh tag Hot cho sản phẩm 5 sao
     }))
 
     renderCategories(productsData) // Render danh mục lọc bên sidebar
-    renderProducts(productsData) // Render lưới sản phẩm
     setupEventListeners() // Gắn sự kiện search, filter, sort
+
+    // Nếu URL có ?category=... (bấm từ khối "Food Category" ở trang chủ) thì lọc sẵn theo đúng danh mục đó
+    const urlCategory = new URLSearchParams(window.location.search).get('category')
+    if (urlCategory) {
+      const matchedRadio = document.querySelector(`.category-radio[value="${CSS.escape(urlCategory)}"]`)
+      if (matchedRadio) {
+        matchedRadio.checked = true
+        filterProducts()
+        return
+      }
+    }
+
+    renderProducts(productsData) // Render lưới sản phẩm (không có filter từ URL)
   } catch (error) {
     console.error("Lỗi khi tải danh sách sản phẩm:", error)
   }
@@ -48,11 +62,11 @@ function renderProducts(items) {
   if (!grid) return
 
   if (countText) {
-    countText.innerText = `Showing ${items.length} results`
+    countText.innerText = t('shop.showingResults', { count: items.length })
   }
 
   if (items.length === 0) {
-    grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">No products found matching your search.</div>`
+    grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">${t('shop.noResults')}</div>`
     return
   }
 
@@ -67,13 +81,18 @@ function renderProducts(items) {
           onerror="this.style.opacity='0'; this.parentElement.classList.add('bg-gray-300');"
         />
         ${item.tag ? `<span class="absolute top-4 left-4 bg-primary text-white text-xs px-3 py-0.5 rounded">${item.tag}</span>` : ''}
-        
+
+        <!-- Yêu thích — lưu localStorage qua wishlist.js, luôn hiện (không chỉ khi hover) -->
+        <button data-id="${item.id}" class="btn-wishlist absolute top-4 right-4 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition ${isWishlisted(item.id) ? 'text-primary' : 'text-gray-600'}" title="${t('common.addToWishlist')}" aria-label="${t('common.addToWishlist')}">
+          <svg class="w-4 h-4 wishlist-icon" fill="${isWishlisted(item.id) ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </button>
+
         <!-- Overlay khi hover: link chi tiết + thêm giỏ hàng -->
         <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-          <a href="/src/pages/shop-details.html?id=${item.id}" class="w-9 h-9 bg-white text-gray-800 rounded flex items-center justify-center hover:bg-primary hover:text-white transition" title="Xem chi tiết">
+          <a href="/src/pages/shop-details.html?id=${item.id}" class="w-9 h-9 bg-white text-gray-800 rounded flex items-center justify-center hover:bg-primary hover:text-white transition" title="${t('shop.viewDetails')}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
           </a>
-          <button data-id="${item.id}" class="btn-add-cart w-9 h-9 bg-primary text-white rounded flex items-center justify-center hover:bg-amber-600 transition" title="Thêm vào giỏ">
+          <button data-id="${item.id}" class="btn-add-cart w-9 h-9 bg-primary text-white rounded flex items-center justify-center hover:bg-amber-600 transition" title="${t('common.addToCart')}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
           </button>
         </div>
@@ -98,7 +117,26 @@ function renderProducts(items) {
       const product = productsData.find(p => String(p.id) === String(productId))
       if (product) {
         addToCart(product) // Gọi hàm addToCart từ cart.js
-        showSuccessToast(`Đã thêm "${product.name}" vào giỏ hàng!`)
+        showSuccessToast(t('toast.addedToCart', { qty: 1, name: product.name }))
+      }
+    })
+  })
+
+  // Gắn sự kiện Yêu thích — dùng wishlist.js module chung
+  document.querySelectorAll('.btn-wishlist').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const productId = btn.getAttribute('data-id')
+      const product = productsData.find(p => String(p.id) === String(productId))
+      const nowWishlisted = toggleWishlist(productId)
+
+      btn.classList.toggle('text-primary', nowWishlisted)
+      btn.classList.toggle('text-gray-600', !nowWishlisted)
+      btn.querySelector('.wishlist-icon').setAttribute('fill', nowWishlisted ? 'currentColor' : 'none')
+
+      if (product) {
+        showSuccessToast(nowWishlisted ? t('toast.addedToWishlist', { name: product.name }) : t('toast.removedFromWishlist', { name: product.name }))
       }
     })
   })

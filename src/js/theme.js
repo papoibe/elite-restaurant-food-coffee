@@ -10,11 +10,12 @@ const THEME_KEY = 'elite-theme'  // Key lưu trong localStorage
  * Gán sự kiện click cho nút toggle theme
  */
 export function initTheme() {
-  // Lấy theme đã lưu, hoặc dùng system preference làm mặc định
+  // Mặc định luôn là Light Mode cho MỌI trang khi chưa từng lưu lựa chọn nào.
+  // Chỉ khi user đã từng bấm nút toggle (có lưu trong localStorage) thì mới
+  // áp dụng đúng lựa chọn đó — đảm bảo toàn site đồng bộ 1 theme duy nhất.
   const savedTheme = localStorage.getItem(THEME_KEY)
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  if (savedTheme === 'dark') {
     document.documentElement.classList.add('dark')
   } else {
     document.documentElement.classList.remove('dark')

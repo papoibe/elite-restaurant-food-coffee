@@ -1,6 +1,7 @@
 /* ============================================================
    cart.js — Logic Giỏ hàng (Shopping Cart)
    ============================================================ */
+import { t } from '/src/js/i18n.js' // Chuyển ngôn ngữ VN/EN
 
 const CART_KEY = 'elite-cart'
 
@@ -59,6 +60,18 @@ export function getCartTotal() {
   return getCart().reduce((total, item) => total + (item.price * item.quantity), 0)
 }
 
+/**
+ * updateCartBadge — Cập nhật số lượng hiển thị trên icon giỏ hàng ở header
+ * Áp dụng cho mọi phần tử #cart-count có mặt trên trang (an toàn nếu không có)
+ */
+export function updateCartBadge() {
+  const count = getCart().reduce((sum, item) => sum + item.quantity, 0)
+  document.querySelectorAll('#cart-count').forEach((el) => {
+    el.textContent = String(count)
+    el.classList.toggle('hidden', count === 0)
+  })
+}
+
 let discountRate = 0
 
 function renderStars(rating = 4) {
@@ -79,7 +92,7 @@ function renderCartPage() {
   if (cart.length === 0) {
     cartTableBody.innerHTML = `
       <tr>
-        <td colspan="5" class="py-12 text-center text-gray-500 font-medium">Giỏ hàng của bạn đang trống.</td>
+        <td colspan="5" class="py-12 text-center text-gray-500 font-medium">${t('cart.empty')}</td>
       </tr>`
     calculateTotal(0)
     return
@@ -159,6 +172,7 @@ function attachCartEvents(cart) {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCartPage()
+  updateCartBadge()
 
   const applyBtn = document.getElementById('apply-coupon-btn')
   if (applyBtn) {
@@ -168,12 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (input && input.value.trim().toUpperCase() === 'FOODTUCK10') {
         discountRate = 0.1
         if (msg) {
-          msg.textContent = 'Áp dụng mã giảm 10% thành công!'
+          msg.textContent = t('cart.couponSuccess')
           msg.className = 'text-sm mt-2 text-green-500 block'
         }
       } else if (msg) {
         discountRate = 0
-        msg.textContent = 'Mã không hợp lệ!'
+        msg.textContent = t('cart.couponInvalid')
         msg.className = 'text-sm mt-2 text-red-500 block'
       }
       renderCartPage()
@@ -181,4 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-window.addEventListener('cart-updated', renderCartPage)
+window.addEventListener('cart-updated', () => {
+  renderCartPage()
+  updateCartBadge()
+})

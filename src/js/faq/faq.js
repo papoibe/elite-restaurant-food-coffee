@@ -33,8 +33,8 @@ function renderFAQ() {
     <div class="bg-[#FAF7F2] dark:bg-gray-900/50 p-6 rounded-md border border-gray-100 dark:border-gray-800 faq-item transition-all">
       <div class="flex justify-between items-center cursor-pointer faq-header" data-index="${index}">
         <h3 class="font-bold text-gray-800 dark:text-white text-base md:text-lg">${item.question}</h3>
-        <button class="text-gray-700 dark:text-gray-300 text-xl font-light faq-icon flex items-center justify-center w-6 h-6">
-          <i class="fa-solid fa-plus text-sm"></i>
+        <button class="text-gray-700 dark:text-gray-300 faq-icon flex items-center justify-center w-6 h-6">
+          <svg class="w-3.5 h-3.5 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
       </div>
       <div class="faq-answer mt-4 text-xs md:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
@@ -47,16 +47,16 @@ function renderFAQ() {
   headers.forEach(header => {
     header.addEventListener('click', () => {
       const parent = header.parentElement;
-      const icon = header.querySelector('.faq-icon i');
+      const icon = header.querySelector('.faq-icon svg');
 
       const isOpen = parent.classList.contains('active');
 
       if (isOpen) {
         parent.classList.remove('active');
-        icon.className = 'fa-solid fa-plus text-sm';
+        icon.classList.remove('rotate-45');
       } else {
         parent.classList.add('active');
-        icon.className = 'fa-solid fa-minus text-sm';
+        icon.classList.add('rotate-45'); // Dấu "+" xoay 45° trông giống dấu "×" khi mở
       }
     });
   });

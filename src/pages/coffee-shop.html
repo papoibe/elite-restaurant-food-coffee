@@ -1,6 +1,6 @@
 <!-- ===== TRANG COFFEE SHOP — PHỤ TRÁCH: THỊNH (Nhóm trưởng) ===== -->
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,25 +8,30 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Coffee Shop — Foodtuck</title>
 </head>
-<body class="bg-bg-dark text-text-white">
+<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
 
   <!-- ========== HEADER ========== -->
   <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
     <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="text-2xl font-bold font-heading">Food<span class="text-primary">tuck</span></a>
       <ul class="hidden lg:flex items-center gap-8 text-sm">
-        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors">Menu</a></li>
-        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors">Blog</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors">About</a></li>
-        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors">Shop</a></li>
-        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+        <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
       </ul>
       <div class="flex items-center gap-4">
-        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"></button>
+        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </a>
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
         <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
         </a>
+        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
         <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -34,24 +39,24 @@
     </nav>
     <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
       <ul class="flex flex-col gap-3 text-sm">
-        <li><a href="/" class="hover:text-primary">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary">Menu</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary">About</a></li>
+        <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
       </ul>
     </div>
   </header>
 
-  <main class="pt-20">
+  <main>
     <!-- ========== HERO COFFEE ========== -->
-    <section class="min-h-[70vh] flex items-center px-6 bg-gradient-to-br from-bg-dark via-bg-dark-2 to-bg-dark">
+    <section class="min-h-[70vh] flex items-center pt-20 px-6 bg-gradient-to-br from-bg-light via-bg-section to-bg-light dark:from-bg-dark dark:via-bg-dark-2 dark:to-bg-dark">
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center w-full" data-reveal>
         <div>
-          <p class="script-text text-xl mb-2">Our Coffee</p>
-          <h1 class="text-5xl lg:text-6xl font-bold font-heading leading-tight mb-6">
+          <p class="script-text text-xl mb-2" data-i18n="page.coffeeShop.tag">Our Coffee</p>
+          <h1 class="text-5xl lg:text-6xl font-bold font-heading leading-tight mb-6 text-text-dark dark:text-text-white" data-i18n-html="page.coffeeShop.heroTitle">
             <span class="text-primary">Premium</span> Coffee<br/>Experience
           </h1>
-          <p class="text-text-light mb-8 max-w-lg">Tận hưởng hương vị cà phê thượng hạng từ những hạt cà phê được chọn lọc kỹ lưỡng, rang xay thủ công mỗi ngày.</p>
-          <a href="/src/pages/menu.html" class="btn-primary">View Full Menu</a>
+          <p class="text-gray-600 dark:text-text-light mb-8 max-w-lg" data-i18n="page.coffeeShop.heroDesc">Tận hưởng hương vị cà phê thượng hạng từ những hạt cà phê được chọn lọc kỹ lưỡng, rang xay thủ công mỗi ngày.</p>
+          <a href="/src/pages/menu.html" class="btn-primary" data-i18n="page.coffeeShop.viewMenu">View Full Menu</a>
         </div>
         <!-- Ảnh minh họa cà phê -->
         <div class="relative">
@@ -65,50 +70,50 @@
     </section>
 
     <!-- ========== COFFEE MENU — Grid 3 cột ========== -->
-    <section class="py-20 px-6 bg-bg-dark-2" data-reveal>
+    <section class="py-20 px-6 bg-gray-50 dark:bg-bg-dark-2" data-reveal>
       <div class="max-w-[1320px] mx-auto text-center">
         <p class="script-text mb-2">Our Drinks</p>
-        <h2 class="section-heading text-text-white text-3xl lg:text-4xl mb-12">Coffee <span class="text-primary">Menu</span></h2>
+        <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-12">Coffee <span class="text-primary">Menu</span></h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Card cà phê: tên + mô tả + giá -->
-          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+          <div class="bg-white dark:bg-bg-dark rounded-xl p-6 text-left card-hover border border-black/5 dark:border-white/5">
             <div class="flex justify-between items-start mb-3">
-              <h4 class="text-text-white font-bold text-lg">Espresso</h4>
+              <h4 class="text-text-dark dark:text-text-white font-bold text-lg">Espresso</h4>
               <span class="text-primary font-bold">3.5$</span>
             </div>
             <p class="text-text-muted text-sm">Cà phê nguyên chất, đậm đà, pha máy áp suất cao.</p>
           </div>
-          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+          <div class="bg-white dark:bg-bg-dark rounded-xl p-6 text-left card-hover border border-black/5 dark:border-white/5">
             <div class="flex justify-between items-start mb-3">
-              <h4 class="text-text-white font-bold text-lg">Cappuccino</h4>
+              <h4 class="text-text-dark dark:text-text-white font-bold text-lg">Cappuccino</h4>
               <span class="text-primary font-bold">4.5$</span>
             </div>
             <p class="text-text-muted text-sm">Espresso, sữa nóng tạo bọt, rắc bột cacao.</p>
           </div>
-          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+          <div class="bg-white dark:bg-bg-dark rounded-xl p-6 text-left card-hover border border-black/5 dark:border-white/5">
             <div class="flex justify-between items-start mb-3">
-              <h4 class="text-text-white font-bold text-lg">Cafe Latte</h4>
+              <h4 class="text-text-dark dark:text-text-white font-bold text-lg">Cafe Latte</h4>
               <span class="text-primary font-bold">5.0$</span>
             </div>
             <p class="text-text-muted text-sm">Espresso, sữa tươi steamed, lớp foam mỏng nhẹ.</p>
           </div>
-          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+          <div class="bg-white dark:bg-bg-dark rounded-xl p-6 text-left card-hover border border-black/5 dark:border-white/5">
             <div class="flex justify-between items-start mb-3">
-              <h4 class="text-text-white font-bold text-lg">Mocha</h4>
+              <h4 class="text-text-dark dark:text-text-white font-bold text-lg">Mocha</h4>
               <span class="text-primary font-bold">5.5$</span>
             </div>
             <p class="text-text-muted text-sm">Espresso, chocolate nóng, sữa tươi, whipped cream.</p>
           </div>
-          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+          <div class="bg-white dark:bg-bg-dark rounded-xl p-6 text-left card-hover border border-black/5 dark:border-white/5">
             <div class="flex justify-between items-start mb-3">
-              <h4 class="text-text-white font-bold text-lg">Cold Brew</h4>
+              <h4 class="text-text-dark dark:text-text-white font-bold text-lg">Cold Brew</h4>
               <span class="text-primary font-bold">4.0$</span>
             </div>
             <p class="text-text-muted text-sm">Cà phê ủ lạnh 12 tiếng, vị mượt mà thanh nhẹ.</p>
           </div>
-          <div class="bg-bg-dark rounded-xl p-6 text-left card-hover border border-white/5">
+          <div class="bg-white dark:bg-bg-dark rounded-xl p-6 text-left card-hover border border-black/5 dark:border-white/5">
             <div class="flex justify-between items-start mb-3">
-              <h4 class="text-text-white font-bold text-lg">Vietnamese Coffee</h4>
+              <h4 class="text-text-dark dark:text-text-white font-bold text-lg">Vietnamese Coffee</h4>
               <span class="text-primary font-bold">3.0$</span>
             </div>
             <p class="text-text-muted text-sm">Cà phê phin truyền thống Việt Nam, sữa đặc.</p>
@@ -118,13 +123,13 @@
     </section>
 
     <!-- ========== KHÔNG GIAN CÀ PHÊ ========== -->
-    <section class="py-20 px-6 bg-bg-dark" data-reveal>
+    <section class="py-20 px-6 bg-white dark:bg-bg-dark" data-reveal>
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <p class="script-text text-xl mb-2">Our Space</p>
-          <h2 class="section-heading text-text-white text-3xl mb-6">Không gian <span class="text-primary">ấm cúng</span></h2>
-          <p class="text-text-light mb-4">Thiết kế hiện đại pha lẫn nét truyền thống, mang đến không gian thư giãn lý tưởng cho những buổi hẹn bạn bè hay làm việc yên tĩnh.</p>
-          <ul class="space-y-3 text-text-light">
+          <h2 class="section-heading text-text-dark dark:text-text-white text-3xl mb-6">Không gian <span class="text-primary">ấm cúng</span></h2>
+          <p class="text-gray-600 dark:text-text-light mb-4">Thiết kế hiện đại pha lẫn nét truyền thống, mang đến không gian thư giãn lý tưởng cho những buổi hẹn bạn bè hay làm việc yên tĩnh.</p>
+          <ul class="space-y-3 text-gray-600 dark:text-text-light">
             <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Wi-Fi miễn phí tốc độ cao</li>
             <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Ổ cắm điện tại mỗi bàn</li>
             <li class="flex items-center gap-2"><span class="text-primary">&#10003;</span> Sách và tạp chí miễn phí</li>
@@ -137,10 +142,79 @@
   </main>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6">
+  <footer class="bg-bg-dark border-t border-white/10 pt-16 pb-8 px-6 text-text-white">
     <div class="max-w-[1320px] mx-auto">
-      <div class="border-t border-white/10 mt-12 pt-6 text-center text-text-muted text-xs">
-        <p>Copyright &copy; 2026 by Elite Restaurant. All Rights Reserved.</p>
+      <!-- CTA Subscribe -->
+      <div class="bg-primary/10 rounded-lg p-8 mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-2xl font-bold text-text-white"><span class="text-primary" data-i18n="footer.supportTitle1">St</span><span data-i18n="footer.supportTitle2">ill You Need Our Support ?</span></h3>
+          <p class="text-text-light text-sm mt-1" data-i18n="footer.supportDesc">Don't wait make a smart & logical quote here. Its pretty easy.</p>
+        </div>
+        <div class="flex gap-2">
+          <input type="email" placeholder="Enter Your Email" data-i18n-placeholder="footer.emailPlaceholder" class="px-4 py-3 bg-primary rounded-l-full text-white placeholder-white/70 outline-none" />
+          <button class="px-6 py-3 bg-white text-primary font-semibold rounded-r-full hover:bg-gray-100 transition-colors" data-i18n="footer.subscribe">Subscribe Now</button>
+        </div>
+      </div>
+
+      <!-- Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.aboutTitle">About Us.</h4>
+          <p class="text-text-light" data-i18n="footer.aboutDesc">Corporate clients and leisure travelers hasbeen relying on Groundlink for dependablesafe.</p>
+          <div class="flex items-center gap-3 mt-4">
+            <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white font-bold">⏰</div>
+            <div><p class="text-text-white text-xs font-semibold" data-i18n="footer.hours">Opening Hours</p><p class="text-text-muted text-xs" data-i18n="footer.hoursValue">Mon - Sat(8:00 - 6:00) · Sunday - Closed</p></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.usefulLinks">Useful Links</h4>
+          <ul class="space-y-2 text-text-light">
+            <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="footer.link.about">About</a></li>
+            <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="footer.link.news">News</a></li>
+            <li><a href="/src/pages/chefs.html" class="hover:text-primary transition-colors" data-i18n="footer.link.team">Team</a></li>
+            <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="footer.link.menu">Menu</a></li>
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors" data-i18n="footer.link.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.help">Help?</h4>
+          <ul class="space-y-2 text-text-light">
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors" data-i18n="footer.link.faq">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.terms">Term & Condition</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.reporting">Reporting</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.docs">Documentation</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.support">Support Policy</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.privacy">Privacy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-text-white font-bold mb-4" data-i18n="footer.recentPost">Recent Post</h4>
+          <div id="footer-recent-posts" class="space-y-4">
+            <!-- render động bởi main.js (renderFooterRecentPosts), dùng blogPostsData thật -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-text-muted text-xs">
+        <p data-i18n="footer.copyright">Copyright © 2026 by Elite Restaurant. All Rights Reserved.</p>
+        <div class="flex gap-2">
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Facebook">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Twitter">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Instagram">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="YouTube">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+          </a>
+          <a href="#" class="w-7 h-7 bg-white rounded flex items-center justify-center hover:bg-primary transition group" aria-label="Pinterest">
+            <svg class="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 17c.7-2 1.2-4 1.8-6.3M12.2 7.2c2.4 0 4 1.4 4 3.5 0 2.6-1.5 4.6-3.7 4.6-1 0-1.8-.5-2-1.2"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </footer>

@@ -130,3 +130,47 @@ export function initScrollReveal() {
     observer.observe(el)
   })
 }
+
+/**
+ * initCounters — Đếm số chạy khi cuộn tới, dùng IntersectionObserver
+ * Áp dụng cho phần tử có [data-count-to="420"] (và [data-count-suffix] tuỳ chọn, vd "+")
+ * Tôn trọng prefers-reduced-motion: nếu user bật, hiện thẳng số cuối, không chạy animation.
+ */
+export function initCounters() {
+  const counters = document.querySelectorAll('[data-count-to]')
+  if (!counters.length) return
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  const animateCount = (el) => {
+    const target = parseInt(el.dataset.countTo, 10) || 0
+    const suffix = el.dataset.countSuffix || ''
+
+    if (prefersReducedMotion) {
+      el.textContent = target + suffix
+      return
+    }
+
+    const duration = 1500 // ms
+    const startTime = performance.now()
+
+    function tick(now) {
+      const progress = Math.min((now - startTime) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
+      el.textContent = Math.round(target * eased) + suffix
+      if (progress < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target)
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.5 })
+
+  counters.forEach(el => observer.observe(el))
+}

@@ -4,6 +4,8 @@
    Theo yêu cầu thầy: dữ liệu user lưu dạng JSON
    ============================================================ */
 
+import { t } from './i18n.js'
+
 const USERS_KEY = 'elite-users' // Key lưu danh sách tài khoản trong localStorage
 const CURRENT_USER_KEY = 'elite-current-user' // Key lưu user đang đăng nhập
 
@@ -37,24 +39,24 @@ function saveUsers(users) {
 export function register(name, email, password) {
   // Validate input
   if (!name || !email || !password) {
-    return { success: false, message: 'Vui lòng điền đầy đủ thông tin!' }
+    return { success: false, message: t('auth.fillAll') }
   }
 
   if (password.length < 6) {
-    return { success: false, message: 'Mật khẩu phải có ít nhất 6 ký tự!' }
+    return { success: false, message: t('auth.passwordMin') }
   }
 
   // Kiểm tra email regex cơ bản
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailRegex.test(email)) {
-    return { success: false, message: 'Email không hợp lệ!' }
+    return { success: false, message: t('auth.invalidEmail') }
   }
 
   const users = getUsers()
 
   // Kiểm tra email đã tồn tại chưa
   if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
-    return { success: false, message: 'Email này đã được đăng ký!' }
+    return { success: false, message: t('auth.emailTaken') }
   }
 
   // Thêm user mới vào mảng và lưu
@@ -66,7 +68,7 @@ export function register(name, email, password) {
   })
 
   saveUsers(users)
-  return { success: true, message: 'Đăng ký thành công! Hãy đăng nhập.' }
+  return { success: true, message: t('auth.registerSuccess') }
 }
 
 /**
@@ -77,7 +79,7 @@ export function register(name, email, password) {
  */
 export function login(email, password) {
   if (!email || !password) {
-    return { success: false, message: 'Vui lòng điền email và mật khẩu!' }
+    return { success: false, message: t('auth.fillEmailPassword') }
   }
 
   const users = getUsers()
@@ -86,7 +88,7 @@ export function login(email, password) {
   )
 
   if (!user) {
-    return { success: false, message: 'Email hoặc mật khẩu không đúng!' }
+    return { success: false, message: t('auth.wrongCredentials') }
   }
 
   // Lưu thông tin user đang đăng nhập
@@ -95,7 +97,7 @@ export function login(email, password) {
     email: user.email
   }))
 
-  return { success: true, message: `Chào mừng ${user.name}!`, user }
+  return { success: true, message: t('auth.welcome', { name: user.name }), user }
 }
 
 /**
@@ -123,4 +125,40 @@ export function logout() {
  */
 export function isLoggedIn() {
   return getCurrentUser() !== null
+}
+
+/**
+ * renderAuthStatus — Đồng bộ icon Tài khoản trên header với trạng thái đăng nhập
+ * - Chưa đăng nhập: icon user giữ nguyên, trỏ tới trang Sign In.
+ * - Đã đăng nhập: ẩn icon user, thay bằng "Hi, <tên> · Đăng xuất".
+ * Gắn liền trước icon #user-account-link (mọi header hiện đều có).
+ */
+export function renderAuthStatus() {
+  const user = getCurrentUser()
+  const accountLinks = document.querySelectorAll('#user-account-link')
+
+  if (!user) {
+    accountLinks.forEach((link) => { link.href = '/src/pages/signin.html' })
+    return
+  }
+
+  accountLinks.forEach((link) => {
+    const container = link.parentElement
+    if (!container || container.querySelector('.auth-status')) return // tránh render trùng
+
+    link.classList.add('hidden') // Ẩn icon mặc định, thay bằng khối tên + đăng xuất
+
+    const wrapper = document.createElement('div')
+    wrapper.className = 'auth-status hidden sm:flex items-center gap-2 text-xs mr-1'
+    wrapper.innerHTML = `
+      <span class="text-white/80">${t('auth.hi')}, ${user.name.split(' ')[0]}</span>
+      <button type="button" class="btn-logout text-primary hover:underline font-semibold cursor-pointer">${t('auth.logout')}</button>
+    `
+    container.insertBefore(wrapper, link)
+
+    wrapper.querySelector('.btn-logout').addEventListener('click', () => {
+      logout()
+      window.location.href = '/'
+    })
+  })
 }
