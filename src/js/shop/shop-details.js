@@ -1,265 +1,319 @@
-/* ============================================================
-   shop-details.js — Logic trang chi tiết sản phẩm
-   Đọc dữ liệu từ menu.json, kết nối cart.js + wishlist.js module chung
-   ============================================================ */
-import { addToCart } from '/src/js/cart.js' // Import hàm thêm giỏ hàng
-import { showSuccessToast } from '/src/js/validate.js' // Toast thông báo
+import { addToCart } from '/src/js/cart.js'
+import { showSuccessToast } from '/src/js/validate.js'
 import { isWishlisted, toggleWishlist } from '/src/js/wishlist.js'
-import { t, getLang } from '/src/js/i18n.js' // Chuyển ngôn ngữ VN/EN
+import { t, getLang } from '/src/js/i18n.js'
 
-/**
- * getProductIdFromUrl — Lấy id sản phẩm từ URL query string (?id=SP01)
- */
+let similarOffset = 0
+let similarItems = []
+
 function getProductIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search)
-  return urlParams.get('id') || 'SP01' // Trả về string vì menu.json dùng "SP01"
+  return urlParams.get('id') || 'SP01'
 }
 
-/**
- * initShopDetails — Khởi tạo trang chi tiết sản phẩm
- * Fetch từ menu.json thay vì dùng mockProducts
- */
 async function initShopDetails() {
   const productId = getProductIdFromUrl()
-  const container = document.getElementById('product-detail-container')
-  if (!container) return
+  const detailContainer = document.getElementById('product-detail-container')
+  if (!detailContainer) return
 
   try {
     const response = await fetch('/src/data/menu.json')
     const menuData = await response.json()
 
-    // Tìm sản phẩm theo ID
     const productIndex = menuData.findIndex(p => String(p.id) === String(productId))
     const product = menuData[productIndex]
 
     if (!product) {
-      container.className = '' // Bỏ hết class skeleton loading (grid + animate-pulse) trước khi render nội dung thật
-      container.innerHTML = `
+      detailContainer.innerHTML = `
         <div class="text-center py-20">
-          <p class="text-red-500 font-bold mb-4">${t('common.notFound')}</p>
-          <a href="/src/pages/shop-list.html" class="text-xs bg-primary text-white px-4 py-2 rounded shadow hover:bg-amber-600 transition">${t('common.backToShop')}</a>
+          <p class="text-red-500 font-bold mb-4">Không tìm thấy món ăn!</p>
+          <a href="/src/pages/shop-list.html" class="text-xs bg-primary text-white px-5 py-2.5 rounded shadow hover:bg-amber-600 transition">Quay lại cửa hàng</a>
         </div>`
       return
     }
 
-    // Sản phẩm trước/sau trong danh sách (vòng lặp về đầu/cuối) — cho nút Prev/Next
     const prevProduct = menuData[(productIndex - 1 + menuData.length) % menuData.length]
     const nextProduct = menuData[(productIndex + 1) % menuData.length]
     const wishlisted = isWishlisted(product.id)
     const description = getLang() === 'en' ? (product.description_en || product.description) : product.description
 
-    // Bỏ hết class skeleton loading (grid + animate-pulse) trước khi render nội dung thật —
-    // nếu không, class "animate-pulse" và grid ngoài sẽ tồn tại vĩnh viễn đè lên layout thật,
-    // gây hiệu ứng nhấp nháy mờ + chồng lấn nội dung (2 lớp grid lồng nhau).
-    container.className = ''
+    const sameCatProducts = menuData.filter(p => p.category === product.category && p.id !== product.id)
+    const thumbnails = [
+      product.image,
+      sameCatProducts[0]?.image || menuData[(productIndex + 1) % menuData.length].image,
+      sameCatProducts[1]?.image || menuData[(productIndex + 2) % menuData.length].image,
+      sameCatProducts[2]?.image || menuData[(productIndex + 3) % menuData.length].image
+    ]
 
-    // Render chi tiết sản phẩm theo layout Figma
-    container.innerHTML = `
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
-        <!-- Ảnh sản phẩm lớn -->
-        <div class="lg:col-span-6">
-          <img src="${product.image}" alt="${product.name}" class="w-full h-[400px] object-cover rounded-xl shadow-md">
+    detailContainer.innerHTML = `
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div class="lg:col-span-6 flex flex-col-reverse sm:flex-row gap-4">
+          <div class="flex sm:flex-col gap-3.5 shrink-0">
+            ${thumbnails.map((imgUrl, idx) => `
+              <div class="thumb-item w-20 h-20 sm:w-24 sm:h-24 rounded-[2px] overflow-hidden border ${idx === 0 ? 'border-primary' : 'border-gray-200 dark:border-gray-700'} cursor-pointer hover:border-primary transition">
+                <img src="${imgUrl}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover" />
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="flex-1 aspect-square bg-gray-100 rounded-[2px] overflow-hidden border border-gray-200 dark:border-gray-800">
+            <img id="main-product-image" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-all duration-300" />
+          </div>
         </div>
 
-        <!-- Thông tin sản phẩm -->
         <div class="lg:col-span-6 space-y-4">
-          <div class="flex items-center justify-between flex-wrap gap-2">
-            <span class="bg-amber-100 text-amber-700 font-semibold px-3 py-1 rounded-full text-xs">${t('common.inStock')}</span>
-            <!-- Prev/Next — chuyển sang món trước/sau trong danh sách -->
-            <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-              <a href="/src/pages/shop-details.html?id=${prevProduct.id}" class="hover:text-primary flex items-center gap-1" title="${prevProduct.name}">← ${t('common.prev')}</a>
-              <a href="/src/pages/shop-details.html?id=${nextProduct.id}" class="hover:text-primary flex items-center gap-1" title="${nextProduct.name}">${t('common.next')} →</a>
+          <div class="flex items-center justify-between text-xs">
+            <span class="bg-primary/10 text-primary font-medium px-3 py-1 rounded-[2px]">In stock</span>
+            <div class="flex items-center gap-4 text-gray-500 dark:text-gray-400">
+              <a href="/src/pages/shop-details.html?id=${prevProduct.id}" class="hover:text-primary transition flex items-center gap-1">&larr; Prev</a>
+              <a href="/src/pages/shop-details.html?id=${nextProduct.id}" class="hover:text-primary transition flex items-center gap-1">Next &rarr;</a>
             </div>
           </div>
 
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">${product.name}</h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">${description}</p>
+          <h1 class="text-3xl sm:text-4xl font-bold font-heading text-[#333333] dark:text-white">
+            ${product.name}
+          </h1>
 
-          <!-- Rating (sao) dựa trên trường rating trong JSON -->
-          <div class="flex items-center gap-1">
-            ${Array.from({length: 5}, (_, i) =>
-              `<span class="${i < Math.round(product.rating) ? 'text-primary' : 'text-gray-300'} text-sm">★</span>`
-            ).join('')}
-            <span class="text-xs text-gray-500 ml-2">(${product.rating})</span>
-          </div>
+          <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+            ${description}
+          </p>
 
-          <div class="text-3xl font-bold text-primary">
+          <hr class="border-gray-200 dark:border-gray-800" />
+
+          <div class="text-3xl font-bold text-[#333333] dark:text-white">
             $${product.price.toFixed(2)}
           </div>
 
-          <!-- Nút tăng/giảm số lượng + Add to Cart -->
-          <div class="flex items-center flex-wrap gap-4 pt-4">
-            <!-- Dạng pill có khoảng cách rõ giữa -/số lượng/+, đồng bộ với cart.js -->
-            <div class="flex items-center h-11 border border-gray-300 dark:border-gray-600 rounded-full px-4 gap-4">
-              <button id="btn-minus" type="button" aria-label="${t('shop.decreaseQty')}" class="text-gray-500 dark:text-gray-300 hover:text-primary font-bold text-lg leading-none cursor-pointer">−</button>
-              <span id="input-qty" class="w-6 text-center text-sm font-bold text-gray-800 dark:text-white select-none">1</span>
-              <button id="btn-plus" type="button" aria-label="${t('shop.increaseQty')}" class="text-gray-500 dark:text-gray-300 hover:text-primary font-bold text-lg leading-none cursor-pointer">+</button>
+          <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+            <div class="flex items-center text-primary text-sm">★★★★★</div>
+            <span>|</span>
+            <span>${(product.rating || 5.0).toFixed(1)} Rating</span>
+            <span>|</span>
+            <span>22 Review</span>
+          </div>
+
+          <p class="text-xs text-gray-500 dark:text-gray-400">Dictum/cursus/Risus</p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <div class="flex items-center border border-gray-300 dark:border-gray-700 rounded-[2px] h-11">
+              <button id="btn-minus" type="button" class="w-10 h-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-primary font-bold text-base transition border-r border-gray-300 dark:border-gray-700">−</button>
+              <span id="input-qty" class="w-12 text-center text-sm font-semibold text-[#333333] dark:text-white select-none">1</span>
+              <button id="btn-plus" type="button" class="w-10 h-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-primary font-bold text-base transition border-l border-gray-300 dark:border-gray-700">+</button>
             </div>
-            <button id="btn-add-to-cart" class="bg-primary text-white font-semibold px-8 h-11 rounded-lg hover:bg-amber-600 transition shadow-md shadow-amber-500/20 flex items-center gap-2 text-sm cursor-pointer">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-              ${t('common.addToCart')}
+
+            <button id="btn-add-to-cart" class="bg-primary text-white font-medium px-8 h-11 rounded-[2px] hover:bg-amber-600 transition flex items-center gap-2 text-sm shadow-sm">
+              <span class="w-4 h-4 bg-current transition-colors" style="mask: url('/public/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Tote.svg') no-repeat center / contain;"></span>
+              Add to cart
             </button>
           </div>
 
-          <!-- Wishlist + Share + Metadata -->
-          <div class="pt-6 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-500 space-y-3">
-            <button id="btn-wishlist" type="button" data-id="${product.id}" class="flex items-center gap-2 font-semibold cursor-pointer transition-colors ${wishlisted ? 'text-primary' : 'text-gray-500 dark:text-gray-400 hover:text-primary'}">
-              <svg id="wishlist-icon" class="w-4 h-4" fill="${wishlisted ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-              <span id="wishlist-label">${wishlisted ? t('common.wishlisted') : t('common.addToWishlist')}</span>
+          <hr class="border-gray-200 dark:border-gray-800" />
+
+          <div class="flex items-center gap-6 text-sm text-[#333333] dark:text-gray-300">
+            <button id="btn-wishlist" type="button" class="flex items-center gap-2 hover:text-primary transition ${wishlisted ? 'text-primary' : ''}">
+              <span class="w-4 h-4 bg-current transition-colors" style="mask: url('/public/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Heart.svg') no-repeat center / contain;"></span>
+              <span id="wishlist-label">${wishlisted ? 'Wishlisted' : 'Add to Wishlist'}</span>
             </button>
-            <div><span class="font-semibold text-gray-800 dark:text-gray-300">${t('common.category')}:</span> ${product.category}</div>
-            <div class="flex items-center gap-3">
-              <span class="font-semibold text-gray-800 dark:text-gray-300">${t('common.share')}:</span>
-              <button id="btn-share" type="button" class="hover:text-primary cursor-pointer" aria-label="${t('shop.copyLink')}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342a3 3 0 100-2.684m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
-              </button>
-              <span id="share-feedback" class="text-primary hidden">${t('toast.copiedLink')}</span>
+            <button type="button" class="flex items-center gap-2 hover:text-primary transition">
+              <span class="w-4 h-4 bg-current transition-colors" style="mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain;"></span>
+              <span>Compare</span>
+            </button>
+          </div>
+
+          <div class="space-y-2 text-sm text-[#333333] dark:text-gray-300 pt-1">
+            <p><span class="text-gray-500 dark:text-gray-400">Category:</span> ${product.category}</p>
+            <p><span class="text-gray-500 dark:text-gray-400">Tag:</span> Our Shop</p>
+            
+            <div class="flex items-center gap-3 pt-2">
+              <span class="text-gray-500 dark:text-gray-400">Share:</span>
+              <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary transition text-xs">f</a>
+                <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary transition text-xs">t</a>
+                <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary transition text-xs">in</a>
+                <a href="#" class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-primary transition text-xs">p</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    `
 
-      <!-- Tab Description / Reviews — nội dung thật lấy từ menu.json -->
-      <div class="space-y-6">
-        <div class="flex border-b border-gray-200 dark:border-gray-800 gap-8 text-sm" role="tablist">
-          <button type="button" role="tab" aria-selected="true" data-tab-target="description" class="detail-tab-btn pb-3 border-b-2 border-primary font-bold text-primary">${t('common.description')}</button>
-          <button type="button" role="tab" aria-selected="false" data-tab-target="reviews" class="detail-tab-btn pb-3 border-b-2 border-transparent text-gray-400 hover:text-primary">${t('common.reviews')}</button>
-        </div>
-        <div id="tab-panel-description" class="detail-tab-panel text-xs text-gray-500 dark:text-gray-400 leading-relaxed space-y-2" role="tabpanel">
-          <p>${description}</p>
-          <p>${t('shop.belongsTo')} <strong class="text-text-dark dark:text-text-white">${product.category}</strong>, ${t('shop.priced')} <strong class="text-primary">$${product.price.toFixed(2)}</strong>.</p>
-        </div>
-        <div id="tab-panel-reviews" class="detail-tab-panel hidden text-xs text-gray-500 dark:text-gray-400 leading-relaxed" role="tabpanel">
-          <p>${t('shop.avgRating')}: <strong class="text-primary">${product.rating} / 5 ★</strong></p>
-          <p class="mt-2">${t('shop.noReviewsYet')}</p>
-        </div>
-      </div>`
+    renderTabs(product, description)
 
+    similarItems = menuData.filter(p => p.id !== product.id)
+    renderSimilarSection()
+
+    setupThumbnailClick()
     setupQuantityControls()
-    setupTabs()
-    setupWishlist(product)
-    setupShare(product)
+    setupCartAndWishlist(product)
 
-    // Gắn sự kiện Add To Cart — dùng cart.js module chung
-    document.getElementById('btn-add-to-cart')?.addEventListener('click', () => {
-      const qty = parseInt(document.getElementById('input-qty')?.textContent) || 1
-      addToCart({ ...product, quantity: qty }) // Truyền sản phẩm + số lượng
-      showSuccessToast(t('toast.addedToCart', { qty, name: product.name }))
-    })
-
-    // Render thêm sản phẩm liên quan (cùng category)
-    renderRelatedProducts(menuData, product)
   } catch (error) {
-    console.error('Lỗi khi tải chi tiết sản phẩm:', error)
+    console.error('Lỗi nạp dữ liệu:', error)
   }
 }
 
-/**
- * setupTabs — Chuyển giữa tab Description / Reviews (điều hướng được bằng bàn phím
- * mặc định của trình duyệt vì dùng đúng thẻ <button>)
- */
-function setupTabs() {
-  const tabButtons = document.querySelectorAll('.detail-tab-btn')
-  tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tabTarget
+function setupThumbnailClick() {
+  const thumbs = document.querySelectorAll('.thumb-item')
+  const mainImg = document.getElementById('main-product-image')
 
-      tabButtons.forEach((b) => {
-        b.classList.remove('border-primary', 'text-primary', 'font-bold')
-        b.classList.add('border-transparent', 'text-gray-400')
-        b.setAttribute('aria-selected', 'false')
-      })
-      btn.classList.add('border-primary', 'text-primary', 'font-bold')
-      btn.classList.remove('border-transparent', 'text-gray-400')
-      btn.setAttribute('aria-selected', 'true')
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      thumbs.forEach(t => t.classList.remove('border-primary'))
+      thumb.classList.add('border-primary')
 
-      document.querySelectorAll('.detail-tab-panel').forEach((panel) => {
-        panel.classList.toggle('hidden', panel.id !== `tab-panel-${target}`)
-      })
+      const img = thumb.querySelector('img')
+      if (img && mainImg) mainImg.src = img.src
     })
   })
 }
 
-/**
- * setupWishlist — Nút "Add to Wishlist" lưu vào localStorage qua wishlist.js
- */
-function setupWishlist(product) {
-  const btn = document.getElementById('btn-wishlist')
-  if (!btn) return
+function renderTabs(product, description) {
+  const container = document.getElementById('product-tabs-container')
+  if (!container) return
 
-  btn.addEventListener('click', () => {
-    const nowWishlisted = toggleWishlist(product.id)
-    const icon = document.getElementById('wishlist-icon')
-    const label = document.getElementById('wishlist-label')
+  const displayDesc = product.description_en || product.description || description
 
-    btn.classList.toggle('text-primary', nowWishlisted)
-    icon.setAttribute('fill', nowWishlisted ? 'currentColor' : 'none')
-    label.textContent = nowWishlisted ? t('common.wishlisted') : t('common.addToWishlist')
-    showSuccessToast(nowWishlisted ? t('toast.addedToWishlist', { name: product.name }) : t('toast.removedFromWishlist', { name: product.name }))
+  container.innerHTML = `
+    <div class="pt-6">
+      <div class="flex items-center gap-6 border-b border-gray-200 dark:border-gray-800 pb-0">
+        <button id="tab-desc-btn" class="bg-primary text-white text-sm font-semibold px-7 py-3 rounded-t-[2px] transition focus:outline-none cursor-pointer">
+          Description
+        </button>
+        <button id="tab-rev-btn" class="text-sm font-semibold px-7 py-3 text-[#333333] dark:text-gray-400 hover:text-primary transition focus:outline-none cursor-pointer">
+          Reviews (24)
+        </button>
+      </div>
+
+      <div id="tab-desc-content" class="pt-8 space-y-6 text-[#4F4F4F] dark:text-gray-400 text-sm sm:text-base leading-relaxed">
+        <p>${displayDesc}</p>
+        <p>Nam tristique porta ligula, vel viverra sem eleifend nec. Nullam sed purus augue, eu euismod tellus. Nam mattis eros nec mi sagittis sagittis. Vestibulum suscipit cursus bibendum. Integer at justo eget sem auctor auctor eget vitae arcu. Nam tempor malesuada porttitor.</p>
+        <p>Suspendisse cursus sodales placerat. Morbi eu lacinia ex. Curabitur blandit justo urna, id porttitor est dignissim nec. Pellentesque scelerisque hendrerit posuere. Sed at dolor quis nisl rutrum accumsan at sagittis massa. Aliquam aliquam accumsan lectus quis auctor. Curabitur rutrum massa at volutpat placerat. Duis sagittis vehicula fermentum. Integer eu vulputate justo. Aenean pretium odio vel tempor sodales. Suspendisse eu fringilla leo, non aliquet nam.</p>
+        
+        <div class="pt-2">
+          <h4 class="font-bold text-[#333333] dark:text-white text-lg mb-3">Key Benefits</h4>
+          <ul class="list-disc list-inside space-y-2 text-sm text-[#4F4F4F] dark:text-gray-400">
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+            <li>Maecenas ullamcorper est et massa mattis condimentum.</li>
+            <li>Vestibulum sed massa vel ipsum imperdiet malesuada id tempus nisl.</li>
+            <li>Etiam nec massa et lectus faucibus ornare congue in nunc.</li>
+            <li>Mauris eget diam magna, in blandit turpis.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="tab-rev-content" class="hidden pt-8 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+        <p class="text-base text-[#333333] dark:text-white font-semibold mb-2">Đánh giá từ khách hàng</p>
+        <p>Điểm trung bình: <strong class="text-primary font-bold">${(product.rating || 5.0).toFixed(1)} / 5 ★</strong> (Dựa trên 22 lượt đánh giá thực tế)</p>
+      </div>
+    </div>
+  `
+
+  const descBtn = document.getElementById('tab-desc-btn')
+  const revBtn = document.getElementById('tab-rev-btn')
+  const descContent = document.getElementById('tab-desc-content')
+  const revContent = document.getElementById('tab-rev-content')
+
+  descBtn?.addEventListener('click', () => {
+    descBtn.className = 'bg-primary text-white text-sm font-semibold px-7 py-3 rounded-t-[2px] transition focus:outline-none cursor-pointer'
+    revBtn.className = 'text-sm font-semibold px-7 py-3 text-[#333333] dark:text-gray-400 hover:text-primary transition focus:outline-none cursor-pointer'
+    descContent.classList.remove('hidden')
+    revContent.classList.add('hidden')
+  })
+
+  revBtn?.addEventListener('click', () => {
+    revBtn.className = 'bg-primary text-white text-sm font-semibold px-7 py-3 rounded-t-[2px] transition focus:outline-none cursor-pointer'
+    descBtn.className = 'text-sm font-semibold px-7 py-3 text-[#333333] dark:text-gray-400 hover:text-primary transition focus:outline-none cursor-pointer'
+    revContent.classList.remove('hidden')
+    descContent.classList.add('hidden')
   })
 }
 
-/**
- * setupShare — Sao chép liên kết trang hiện tại bằng Clipboard API
- */
-function setupShare(product) {
-  const btn = document.getElementById('btn-share')
-  if (!btn) return
+function renderSimilarSection() {
+  const container = document.getElementById('similar-products-container')
+  if (!container) return
 
-  btn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href)
-      const feedback = document.getElementById('share-feedback')
-      feedback.classList.remove('hidden')
-      setTimeout(() => feedback.classList.add('hidden'), 2000)
-    } catch (error) {
-      console.error('Không thể sao chép liên kết:', error)
-      showSuccessToast(t('toast.copyFailed'))
+  const visibleItems = similarItems.slice(similarOffset, similarOffset + 4)
+
+  container.innerHTML = `
+    <div class="space-y-6">
+      <div class="flex justify-between items-center">
+        <h3 class="text-2xl sm:text-3xl font-bold text-[#333333] dark:text-white font-heading">Similar Products</h3>
+        <div class="flex items-center gap-2">
+          <button id="btn-similar-prev" class="w-9 h-9 rounded-full bg-white dark:bg-bg-dark-2 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition shadow-sm cursor-pointer">&larr;</button>
+          <button id="btn-similar-next" class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center hover:bg-amber-600 transition shadow-sm cursor-pointer">&rarr;</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        ${visibleItems.map(item => `
+          <div class="group cursor-pointer flex flex-col" onclick="window.location.href='/src/pages/shop-details.html?id=${item.id}'">
+            <div class="relative bg-gray-100 aspect-square overflow-hidden rounded-[2px]">
+              <img 
+                src="${item.image}" 
+                alt="${item.name}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                onerror="this.src='https://placehold.co/300x300?text=Food'"
+              />
+              ${item.oldPrice ? `<span class="absolute top-4 left-4 bg-primary text-white text-xs px-3 py-0.5 rounded-[2px]">Sell</span>` : ''}
+            </div>
+            <h4 class="mt-3 font-bold text-base text-[#333333] dark:text-white group-hover:text-primary transition line-clamp-1">${item.name}</h4>
+            <div class="mt-1 text-sm flex items-center">
+              <span class="text-primary font-semibold">$${item.price.toFixed(2)}</span>
+              ${item.oldPrice ? `<span class="text-gray-400 line-through ml-2 text-xs font-normal">$${item.oldPrice.toFixed(2)}</span>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `
+
+  document.getElementById('btn-similar-prev')?.addEventListener('click', () => {
+    if (similarOffset > 0) {
+      similarOffset = Math.max(0, similarOffset - 4)
+      renderSimilarSection()
+    }
+  })
+
+  document.getElementById('btn-similar-next')?.addEventListener('click', () => {
+    if (similarOffset + 4 < similarItems.length) {
+      similarOffset += 4
+      renderSimilarSection()
     }
   })
 }
 
-/**
- * renderRelatedProducts — Hiển thị sản phẩm liên quan (cùng category)
- */
-function renderRelatedProducts(allProducts, currentProduct) {
-  const relatedGrid = document.getElementById('related-products-grid')
-  if (!relatedGrid) return
-
-  // Lọc 4 sản phẩm cùng category, bỏ sản phẩm hiện tại
-  const related = allProducts
-    .filter(p => p.category === currentProduct.category && p.id !== currentProduct.id)
-    .slice(0, 4)
-
-  relatedGrid.innerHTML = related.map(item => `
-    <a href="/src/pages/shop-details.html?id=${item.id}" class="group">
-      <div class="bg-gray-200 aspect-square overflow-hidden rounded">
-        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-      </div>
-      <h4 class="mt-2 font-bold text-sm text-gray-800 dark:text-white group-hover:text-primary transition-colors">${item.name}</h4>
-      <span class="text-primary font-semibold text-sm">$${item.price.toFixed(2)}</span>
-    </a>
-  `).join('')
-}
-
-/**
- * setupQuantityControls — Xử lý nút +/- số lượng
- */
 function setupQuantityControls() {
   const btnMinus = document.getElementById('btn-minus')
   const btnPlus = document.getElementById('btn-plus')
   const inputQty = document.getElementById('input-qty')
 
-  if (btnMinus && btnPlus && inputQty) {
-    btnMinus.addEventListener('click', () => {
-      let val = parseInt(inputQty.textContent) || 1
-      if (val > 1) inputQty.textContent = val - 1
-    })
-    btnPlus.addEventListener('click', () => {
-      let val = parseInt(inputQty.textContent) || 1
-      inputQty.textContent = val + 1
-    })
-  }
+  btnMinus?.addEventListener('click', () => {
+    let val = parseInt(inputQty.textContent) || 1
+    if (val > 1) inputQty.textContent = val - 1
+  })
+
+  btnPlus?.addEventListener('click', () => {
+    let val = parseInt(inputQty.textContent) || 1
+    inputQty.textContent = val + 1
+  })
+}
+
+function setupCartAndWishlist(product) {
+  document.getElementById('btn-add-to-cart')?.addEventListener('click', () => {
+    const qty = parseInt(document.getElementById('input-qty')?.textContent) || 1
+    addToCart({ ...product, quantity: qty })
+    showSuccessToast(t('toast.addedToCart', { qty, name: product.name }) || `Đã thêm ${qty} ${product.name} vào giỏ!`)
+  })
+
+  const wishlistBtn = document.getElementById('btn-wishlist')
+  wishlistBtn?.addEventListener('click', () => {
+    const nowWishlisted = toggleWishlist(product.id)
+    const label = document.getElementById('wishlist-label')
+
+    wishlistBtn.classList.toggle('text-primary', nowWishlisted)
+    if (label) label.textContent = nowWishlisted ? 'Wishlisted' : 'Add to Wishlist'
+    showSuccessToast(nowWishlisted ? `Đã thêm ${product.name} vào yêu thích!` : `Đã xóa khỏi danh sách yêu thích!`)
+  })
 }
 
 document.addEventListener('DOMContentLoaded', initShopDetails)
