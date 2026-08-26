@@ -9,7 +9,7 @@
   </head>
   <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased">
 
-    <!-- ========== HEADER (đồng bộ với index.html) ========== -->
+    <!-- ========== HEADER ========== -->
     <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
       <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" class="text-2xl font-bold font-heading text-white">
@@ -25,9 +25,9 @@
         </ul>
         <div class="flex items-center gap-4 text-white">
           <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-        </a>
-        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </a>
+          <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
           <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
             <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
@@ -51,151 +51,158 @@
     </header>
 
     <main class="pt-16">
+      <!-- Banner Header -->
       <section class="relative">
-        <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" />
+        <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1495195129352-aeb325a55b65?q=80&w=1600'" />
         <div class="absolute inset-0 bg-black/40"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-          <h1 class="text-5xl font-bold" data-i18n="page.blogDetails.title">Blog Details</h1>
+          <h1 class="text-4xl md:text-5xl font-bold font-heading" data-i18n="page.blogDetails.title">Blog Details</h1>
           <nav class="mt-3 text-sm">
             <a href="/" class="hover:text-primary transition" data-i18n="page.home.tab">Home</a>
-            <span class="mx-2">&gt;</span>
-            <span class="text-primary" data-i18n="page.blogDetails.crumb">Blog details</span>
+            <span class="mx-2 text-white/60">&gt;</span>
+            <span class="text-primary font-medium" data-i18n="page.blogDetails.crumb">Blog details</span>
           </nav>
         </div>
       </section>
 
-      <section class="py-12 md:py-20 px-4 sm:px-6">
+      <!-- Main Content & Sidebar -->
+      <section class="py-16 md:py-24 px-4 sm:px-6">
         <div class="max-w-[1320px] mx-auto">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <div id="blog-detail-container" class="lg:col-span-8 space-y-8"></div>
+          <div class="flex flex-col lg:flex-row justify-between items-start gap-6">
+            
+            <!-- Cột trái: Chi tiết bài viết -->
+            <div class="w-full lg:w-[872px] shrink-0">
+              <div id="blog-detail-container" class="space-y-8"></div>
+            </div>
 
-            <aside id="sidebar-container" class="lg:col-span-4 space-y-8"></aside>
+            <!-- Cột phải: Sidebar -->
+            <aside id="sidebar-container" class="w-full lg:w-[424px] shrink-0 space-y-6 self-start"></aside>
+
           </div>
         </div>
       </section>
     </main>
 
+    <!-- ========== FOOTER ========== -->
     <footer class="bg-[#0D0D0D] text-gray-400 text-sm pt-20 font-sans">
-  <div class="max-w-[1170px] mx-auto px-4 sm:px-6 pb-12 border-b border-primary/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-    <div>
-      <h4 class="text-white text-3xl font-bold mb-3 font-heading">
-        <span class="text-primary" data-i18n="footer.supportTitle1">St</span><span data-i18n="footer.supportTitle2">ill You Need Our Support ?</span>
-      </h4>
-      <p class="text-sm text-gray-400" data-i18n="footer.supportDesc">
-        Don't wait make a smart & logical quote here. Its pretty easy.
-      </p>
-    </div>
-    <div class="flex w-full md:w-auto max-w-md">
-      <input
-        type="email"
-        placeholder="Enter Your Email"
-        data-i18n-placeholder="footer.emailPlaceholder"
-        class="w-full bg-primary text-white placeholder-white/80 px-5 py-3.5 rounded-l-[4px] rounded-r-none focus:outline-none text-sm"
-      />
-      <button class="bg-white text-primary px-7 py-3.5 rounded-r-[4px] rounded-l-none font-normal whitespace-nowrap text-sm hover:bg-gray-100 transition cursor-pointer" data-i18n="footer.subscribe">
-        Subscribe Now
-      </button>
-    </div>
-  </div>
-
-  <div class="max-w-[1320px] mx-auto px-0 py-14 flex flex-col lg:flex-row justify-between items-start">
-  
-  <div class="w-full lg:w-[395px] space-y-6">
-    <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.aboutTitle">About Us.</h5>
-    <p class="text-sm leading-relaxed text-[#FFFFFF]/75">
-      orporate clients and leisure travelers hasbeen relying on Groundlink for dependablesafe, and professional chauffeured carservice in major cities across World.
-    </p>
-    <div class="flex items-center gap-4 pt-1">
-      <div class="bg-primary text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-        <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
-      </div>
-      <div>
-        <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
-        <p class="text-xs text-gray-400 mt-1" data-i18n="footer.hoursValue2">Mon - Sat(8.00 - 6.00)</p>
-        <p class="text-xs text-gray-400 mt-0.5" data-i18n="footer.hoursClosed">Sunday - Closed</p>
-      </div>
-    </div>
-  </div>
-  <div class="w-full lg:w-[140px] space-y-4 mt-8 lg:mt-0">
-    <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.usefulLinks">Useful Links</h5>
-    <ul class="space-y-3.5 text-sm text-[#FFFFFF]/75">
-      <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="footer.link.about">About</a></li>
-      <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="footer.link.news">News</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.partners">Partners</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.team2">Team</a></li>
-      <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="footer.link.menu">Menu</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.contact">Contacts</a></li>
-    </ul>
-  </div>
-  <div class="w-full lg:w-[140px] space-y-4 mt-8 lg:mt-0">
-    <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.help">Help?</h5>
-    <ul class="space-y-3.5 text-sm text-[#FFFFFF]/75">
-      <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors" data-i18n="footer.link.faq">FAQ</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.terms">Term & conditions</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.reporting">Reporting</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.docs">Documentation</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.support">Support Policy</a></li>
-      <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.privacy">Privacy</a></li>
-    </ul>
-  </div>
-  <div class="w-full lg:w-[274px] space-y-5 mt-8 lg:mt-0">
-    <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
-    <div id="footer-recent-posts" class="space-y-4">
-      <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+      <div class="max-w-[1170px] mx-auto px-4 sm:px-6 pb-12 border-b border-primary/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
-          <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
-            Keep Your Business
-          </a>
+          <h4 class="text-white text-3xl font-bold mb-3 font-heading">
+            <span class="text-primary" data-i18n="footer.supportTitle1">St</span><span data-i18n="footer.supportTitle2">ill You Need Our Support ?</span>
+          </h4>
+          <p class="text-sm text-gray-400" data-i18n="footer.supportDesc">
+            Don't wait make a smart & logical quote here. Its pretty easy.
+          </p>
+        </div>
+        <div class="flex w-full md:w-auto max-w-md">
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            data-i18n-placeholder="footer.emailPlaceholder"
+            class="w-full bg-primary text-white placeholder-white/80 px-5 py-3.5 rounded-l-[4px] rounded-r-none focus:outline-none text-sm"
+          />
+          <button class="bg-white text-primary px-7 py-3.5 rounded-r-[4px] rounded-l-none font-normal whitespace-nowrap text-sm hover:bg-gray-100 transition cursor-pointer" data-i18n="footer.subscribe">
+            Subscribe Now
+          </button>
         </div>
       </div>
-      <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
-        <div>
-          <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
-          <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
-            Keep Your Business
-          </a>
+
+      <div class="max-w-[1320px] mx-auto px-4 sm:px-6 py-14 flex flex-col lg:flex-row justify-between items-start gap-8">
+        <div class="w-full lg:w-[395px] space-y-6">
+          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.aboutTitle">About Us.</h5>
+          <p class="text-sm leading-relaxed text-[#FFFFFF]/75">
+            orporate clients and leisure travelers hasbeen relying on Groundlink for dependablesafe, and professional chauffeured carservice in major cities across World.
+          </p>
+          <div class="flex items-center gap-4 pt-1">
+            <div class="bg-primary text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
+              <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+            </div>
+            <div>
+              <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
+              <p class="text-xs text-gray-400 mt-1" data-i18n="footer.hoursValue2">Mon - Sat(8.00 - 6.00)</p>
+              <p class="text-xs text-gray-400 mt-0.5" data-i18n="footer.hoursClosed">Sunday - Closed</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-full lg:w-[140px] space-y-4">
+          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.usefulLinks">Useful Links</h5>
+          <ul class="space-y-3.5 text-sm text-[#FFFFFF]/75">
+            <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="footer.link.about">About</a></li>
+            <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="footer.link.news">News</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.partners">Partners</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.team2">Team</a></li>
+            <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="footer.link.menu">Menu</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.contact">Contacts</a></li>
+          </ul>
+        </div>
+        <div class="w-full lg:w-[140px] space-y-4">
+          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.help">Help?</h5>
+          <ul class="space-y-3.5 text-sm text-[#FFFFFF]/75">
+            <li><a href="/src/pages/faq.html" class="hover:text-primary transition-colors" data-i18n="footer.link.faq">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.terms">Term & conditions</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.reporting">Reporting</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.docs">Documentation</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.support">Support Policy</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.link.privacy">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="w-full lg:w-[274px] space-y-5">
+          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
+          <div id="footer-recent-posts" class="space-y-4">
+            <div class="flex items-center gap-4">
+              <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+              <div>
+                <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
+                <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
+                  Keep Your Business
+                </a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+              <div>
+                <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
+                <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
+                  Keep Your Business
+                </a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+              <div>
+                <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
+                <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
+                  Keep Your Business
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
-        <div>
-          <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
-          <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
-            Keep Your Business
-          </a>
+
+      <div class="bg-[#4F4F4F] dark:bg-primary py-7 text-gray-200 dark:text-white text-sm transition-colors">
+        <div class="max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
+          <div class="flex space-x-3">
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Facebook">
+              <img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
+            </a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Twitter">
+              <img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
+            </a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Instagram">
+              <img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
+            </a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="YouTube">
+              <img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
+            </a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Pinterest">
+              <img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-</div>
-
-  <div class="bg-[#4F4F4F] dark:bg-primary py-7 text-gray-200 dark:text-white text-sm transition-colors">
-    <div class="max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
-      <div class="flex space-x-3">
-        <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Facebook">
-          <img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
-        </a>
-        <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Twitter">
-          <img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
-        </a>
-        <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Instagram">
-          <img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
-        </a>
-        <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="YouTube">
-          <img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
-        </a>
-        <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Pinterest">
-          <img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
-        </a>
-      </div>
-    </div>
-  </div>
-</footer>
+    </footer>
 
     <script type="module" src="/src/js/main.js"></script>
     <script type="module" src="/src/js/blog/blog-details.js"></script>

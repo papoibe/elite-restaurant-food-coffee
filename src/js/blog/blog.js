@@ -1,51 +1,192 @@
 import { blogPostsData } from './data.js';
 import { renderSidebar } from './sidebar.js';
-import { getLang, t } from '../i18n.js'; // Hỗ trợ đa ngôn ngữ
-import { countComments } from './comments.js'; // Đếm bình luận thật (mẫu + do user đăng), thay cho số tĩnh commentsCount
+import { getLang, t } from '../i18n.js';
+import { countComments } from './comments.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderSidebar();
+let currentPage = 1;
+const postsPerPage = 4;
 
+export function renderBlogList() {
   const container = document.getElementById('blog-posts-container');
   if (!container) return;
 
-  const lang = getLang(); // Lấy ngôn ngữ hiện tại (vi hoặc en)
+  const lang = getLang();
+  const totalPosts = blogPostsData.length;
+  const totalPages = Math.ceil(totalPosts / postsPerPage) || 1;
 
-  container.innerHTML = blogPostsData.map(post => {
-    // Chọn tiêu đề, mô tả theo ngôn ngữ hiện tại
-    const title = lang === 'vi' ? (post.title_vi || post.title) : post.title;
-    const excerpt = lang === 'vi' ? (post.excerpt_vi || post.excerpt) : post.excerpt;
-    const readMoreText = t('common.readMore');
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
 
-    return `
-    <article class="mb-12">
-      <div class="relative overflow-hidden rounded-md mb-6">
-        <a href="/src/pages/blog-details.html?id=${post.id}">
-          <img src="${post.image}" class="w-full h-[350px] md:h-[450px] object-cover hover:scale-105 transition duration-500" alt="${title}">
-        </a>
-        <div class="absolute left-6 top-6 w-[55px] h-[55px] bg-primary rounded-sm flex flex-col items-center justify-center text-white font-bold shadow-md pointer-events-none">
-          <span class="text-base leading-tight">${post.day}</span>
-          <span class="text-xs leading-tight font-normal">${post.month}</span>
-        </div>
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const currentPosts = blogPostsData.slice(startIndex, endIndex);
+
+  if (currentPosts.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-16 text-gray-500 dark:text-gray-400">
+        <p>${lang === 'vi' ? 'Không có bài viết nào.' : 'No blog posts found.'}</p>
       </div>
+    `;
+  } else {
+    container.innerHTML = currentPosts.map(post => {
+      const title = lang === 'vi' ? (post.title_vi || post.title) : post.title;
+      const excerpt = lang === 'vi' ? (post.excerpt_vi || post.excerpt) : post.excerpt;
+      const date = lang === 'vi' ? (post.date_vi || post.date) : post.date;
+      const commentsNum = typeof countComments === 'function' ? countComments(post.id) : (post.commentsCount || 3);
+      const readMoreText = t('common.readMore') || (lang === 'vi' ? 'Xem thêm' : 'Read More');
 
-      <div class="flex items-center gap-4 text-xs text-gray-500 mb-3">
-        <span class="flex items-center gap-1"><svg class="w-3 h-3 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> ${post.date}</span>
-        <span>/</span>
-        <span class="flex items-center gap-1"><svg class="w-3 h-3 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> ${countComments(post.id)}</span>
-        <span>/</span>
-        <span class="flex items-center gap-1"><svg class="w-3 h-3 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg> ${post.author}</span>
-      </div>
+      return `
+        <article class="bg-white dark:bg-bg-dark rounded-[2px] overflow-hidden mb-12">
+          <div class="relative overflow-hidden group">
+            <a href="/src/pages/blog-details.html?id=${post.id}" class="block overflow-hidden">
+              <img 
+                src="${post.image}" 
+                class="w-full h-[360px] md:h-[480px] object-cover group-hover:scale-105 transition duration-500" 
+                alt="${title}" 
+                onerror="this.src='https://placehold.co/800x480?text=Food+Blog'"
+              />
+            </a>
+            <div class="absolute left-6 top-6 w-[56px] h-[56px] bg-primary rounded-[2px] flex flex-col items-center justify-center text-white shadow-md pointer-events-none">
+              <span class="text-lg font-bold leading-none">${post.day}</span>
+              <span class="text-xs font-normal leading-tight mt-1">${post.month}</span>
+            </div>
+          </div>
 
-      <h2 class="text-xl md:text-2xl font-bold text-[#333333] dark:text-white hover:text-primary transition mb-3 leading-snug">
-        <a href="/src/pages/blog-details.html?id=${post.id}">${title}</a>
-      </h2>
+          <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 mt-5 mb-3 font-normal">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              ${date}
+            </span>
+            <span class="text-gray-300">/</span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              ${commentsNum}
+            </span>
+            <span class="text-gray-300">/</span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              ${post.author}
+            </span>
+          </div>
 
-      <p class="text-sm text-gray-500 leading-relaxed mb-6">${excerpt}</p>
+          <h2 class="text-2xl md:text-[26px] font-bold text-[#333333] dark:text-white hover:text-primary transition mb-3 leading-snug">
+            <a href="/src/pages/blog-details.html?id=${post.id}">${title}</a>
+          </h2>
 
-      <a href="/src/pages/blog-details.html?id=${post.id}" class="inline-flex items-center px-6 py-2.5 border border-primary text-primary font-semibold text-xs rounded-sm hover:bg-primary hover:text-white transition gap-2">
-        ${readMoreText} <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </article>
-  `}).join('');
+          <p class="text-sm text-[#4F4F4F] dark:text-gray-400 leading-relaxed mb-6 font-normal">
+            ${excerpt}
+          </p>
+
+          <a 
+            href="/src/pages/blog-details.html?id=${post.id}" 
+            class="inline-flex items-center px-6 py-2.5 border border-primary text-primary font-normal text-sm rounded-[2px] hover:bg-primary hover:text-white transition gap-2 group"
+          >
+            <span>${readMoreText}</span>
+            <svg class="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </a>
+        </article>
+      `;
+    }).join('');
+  }
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const paginationContainer = document.getElementById('blog-pagination');
+  if (!paginationContainer) return;
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === totalPages;
+
+  paginationContainer.innerHTML = `
+    <div class="flex justify-center items-center gap-3 mt-12">
+      <button 
+        id="btn-prev-page" 
+        ${isFirstPage ? 'disabled' : ''}
+        class="w-11 h-11 flex items-center justify-center rounded-[2px] border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-bg-dark text-primary font-bold text-sm shadow-sm transition ${
+          isFirstPage 
+            ? 'opacity-40 cursor-not-allowed border-gray-200' 
+            : 'hover:border-primary cursor-pointer'
+        }"
+        aria-label="Previous Page"
+      >
+        &#171;
+      </button>
+
+      ${pageNumbers.map(p => `
+        <button 
+          data-page="${p}" 
+          class="btn-page-number w-11 h-11 flex items-center justify-center rounded-[2px] text-sm font-semibold transition shadow-sm ${
+            p === currentPage 
+              ? 'bg-primary text-white border border-primary cursor-default' 
+              : 'border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-bg-dark text-primary hover:border-primary cursor-pointer'
+          }"
+        >
+          ${p}
+        </button>
+      `).join('')}
+
+      <button 
+        id="btn-next-page" 
+        ${isLastPage ? 'disabled' : ''}
+        class="w-11 h-11 flex items-center justify-center rounded-[2px] border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-bg-dark text-primary font-bold text-sm shadow-sm transition ${
+          isLastPage 
+            ? 'opacity-40 cursor-not-allowed border-gray-200' 
+            : 'hover:border-primary cursor-pointer'
+        }"
+        aria-label="Next Page"
+      >
+        &#187;
+      </button>
+    </div>
+  `;
+
+  document.getElementById('btn-prev-page')?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderBlogList();
+      window.scrollTo({ top: 350, behavior: 'smooth' });
+    }
+  });
+
+  document.getElementById('btn-next-page')?.addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderBlogList();
+      window.scrollTo({ top: 350, behavior: 'smooth' });
+    }
+  });
+
+  document.querySelectorAll('.btn-page-number').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const targetPage = parseInt(e.currentTarget.dataset.page, 10);
+      if (targetPage !== currentPage) {
+        currentPage = targetPage;
+        renderBlogList();
+        window.scrollTo({ top: 350, behavior: 'smooth' });
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  renderBlogList();
+  try {
+    await renderSidebar();
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+window.addEventListener('languageChanged', async () => {
+  renderBlogList();
+  try {
+    await renderSidebar();
+  } catch (e) {
+    console.error(e);
+  }
 });

@@ -51,41 +51,35 @@
     </header>
 
     <main class="pt-16">
-      <section class="relative">
-        <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" />
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-          <h1 class="text-5xl font-bold" data-i18n="page.blog.title">Blog List</h1>
-          <nav class="mt-3 text-sm">
-            <a href="/" class="hover:text-primary transition" data-i18n="page.home.tab">Home</a>
-            <span class="mx-2">&gt;</span>
-            <span class="text-primary" data-i18n="page.blog.crumb">Blog</span>
-          </nav>
-        </div>
-      </section>
+  <!-- Banner Header -->
+  <section class="relative">
+    <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1495195129352-aeb325a55b65?q=80&w=1600'" />
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading" data-i18n="page.blog.title">Blog List</h1>
+      <nav class="mt-3 text-sm">
+        <a href="/" class="hover:text-primary transition" data-i18n="page.home.tab">Home</a>
+        <span class="mx-2 text-white/60">&gt;</span>
+        <span class="text-primary font-medium" data-i18n="page.blog.crumb">Blog</span>
+      </nav>
+    </div>
+  </section>
 
-      <section class="py-12 md:py-20 px-4 sm:px-6">
-        <div class="max-w-[1320px] mx-auto">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <div class="lg:col-span-8">
-              <div id="blog-posts-container" class="space-y-10"></div>
-              
-              <div class="flex justify-center items-center gap-2 mt-12">
-                <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 dark:border-gray-700 hover:bg-primary hover:text-white transition"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 17l-5-5 5-5M11 17l-5-5 5-5"/></svg></button>
-                <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 dark:border-gray-700 hover:bg-primary hover:text-white transition"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button class="w-9 h-9 flex items-center justify-center rounded bg-primary text-white font-bold text-xs">1</button>
-                <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 dark:border-gray-700 hover:bg-primary hover:text-white transition text-xs font-semibold">2</button>
-                <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 dark:border-gray-700 hover:bg-primary hover:text-white transition text-xs font-semibold">3</button>
-                <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 dark:border-gray-700 hover:bg-primary hover:text-white transition"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-                <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 dark:border-gray-700 hover:bg-primary hover:text-white transition"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17l5-5-5-5M13 17l5-5-5-5"/></svg></button>
-              </div>
-            </div>
+  <section class="py-16 md:py-24 px-4 sm:px-6">
+  <div class="max-w-[1320px] mx-auto">
+    <div class="flex flex-col lg:flex-row justify-between items-start gap-6">
+      
+      <div class="w-full lg:w-[872px] shrink-0">
+        <div id="blog-posts-container" class="space-y-12"></div>
+        <div id="blog-pagination"></div>
+      </div>
 
-            <aside id="sidebar-container" class="lg:col-span-4 space-y-8"></aside>
-          </div>
-        </div>
-      </section>
-    </main>
+      <aside id="sidebar-container" class="w-full lg:w-[424px] shrink-0 space-y-6 self-start"></aside>
+
+    </div>
+  </div>
+</section>
+</main>
 
     <footer class="bg-[#0D0D0D] text-gray-400 text-sm pt-20 font-sans">
   <div class="max-w-[1170px] mx-auto px-4 sm:px-6 pb-12 border-b border-primary/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
