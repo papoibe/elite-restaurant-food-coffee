@@ -3,52 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Elite Restaurant — Nhà hàng ẩm thực cao cấp với thực đơn đa dạng" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <meta name="description" content="Savoria — Elite Restaurant" />
   <meta property="og:title" content="Elite Restaurant — Savoria" />
-  <meta property="og:description" content="Trải nghiệm ẩm thực đẳng cấp tại Elite Restaurant" />
+  <meta property="og:description" content="Trải nghiệm ẩm thực đẳng cấp tại Savoria Restaurant" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Savoria — Elite Restaurant</title>
 </head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
+<body class="bg-[#0D0D0D] text-white font-sans antialiased selection:bg-primary selection:text-white">
 
-  <!-- ========== HEADER — Thịnh ========== -->
-  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm text-text-white">
-    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="/" class="text-2xl font-bold font-heading">
-        Savo<span class="text-primary">ria</span>
-      </a>
-
-      <!-- Desktop Nav -->
-      <ul class="hidden lg:flex items-center gap-8 text-sm">
-        <li><a href="/" class="text-primary font-semibold" data-i18n="nav.home">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
-        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a></li>
-        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
-        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
-      </ul>
-
-      <!-- Icons -->
-      <div class="flex items-center gap-4">
-        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản" data-i18n-aria-label="nav.account">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+  <!-- ========== HEADER (Chuẩn Figma: Logo căn giữa, Nav & Search bên dưới) ========== -->
+  <header class="w-full z-50 bg-[#0D0D0D] pt-6 pb-4">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
+      
+      <!-- Top Center Logo -->
+      <div class="text-center mb-4">
+        <a href="/" class="text-3xl font-bold font-heading text-white inline-block">
+          Food<span class="text-primary">tuck</span>
         </a>
-        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme" data-i18n-aria-label="nav.theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
-        <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng" data-i18n-aria-label="nav.cart">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
-        </a>
-        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
       </div>
-    </nav>
+
+      <!-- Nav & Search Bar Row -->
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <!-- Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm">
+          <a href="/" class="text-primary font-medium flex items-center gap-1" data-i18n="nav.home">Home <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span></a>
+          <a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a>
+          <a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a>
+          <a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a>
+          <a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a>
+          <a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
+        </nav>
+
+        <!-- Right: Search Box & Cart Icon -->
+        <div class="flex items-center gap-4 ml-auto lg:ml-0">
+          <div class="relative hidden sm:block">
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              class="w-60 bg-transparent border border-primary rounded-full px-5 py-2 text-xs focus:outline-none placeholder-gray-400 text-white pr-10"
+            />
+            <button class="absolute right-3.5 top-2 text-white hover:text-primary transition" aria-label="Search">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
+          </div>
+
+          <a href="/src/pages/cart.html" class="relative p-2 text-white hover:text-primary transition-colors" aria-label="Giỏ hàng">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            <span id="cart-count" class="absolute 0 top-0 right-0 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </a>
+
+          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors">EN</button>
+          
+          <button id="mobile-menu-btn" class="lg:hidden p-2 text-white" aria-label="Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+    <div id="mobile-menu" class="hidden lg:hidden bg-[#1a1a1a] px-6 py-4">
       <ul class="flex flex-col gap-3 text-sm">
         <li><a href="/" class="text-primary" data-i18n="nav.home">Home</a></li>
         <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
@@ -61,208 +78,525 @@
   </header>
 
   <main>
-    <!-- ========== HERO SECTION ========== -->
-    <section class="min-h-screen flex items-center pt-20 px-6">
-      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
-        <div data-reveal>
-          <p class="script-text text-xl mb-2" data-i18n="home.hero.tag">Its all about Good Food</p>
-          <h1 class="section-heading text-text-dark dark:text-text-white leading-tight" data-i18n-html="home.hero.title">
-            <span class="text-primary">Th</span>e Art of speed<br/>food Quality
-          </h1>
-          <p class="text-gray-600 dark:text-text-light mt-4 mb-8 max-w-lg" data-i18n="home.hero.desc">Hương vị Á Đông tinh tế hoà quyện cùng kỹ thuật chế biến hiện đại, phục vụ nhanh mà vẫn giữ trọn chất lượng từng món ăn.</p>
-          <a href="/src/pages/menu.html" class="btn-primary" data-i18n="home.hero.cta">See Menu</a>
-        </div>
-        <div class="relative" data-reveal>
-          <!-- Ảnh hero chính: món ăn trong đĩa tròn, viền trắng trang trí -->
-          <div class="w-full aspect-square relative">
-            <div class="absolute inset-4 rounded-full border border-black/10 dark:border-white/20"></div>
-            <img src="/assets/images/hero-food.png" alt="Món ăn đặc trưng Elite Restaurant" class="w-full h-full object-cover rounded-full" />
+    <!-- ========== 1. HERO SECTION ========== -->
+    <section class="min-h-[85vh] flex items-center py-12 px-4 sm:px-6 relative">
+      <div class="max-w-[1320px] mx-auto flex items-center w-full gap-8">
+        
+        <!-- Vertical Social Bar (Left) -->
+        <div class="hidden xl:flex flex-col items-center gap-6 pr-4">
+  <div class="w-[1px] h-24 bg-white/30"></div>
+
+  <a href="#" class="text-white hover:text-primary transition duration-300">
+  <span
+    class="w-3.5 h-3.5 bg-current inline-block"
+    style="
+      mask: url('/public/assets/images/facebook.svg') no-repeat center / contain;
+      -webkit-mask: url('/public/assets/images/facebook.svg') no-repeat center / contain;
+    "
+    aria-label="Facebook"
+  ></span>
+</a>
+
+<a href="#" class="text-white hover:text-primary transition duration-300">
+  <span
+    class="w-3.5 h-3.5 bg-current inline-block"
+    style="
+      mask: url('/public/assets/images/twitter.svg') no-repeat center / contain;
+      -webkit-mask: url('/public/assets/images/twitter.svg') no-repeat center / contain;
+    "
+    aria-label="Twitter"
+  ></span>
+</a>
+
+<a href="#" class="text-white hover:text-primary transition duration-300">
+  <span
+    class="w-3.5 h-3.5 bg-current inline-block"
+    style="
+      mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain;
+      -webkit-mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain;
+    "
+    aria-label="Pinterest"
+  ></span>
+</a>
+
+  <div class="w-[1px] h-24 bg-white/30"></div>
+</div>
+
+        <div class="grid lg:grid-cols-12 gap-12 items-center flex-1">
+          <!-- Text Left -->
+          <div class="lg:col-span-6 space-y-6">
+            <p class="text-primary italic font-serif text-xl md:text-2xl" style="font-family: 'Great Vibes', cursive, serif;">Its Quick & Amusing!</p>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold font-heading leading-tight">
+              <span class="text-primary">Th</span>e Art of speed<br/>food Quality
+            </h1>
+            <p class="text-gray-400 text-sm leading-relaxed max-w-md">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius sed pharetra dictum neque massa congue.
+            </p>
+            <div>
+              <a href="/src/pages/menu.html" class="inline-block bg-primary hover:bg-amber-600 text-white text-sm px-8 py-3.5 rounded-full font-medium transition cursor-pointer">
+                See Menu
+              </a>
+            </div>
+          </div>
+
+          <!-- Food Image Right -->
+          <div class="lg:col-span-6 relative flex justify-center">
+            <div class="relative w-full max-w-[500px] aspect-square">
+              <img src="/assets/images/hero-food.svg" alt="Hero Dish" class="w-full h-full object-contain drop-shadow-2xl" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800'" />
+            </div>
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- ========== ABOUT SECTION ========== -->
-    <section class="py-24 px-6" data-reveal>
-      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <p class="script-text mb-2" data-i18n="home.about.tag">About us</p>
-          <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-6" data-i18n="home.about.title">
-            We Create the best foody product
-          </h2>
-          <p class="text-gray-600 dark:text-text-light mb-6" data-i18n="home.about.desc">Từ nguyên liệu tuyển chọn mỗi sáng đến bàn tay chế biến tỉ mỉ của đội ngũ đầu bếp — mỗi món ăn tại Elite đều kể một câu chuyện riêng.</p>
-          <a href="/src/pages/about.html" class="btn-primary" data-i18n="common.readMore">Read More</a>
+    <section class="bg-[#0D0D0D] py-20 px-4 sm:px-6">
+  <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-10 xl:gap-14 items-center">
+    
+    <!-- Text Column (Left) -->
+    <div class="lg:col-span-6 space-y-6">
+      <p class="text-[#FF9F0D] italic text-2xl" style="font-family: 'Great Vibes', cursive, serif;">
+        About us
+      </p>
+
+      <h2 class="text-4xl sm:text-5xl font-bold font-heading text-white leading-tight">
+        <span class="text-[#FF9F0D]">We</span> Create the best<br/>foody product
+      </h2>
+
+      <p class="text-[#E0E0E0] text-sm leading-relaxed max-w-lg font-light">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum. Urna, elit augue urna, vitae feugiat pretium donec id elementum. Ultrices mattis sed vitae mus risus. Lacus nisi, et ac dapibus sit eu velit in consequat.
+      </p>
+
+      <!-- 3 Checkpoints with White SVG Checkmark -->
+      <ul class="space-y-4 text-xs sm:text-sm text-[#E0E0E0] font-light pt-2">
+        <li class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Lacus nisi, et ac dapibus sit eu velit in consequat.</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Quisque diam pellentesque bibendum non dui volutpat fringilla</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <svg class="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+        </li>
+      </ul>
+
+      <!-- CTA Button -->
+      <div class="pt-4">
+        <a href="/src/pages/about.html" class="inline-block bg-[#FF9F0D] hover:bg-amber-600 text-white text-sm font-medium px-10 py-4 rounded-full transition duration-300">
+          Read More
+        </a>
+      </div>
+    </div>
+
+    <!-- Images Column (Right Grid: 1 Big Top, 2 Equal Bottom) -->
+    <div class="lg:col-span-6 flex flex-col gap-4">
+      <!-- Top Large Image -->
+      <div class="w-full h-72 sm:h-80 md:h-[330px] rounded-md overflow-hidden">
+        <img 
+          src="/public/assets/images/index/egg.jpg" 
+          alt="Egg and Avocado Toast" 
+          class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500"
+        />
+      </div>
+
+      <!-- Bottom Two Side-by-Side Images -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="h-44 sm:h-48 md:h-[190px] rounded-md overflow-hidden">
+          <img 
+            src="/public/assets/images/index/beef.jpg" 
+            alt="Grilled Dish" 
+            class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500"
+          />
         </div>
-        <div class="grid grid-cols-2 gap-4">
-          <img src="/assets/images/about-tacos.jpg" alt="Tacos" class="rounded-lg object-cover h-full" />
-          <img src="/assets/images/about-juice.jpg" alt="Fresh juice" class="rounded-lg object-cover h-full" />
-          <img src="/assets/images/about-salad.jpg" alt="Salad" class="rounded-lg object-cover col-span-2 h-48" />
+        <div class="h-44 sm:h-48 md:h-[190px] rounded-md overflow-hidden">
+          <img 
+            src="/public/assets/images/index/sandwich.jpg" 
+            alt="Sandwich" 
+            class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500"
+          />
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ========== FOOD CATEGORY — render động từ menu.json (home.js) ========== -->
-    <section class="py-24 px-6 text-center" data-reveal>
+  </div>
+</section>
+
+    <!-- ========== 3. FOOD CATEGORY SECTION ========== -->
+    <section class="py-20 px-4 sm:px-6 text-center">
       <div class="max-w-[1320px] mx-auto">
-        <p class="script-text mb-2" data-i18n="home.foodCat.tag">Food Category</p>
-        <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-12" data-i18n-html="home.foodCat.title">
+        <p class="text-primary italic font-serif text-xl" style="font-family: 'Great Vibes', cursive, serif;">Food Category</p>
+        <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12">
           <span class="text-primary">Ch</span>oose Food Item
         </h2>
+
         <div id="food-categories" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-square rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-square rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-square rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-square rounded-lg animate-pulse"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== STATS COUNTER — đếm chạy khi cuộn tới (IntersectionObserver) ========== -->
-    <section class="py-16 px-6 bg-gray-50 dark:bg-bg-dark-2">
-      <div class="max-w-[1320px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-        <div><p class="text-4xl font-bold text-text-dark dark:text-text-white" data-count-to="420">0</p><p class="text-gray-600 dark:text-text-light mt-2" data-i18n="home.stats.chefs">Professional Chefs</p></div>
-        <div><p class="text-4xl font-bold text-text-dark dark:text-text-white" data-count-to="320">0</p><p class="text-gray-600 dark:text-text-light mt-2" data-i18n="home.stats.items">Items Of Food</p></div>
-        <div><p class="text-4xl font-bold text-text-dark dark:text-text-white" data-count-to="30" data-count-suffix="+">0</p><p class="text-gray-600 dark:text-text-light mt-2" data-i18n="home.stats.years">Years Of Experienced</p></div>
-        <div><p class="text-4xl font-bold text-text-dark dark:text-text-white" data-count-to="220">0</p><p class="text-gray-600 dark:text-text-light mt-2" data-i18n="home.stats.customers">Happy Customers</p></div>
-      </div>
-    </section>
-
-    <!-- ========== MENU PREVIEW (Tabs) ========== -->
-    <section class="py-24 px-6 text-center" data-reveal>
-      <div class="max-w-[1320px] mx-auto">
-        <p class="script-text mb-2" data-i18n="home.menuPreview.tag">Choose & Pick</p>
-        <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-8" data-i18n-html="home.menuPreview.title">
-          <span class="text-primary">Fr</span>om Our Menu
-        </h2>
-        <!-- Tabs — Nhóm món -->
-        <div class="tabs-container">
-          <div class="flex flex-wrap justify-center gap-4 mb-10">
-            <button data-tab="breakfast" class="px-5 py-2 rounded-full bg-primary text-text-white font-semibold text-sm transition-colors" data-i18n="home.tab.breakfast">Breakfast</button>
-            <button data-tab="lunch" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors" data-i18n="home.tab.lunch">Lunch</button>
-            <button data-tab="dinner" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors" data-i18n="home.tab.dinner">Dinner</button>
-            <button data-tab="dessert" class="px-5 py-2 rounded-full text-text-muted hover:text-primary text-sm transition-colors" data-i18n="home.tab.dessert">Dessert</button>
+          <div class="relative group rounded-[4px] overflow-hidden aspect-square">
+            <img src="/assets/images/category-1.jpg" alt="Dish 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400'" />
+            <span class="absolute top-4 left-4 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-[2px]">Save 30%</span>
           </div>
-
-          <!-- Breakfast Panel -->
-          <div data-panel="breakfast" class="grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
-            <img src="/assets/images/menu-starter.jpg" alt="Breakfast feature" class="rounded-lg w-full h-80 object-cover" />
-            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/1529444830.jpg" alt="Lettuce Leaf" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Lettuce Leaf</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">12.5$</p></div>
-              </div>
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg" alt="Glow Cheese" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Glow Cheese</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">12.5$</p></div>
-              </div>
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg" alt="Fresh Breakfast" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Fresh Breakfast</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">14.5$</p></div>
-              </div>
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/svprys1511176755.jpg" alt="Italian Pizza" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Italian Pizza</h4><p class="text-text-muted text-sm">Lacus nisi, et ac dapibus</p><p class="text-primary font-bold">14.5$</p></div>
-              </div>
-            </div>
+          <div class="relative group rounded-[4px] overflow-hidden aspect-square">
+            <img src="/assets/images/category-2.jpg" alt="Dish 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400'" />
+            <span class="absolute top-4 left-4 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-[2px]">Fast Food Dish</span>
           </div>
-
-          <!-- Lunch Panel -->
-          <div data-panel="lunch" class="hidden grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
-            <img src="/assets/images/menu-burger.jpg" alt="Lunch feature" class="rounded-lg w-full h-80 object-cover" />
-            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/58oia61564916529.jpg" alt="Grilled Chicken" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Grilled Chicken</h4><p class="text-text-muted text-sm">Herbs, lemon butter sauce</p><p class="text-primary font-bold">18.5$</p></div>
-              </div>
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/urzj1d1587066726.jpg" alt="Steak Frites" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Steak Frites</h4><p class="text-text-muted text-sm">Premium beef, truffle fries</p><p class="text-primary font-bold">24.0$</p></div>
-              </div>
-            </div>
+          <div class="relative group rounded-[4px] overflow-hidden aspect-square">
+            <img src="/assets/images/category-3.jpg" alt="Dish 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=400'" />
           </div>
-
-          <!-- Dinner Panel -->
-          <div data-panel="dinner" class="hidden grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
-            <img src="/assets/images/about-salad.jpg" alt="Dinner feature" class="rounded-lg w-full h-80 object-cover" />
-            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/ysxwuq1487323065.jpg" alt="Salmon Teriyaki" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Salmon Teriyaki</h4><p class="text-text-muted text-sm">Fresh Atlantic salmon</p><p class="text-primary font-bold">32.0$</p></div>
-              </div>
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg" alt="Lamb Chops" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Lamb Chops</h4><p class="text-text-muted text-sm">Rosemary, mint jus</p><p class="text-primary font-bold">28.5$</p></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dessert Panel -->
-          <div data-panel="dessert" class="hidden grid lg:grid-cols-[1fr_2fr] gap-8 text-left">
-            <img src="/assets/images/about-juice.jpg" alt="Dessert feature" class="rounded-lg w-full h-80 object-cover" />
-            <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg" alt="Tiramisu" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Tiramisu</h4><p class="text-text-muted text-sm">Classic Italian dessert</p><p class="text-primary font-bold">9.5$</p></div>
-              </div>
-              <div class="flex items-start gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-                <img src="https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg" alt="Chocolate Lava" class="w-16 h-16 rounded object-cover flex-shrink-0"/>
-                <div><h4 class="text-text-dark dark:text-text-white font-semibold">Chocolate Lava</h4><p class="text-text-muted text-sm">Warm, gooey center</p><p class="text-primary font-bold">11.0$</p></div>
-              </div>
-            </div>
+          <div class="relative group rounded-[4px] overflow-hidden aspect-square">
+            <img src="/assets/images/category-4.jpg" alt="Dish 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=400'" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== MÓN MỚI KHÁM PHÁ — TheMealDB API ========== -->
-    <section class="py-24 px-6 bg-gray-50 dark:bg-bg-dark-2" data-reveal>
-      <div class="max-w-[1320px] mx-auto text-center">
-        <p class="script-text mb-2" data-i18n="home.discover.tag">Discover</p>
-        <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-4" data-i18n-html="home.discover.title">
-          Món Mới <span class="text-primary">Khám Phá</span>
-        </h2>
-        <p class="text-gray-600 dark:text-text-light mb-10" data-i18n="home.discover.desc">Gợi ý món ăn từ khắp nơi trên thế giới — powered by TheMealDB API</p>
-        <!-- Grid chứa card món từ API — render bởi JS (home.js) -->
-        <div id="discover-meals" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <p class="text-text-muted col-span-full py-8" data-i18n="common.loading">Đang tải...</p>
-        </div>
+    <!-- ========== 4. WHY CHOOSE US SECTION ========== -->
+<section class="bg-[#0D0D0D] py-20 px-4 sm:px-6">
+  <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-10 xl:gap-14 items-center">
+    
+    <div class="lg:col-span-6 grid grid-cols-12 gap-3 sm:gap-4 items-start">
+      <div class="col-span-7 h-56 sm:h-72 md:h-80 rounded-[6px] overflow-hidden">
+        <img 
+          src="/public/assets/images/blog/blog1.jpg" 
+          alt="Fresh Tacos Lime" 
+          class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500"
+        />
       </div>
-    </section>
 
-    <!-- ========== CHEFS — render động từ chefs.json (home.js) ========== -->
-    <section class="py-24 px-6 text-center" data-reveal>
-      <div class="max-w-[1320px] mx-auto">
-        <p class="script-text mb-2" data-i18n="home.chefs.tag">Chefs</p>
-        <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-12" data-i18n-html="home.chefs.title">
-          <span class="text-primary">Me</span>et Our Chef
-        </h2>
-        <div id="chefs-preview" class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-        </div>
-        <a href="/src/pages/chefs.html" class="btn-outline mt-10 inline-block" data-i18n="common.seeMore">See More</a>
+      <div class="col-span-5 h-44 sm:h-56 md:h-60 rounded-[6px] overflow-hidden self-end">
+        <img 
+          src="/public/assets/images/index/burger.jpg" 
+          alt="Beef Burger Dish" 
+          class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500"
+        />
       </div>
-    </section>
 
-    <!-- ========== BLOG PREVIEW — render động từ blog/data.js (home.js) ========== -->
-    <section class="py-24 px-6" data-reveal>
-      <div class="max-w-[1320px] mx-auto text-center">
-        <p class="script-text mb-2" data-i18n="home.blog.tag">Blog Post</p>
-        <h2 class="section-heading text-text-dark dark:text-text-white text-3xl lg:text-4xl mb-12" data-i18n-html="home.blog.title">
-          <span class="text-primary">La</span>test News & Blog
-        </h2>
-        <div id="blog-preview" class="grid md:grid-cols-3 gap-6">
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-video rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-video rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-video rounded-lg animate-pulse"></div>
+      <div class="col-span-5 h-48 sm:h-64 md:h-72 rounded-[6px] overflow-hidden">
+        <img 
+          src="/public/assets/images/recent_post.jpg" 
+          alt="Dipping Crispy Chicken" 
+          class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500"
+        />
+      </div>
+
+      <div class="col-span-4 h-36 sm:h-48 md:h-52 rounded-[6px] overflow-hidden">
+        <img 
+          src="/public/assets/images/burger.jpg" 
+          alt="Cheese Burger" 
+          class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500"
+        />
+      </div>
+
+      <div class="col-span-3 flex flex-col gap-3 sm:gap-4">
+        <div class="h-20 sm:h-24 md:h-28 rounded-[6px] overflow-hidden">
+          <img 
+            src="/public/assets/images/index/chip.jpg" 
+            alt="Burger with Sauce" 
+            class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500"
+          />
+        </div>
+        <div class="h-20 sm:h-24 md:h-28 rounded-[6px] overflow-hidden">
+          <img 
+            src="/public/assets/images/index/salad.jpg" 
+            alt="Salad Bowl Orange Background" 
+            class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500"
+          />
         </div>
       </div>
-    </section>
+    </div>
+
+    <div class="lg:col-span-6 space-y-6">
+      <p class="text-[#FF9F0D] italic text-2xl font-normal" style="font-family: 'Great Vibes', cursive, serif;">
+        Why Choose us
+      </p>
+
+      <h2 class="text-4xl sm:text-5xl font-bold font-heading text-white leading-tight">
+        <span class="text-[#FF9F0D]">Ex</span>ta ordinary taste<br/>And Experienced
+      </h2>
+
+      <p class="text-[#E0E0E0] text-sm leading-relaxed max-w-lg font-light">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum. Urna, elit augue urna, vitae feugiat pretium donec id elementum. Ultrices mattis sed vitae mus risus. Lacus nisi, et ac dapibus sit eu velit in consequat.
+      </p>
+
+      <div class="flex items-center gap-6 sm:gap-8 pt-2">
+        <div class="text-center">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#FF9F0D] rounded-[6px] flex items-center justify-center mb-2.5 mx-auto transition-transform hover:scale-105">
+            <img src="/public/assets/images/index/Hamburger.svg" alt="Fast Food" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+          </div>
+          <span class="text-xs sm:text-sm text-white font-normal">Fast Food</span>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#FF9F0D] rounded-[6px] flex items-center justify-center mb-2.5 mx-auto transition-transform hover:scale-105">
+            <img src="/public/assets/images/index/Cookie.svg" alt="Lunch" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+          </div>
+          <span class="text-xs sm:text-sm text-white font-normal">Lunch</span>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#FF9F0D] rounded-[6px] flex items-center justify-center mb-2.5 mx-auto transition-transform hover:scale-105">
+            <img src="/public/assets/images/index/Wine.svg" alt="Dinner" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+          </div>
+          <span class="text-xs sm:text-sm text-white font-normal">Dinner</span>
+        </div>
+      </div>
+
+      <div class="pt-4">
+        <div class="bg-white rounded-[6px] border-l-[10px] border-[#FF9F0D] px-8 py-5 flex items-center gap-6 max-w-[340px] shadow-2xl">
+          <span class="text-4xl sm:text-5xl font-bold text-[#FF9F0D] tracking-tight">30+</span>
+          <div>
+            <p class="text-xs sm:text-sm text-[#4F4F4F] font-normal leading-tight">Years of</p>
+            <h4 class="text-base sm:text-lg font-bold text-[#1E1E1E] leading-tight">Experienced</h4>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+    <section class="relative w-full h-[469px] flex items-center justify-center px-4 sm:px-6 bg-cover bg-center overflow-hidden" style="background-image: url('/public/assets/images/index/stats-bg.jpg');">
+  <div class="absolute inset-0 bg-[#0D0D0D]/85"></div>
+
+  <div class="relative z-10 w-full max-w-[1320px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
+    
+    <div class="flex flex-col items-center">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
+        <img src="/public/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
+      </div>
+      <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="420">420</h3>
+      <p class="text-xs sm:text-sm md:text-base font-normal text-white">Professional Chefs</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
+        <img src="/public/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
+      </div>
+      <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="320">320</h3>
+      <p class="text-xs sm:text-sm md:text-base font-normal text-white">Items Of Food</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
+        <img src="/public/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
+      </div>
+      <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="30" data-count-suffix="+">30+</h3>
+      <p class="text-xs sm:text-sm md:text-base font-normal text-white">Years Of Experienced</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
+        <img src="/public/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
+      </div>
+      <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="220">220</h3>
+      <p class="text-xs sm:text-sm md:text-base font-normal text-white">Happy Customers</p>
+    </div>
+
+  </div>
+</section>
+
+   <!-- ========== 6. MENU PREVIEW (From Our Menu) ========== -->
+<section class="w-full bg-[#0D0D0D] py-20 px-4 sm:px-6">
+  <div class="max-w-[1320px] min-h-[656px] mx-auto text-center flex flex-col justify-between">
+    
+    <div>
+      <p class="text-[#FF9F0D] italic text-2xl font-normal" style="font-family: 'Great Vibes', cursive, serif;">Choose & Pick</p>
+      <h2 class="text-4xl md:text-5xl font-bold font-heading text-white mt-2 mb-8">
+        <span class="text-[#FF9F0D]">Fr</span>om Our Menu
+      </h2>
+
+      <div id="menu-preview-tabs" class="flex flex-wrap justify-center items-center gap-8 md:gap-10 mb-12 text-sm md:text-base">
+        <button data-meal="Breakfast" class="menu-tab-btn text-[#FF9F0D] font-bold cursor-pointer transition">Breakfast</button>
+        <button data-meal="Lunch" class="menu-tab-btn text-[#828282] hover:text-[#FF9F0D] cursor-pointer transition">Lunch</button>
+        <button data-meal="Dinner" class="menu-tab-btn text-[#828282] hover:text-[#FF9F0D] cursor-pointer transition">Dinner</button>
+        <button data-meal="Dessert" class="menu-tab-btn text-[#828282] hover:text-[#FF9F0D] cursor-pointer transition">Dessert</button>
+        <button data-meal="Drink" class="menu-tab-btn text-[#828282] hover:text-[#FF9F0D] cursor-pointer transition">Drink</button>
+        <button data-meal="Snack" class="menu-tab-btn text-[#828282] hover:text-[#FF9F0D] cursor-pointer transition">Snack</button>
+        <button data-meal="Soups" class="menu-tab-btn text-[#828282] hover:text-[#FF9F0D] cursor-pointer transition">Soups</button>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-8 items-center text-left">
+      
+      <div class="lg:col-span-4 flex justify-center items-center">
+        <div class="relative w-[320px] h-[320px] md:w-[360px] md:h-[360px] rounded-full p-2 border border-white/10 flex items-center justify-center">
+          <img 
+            id="menu-featured-img" 
+            src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=600" 
+            alt="Featured Dish" 
+            class="w-full h-full rounded-full object-cover shadow-2xl"
+          />
+        </div>
+      </div>
+
+      <div id="menu-items-grid" class="lg:col-span-8 grid sm:grid-cols-2 gap-x-8 gap-y-6">
+        <div class="col-span-full text-center py-10 text-gray-400">Loading menu...</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+    <section class="bg-[#0D0D0D] py-20 px-4 sm:px-6 text-center">
+  <div class="max-w-[1320px] mx-auto min-h-[657px] flex flex-col justify-between">
+    <div>
+      <p class="text-[#FF9F0D] italic text-2xl font-normal" style="font-family: 'Great Vibes', cursive, serif;">Chefs</p>
+      <h2 class="text-4xl sm:text-5xl font-bold font-heading text-white mt-2 mb-12">
+        <span class="text-[#FF9F0D]">Me</span>et Our Chef
+      </h2>
+
+      <div id="chefs-preview" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+        
+        <div class="relative w-[312px] h-[391px] rounded-[6px] overflow-hidden group bg-[#1a1a1a]">
+          <img src="/assets/images/index/chef1.jpg" alt="D.Estwood" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=500'" />
+          <div class="absolute top-[324px] left-0 w-[181px] h-[67px] bg-white rounded-bl-[6px] text-left px-5 flex flex-col justify-center shadow-md z-10">
+            <h4 class="font-bold text-base text-[#333333] leading-tight truncate">D.Estwood</h4>
+            <p class="text-xs text-[#828282] mt-0.5">Chief Chef</p>
+          </div>
+        </div>
+
+        <div class="relative w-[312px] h-[391px] rounded-[6px] overflow-hidden group bg-[#1a1a1a]">
+          <img src="/assets/images/index/chef2.jpg" alt="D.Scoriesh" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=500'" />
+          <div class="absolute top-[324px] left-0 w-[181px] h-[67px] bg-white rounded-bl-[6px] text-left px-5 flex flex-col justify-center shadow-md z-10">
+            <h4 class="font-bold text-base text-[#333333] leading-tight truncate">D.Scoriesh</h4>
+            <p class="text-xs text-[#828282] mt-0.5">Assistant Chef</p>
+          </div>
+        </div>
+
+        <div class="relative w-[312px] h-[391px] rounded-[6px] overflow-hidden group bg-[#1a1a1a]">
+          <img src="/assets/images/index/chef3.jpg" alt="M. William" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1581299894007-aaa50297cf16?q=80&w=500'" />
+          <div class="absolute top-[324px] left-0 w-[181px] h-[67px] bg-white rounded-bl-[6px] text-left px-5 flex flex-col justify-center shadow-md z-10">
+            <h4 class="font-bold text-base text-[#333333] leading-tight truncate">M. William</h4>
+            <p class="text-xs text-[#828282] mt-0.5">Advertising Chef</p>
+          </div>
+        </div>
+
+        <div class="relative w-[312px] h-[391px] rounded-[6px] overflow-hidden group bg-[#1a1a1a]">
+          <img src="/assets/images/index/chef4.jpg" alt="W.Readfroad" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1607631568010-a87245c0daf8?q=80&w=500'" />
+          <div class="absolute top-[324px] left-0 w-[181px] h-[67px] bg-white rounded-bl-[6px] text-left px-5 flex flex-col justify-center shadow-md z-10">
+            <h4 class="font-bold text-base text-[#333333] leading-tight truncate">W.Readfroad</h4>
+            <p class="text-xs text-[#828282] mt-0.5">Chef</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <a href="/src/pages/chefs.html" class="inline-block border border-[#FF9F0D] text-white hover:bg-[#FF9F0D] px-10 py-3.5 rounded-full text-sm font-medium transition duration-300">
+        See More
+      </a>
+    </div>
+  </div>
+</section>
+
+    <section class="w-full min-h-[770px] bg-[#0D0D0D] py-20 px-4 sm:px-6 relative overflow-hidden flex flex-col justify-center items-center">
+  <div class="w-full max-w-[1273px] mx-auto flex flex-col items-center">
+    
+    <div class="w-full text-left mb-16 pl-4 md:pl-8">
+      <p class="text-[#FF9F0D] italic text-2xl md:text-3xl" style="font-family: 'Great Vibes', cursive, serif;">Testimonials</p>
+      <h2 class="text-3xl md:text-5xl font-bold font-heading text-white mt-1">What our client are saying</h2>
+    </div>
+
+    <div class="relative w-full max-w-[868px] flex items-center justify-center">
+      
+      <div class="absolute right-[-40px] md:right-[-60px] top-1/2 -translate-y-1/2 w-48 md:w-64 opacity-20 pointer-events-none select-none z-0">
+        <svg viewBox="0 0 200 200" fill="none" class="w-full h-full stroke-white/40" stroke-width="1.5">
+          <path d="M100 20 C110 50, 150 70, 170 100 C150 130, 110 150, 100 180 C90 150, 50 130, 30 100 C50 70, 90 50, 100 20 Z" />
+          <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="relative z-10 w-full bg-white text-[#1E1E1E] rounded-[2px] shadow-2xl pt-16 pb-12 px-6 sm:px-12 md:px-20 text-center flex flex-col items-center">
+        
+        <div class="absolute -top-[55px] left-1/2 -translate-x-1/2 w-[110px] h-[110px] rounded-full overflow-hidden border-[6px] border-[#0D0D0D] shadow-xl bg-gray-200">
+          <img 
+            id="testimonial-avatar" 
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200" 
+            alt="Client" 
+            class="w-full h-full object-cover transition-opacity duration-300"
+          />
+        </div>
+
+        <div class="text-[#FF9F0D] text-4xl mb-4 font-serif select-none">❝</div>
+
+        <p id="testimonial-comment" class="text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4F4F4F] max-w-[650px] mx-auto min-h-[75px] transition-opacity duration-300">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum. Urna, elit augue urna, vitae feugiat pretium donec id elementum. Ultrices mattis sed vitae mus risus. Lacus nisi, et ac dapibus sit eu velit in consequat.
+        </p>
+
+        <div id="testimonial-rating" class="flex justify-center items-center gap-1 text-[#FF9F0D] text-base md:text-lg my-4">
+          ★ ★ ★ ★ <span class="text-gray-300">★</span>
+        </div>
+
+        <h4 id="testimonial-name" class="font-bold text-lg md:text-xl text-[#333333] transition-opacity duration-300">Alamin Hasan</h4>
+        <p id="testimonial-role" class="text-xs text-[#828282] mt-1 transition-opacity duration-300">Food Specialist</p>
+
+      </div>
+    </div>
+
+    <div id="testimonial-dots" class="flex justify-center items-center gap-2.5 mt-10 z-20"></div>
+
+  </div>
+</section>
+<section
+  class="relative w-full h-[558px] bg-cover bg-center overflow-hidden flex items-center"
+  style="background-image: url('assets/images/index/restaurant.jpg');"
+>
+  <div class="relative z-10 max-w-[1320px] w-full mx-auto px-4 sm:px-6 flex justify-end">
+    <div class="max-w-[705px] text-right space-y-6">
+      <p class="text-[#FF9F0D] italic text-3xl font-normal" style="font-family: 'Great Vibes', cursive, serif;">
+        Restaurant Active Process
+      </p>
+
+      <h2 class="text-3xl sm:text-4xl lg:text-[48px] font-bold font-heading text-white leading-[1.2]">
+        <span class="text-[#FF9F0D]">We</span> Document Every Food<br />
+        Bean Process untile it is saved
+      </h2>
+
+      <p class="text-base sm:text-lg lg:text-[24px] text-[#E0E0E0] leading-relaxed font-light">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum. Urna, elit augue urna,
+      </p>
+
+      <div class="pt-4 flex items-center justify-end gap-6">
+        <a href="/src/pages/about.html" class="inline-block border border-[#FF9F0D] text-white hover:bg-[#FF9F0D] text-sm font-semibold px-8 py-3.5 rounded-full transition duration-300">
+          Read More
+        </a>
+        <button class="flex items-center gap-3 text-white hover:text-[#FF9F0D] transition group cursor-pointer" aria-label="Play Video">
+          <span class="w-12 h-12 rounded-full bg-[#FF9F0D] text-white flex items-center justify-center group-hover:scale-105 transition shadow-lg">
+            <svg class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+          <span class="text-sm font-bold">Play Video</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#0D0D0D] py-24 px-4 sm:px-6 text-center">
+  <div class="max-w-[1320px] mx-auto">
+    <p class="text-[#FF9F0D] italic text-2xl md:text-3xl" style="font-family: 'Great Vibes', cursive, serif;">Blog Post</p>
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-white mt-1 mb-14">
+      <span class="text-[#FF9F0D]">La</span>test News & Blog
+    </h2>
+
+    <div id="blog-preview" class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+
+    </div>
+  </div>
+</section>
   </main>
 
-  <!-- ========== FOOTER ========== -->
   <footer class="bg-[#0D0D0D] text-gray-400 text-sm pt-20 font-sans">
   <div class="max-w-[1170px] mx-auto px-4 sm:px-6 pb-12 border-b border-primary/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
     <div>
@@ -385,9 +719,7 @@
   </div>
 </footer>
 
-  <!-- JS Entry -->
   <script type="module" src="/src/js/main.js"></script>
-  <!-- Trang chủ: render động Food Category / Chefs / Blog / TheMealDB API -->
   <script type="module" src="/src/js/home.js"></script>
 </body>
 </html>
