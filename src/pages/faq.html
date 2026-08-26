@@ -59,32 +59,36 @@
     </header>
 
     <main class="pt-16">
-      <section class="relative">
-        <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" />
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-          <h1 class="text-5xl font-bold" data-i18n="page.faq.title">FAQ Page</h1>
-          <nav class="mt-3 text-sm">
-            <a href="/" class="hover:text-primary transition" data-i18n="page.home.tab">Home</a>
-            <span class="mx-2">&gt;</span>
-            <span class="text-primary" data-i18n="page.faq.crumb">faq</span>
-          </nav>
-        </div>
-      </section>
+  <section class="relative">
+    <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1495195129352-aeb325a55b65?q=80&w=1600'" />
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading" data-i18n="page.faq.title">FAQ Page</h1>
+      <nav class="mt-3 text-sm">
+        <a href="/" class="hover:text-primary transition" data-i18n="page.home.tab">Home</a>
+        <span class="mx-2 text-white/60">&gt;</span>
+        <span class="text-primary font-medium" data-i18n="page.faq.crumb">faq</span>
+      </nav>
+    </div>
+  </section>
 
-      <section class="py-16 md:py-24 px-4 sm:px-6">
-        <div class="max-w-[1320px] mx-auto">
-          
-          <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">Questions Looks Here</h2>
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</p>
-          </div>
+  <section class="py-16 md:py-24 px-4 sm:px-6">
+    <div class="max-w-[1320px] mx-auto">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14 space-y-2">
+        <h2 class="text-3xl md:text-4xl font-bold text-[#333333] dark:text-white font-heading">
+          Questions Looks Here
+        </h2>
+        <p class="text-xs text-[#4F4F4F] dark:text-gray-400 leading-relaxed">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+        </p>
+      </div>
 
-          <div id="faq-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      <div id="faq-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start"></div>
 
-        </div>
-      </section>
-    </main>
+    </div>
+  </section>
+</main>
 
     <footer class="bg-[#0D0D0D] text-gray-400 text-sm pt-20 font-sans">
   <div class="max-w-[1170px] mx-auto px-4 sm:px-6 pb-12 border-b border-primary/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -209,6 +213,6 @@
 </footer>
 
     <script type="module" src="/src/js/main.js"></script>
-    <script src="../js/faq/faq.js" defer></script>
+    <script type="module"  src="../js/faq/faq.js" defer></script>
   </body>
 </html>
