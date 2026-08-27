@@ -44,9 +44,9 @@ export function renderCheckoutSummary() {
 
   if (cart.length === 0) {
     cartListContainer.innerHTML = `
-      <div class="py-6 text-center text-text-muted text-xs">
-        <p>${t('toast.emptyCart')}</p>
-        <a href="shop-list.html" class="text-primary underline mt-2 inline-block">${t('checkout.backToShopping')}</a>
+      <div class="py-6 text-center">
+        <p class="text-[16px] leading-[24px] text-[#4F4F4F]">${t('toast.emptyCart')}</p>
+        <a href="/src/pages/shop-list.html" class="mt-2 inline-block text-[16px] leading-[24px] text-[#FF9F0D] underline">${t('checkout.backToShopping')}</a>
       </div>
     `;
     if (subtotalEl) subtotalEl.textContent = '$0.00';
@@ -55,13 +55,17 @@ export function renderCheckoutSummary() {
     return;
   }
 
-  cartListContainer.innerHTML = cart.map(item => `
-    <div class="flex items-center gap-3 pt-3">
-      <img src="${item.image}" class="w-14 h-14 object-cover rounded shrink-0" alt="${item.name}" />
-      <div class="flex-1 text-xs">
-        <h4 class="font-bold text-gray-800 dark:text-gray-200">${item.name}</h4>
-        <p class="text-text-muted mt-0.5">${item.category || t('checkout.dish')} x ${item.quantity || 1}</p>
-        <p class="text-primary font-medium mt-0.5">$${(item.price * (item.quantity || 1)).toFixed(2)}</p>
+  // Figma "Chiken" INSTANCE 376x104: anh 83x88, chu cach anh 15px,
+  // ten Helvetica Bold 16/24 #333333, dong phu va gia deu 14/22 #4F4F4F.
+  // Cac mon cach nhau 16px va co ke ngan 1px #E0E0E0 (tru mon cuoi).
+  cartListContainer.innerHTML = cart.map((item, index) => `
+    <div class="flex gap-[15px] pb-4 border-b border-[#E0E0E0] dark:border-white/15 ${index < cart.length - 1 ? 'mb-4' : ''}">
+      <img src="${item.image}" alt="${item.name}" loading="lazy"
+           class="w-[83px] h-[88px] shrink-0 object-cover bg-[#C4C4C4]" />
+      <div class="min-w-0">
+        <h4 class="font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white truncate">${item.name}</h4>
+        <p class="mt-2 text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70">${t('checkout.qty')} ${item.quantity || 1}</p>
+        <p class="mt-1 text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70">$${(item.price * (item.quantity || 1)).toFixed(2)}</p>
       </div>
     </div>
   `).join('');

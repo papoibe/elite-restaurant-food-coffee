@@ -76,41 +76,104 @@
           </table>
         </div>
 
-        <!-- Khối Mã giảm giá & Total Bill -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
-          
+        <!-- ============================================================
+             KHỐI "Contant" — Figma 7. Shopping Cart: x=301 y=1414, 1320x338
+             2 cột 648px cách nhau 24px:
+               · Coupon Code : tiêu đề 32/40 + Rectangle 8941 (648x188, bo 6px, viền 1px #E0E0E0)
+               · Total bill  : tiêu đề 32/40 + Rectangle 8935 (648x185, bo 6px, viền 1px #BDBDBD)
+                               + Line 47 kẻ ngang HẾT bề rộng hộp
+                               + nút 648x64 nền #FF9F0D (vuông, không bo góc)
+             ============================================================ -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-6">
+
+          <!-- ---------- Coupon Code ---------- -->
           <div>
-            <h3 class="text-xl font-bold mb-4">Coupon Code</h3>
-            <p class="text-gray-500 text-sm mb-4">Nhập mã giảm giá của bạn nếu có (Mã dùng thử: <span class="font-bold text-[#FF9F0D]">Savoria10</span> để giảm 10%).</p>
-            <div class="flex gap-2 max-w-md">
-              <input type="text" id="coupon-input" placeholder="Enter code" class="flex-1 px-4 py-3 border rounded-lg dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#FF9F0D]" />
-              <button id="apply-coupon-btn" class="bg-[#FF9F0D] text-white font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition cursor-pointer">Apply</button>
+            <!-- Figma: Helvetica Bold 32/40, màu #333333 -->
+            <h3 class="font-heading font-bold text-[32px] leading-[40px] text-[#333333] dark:text-white" data-i18n="cart.couponTitle">
+              Coupon Code
+            </h3>
+
+            <!-- Rectangle 8941 — cách tiêu đề 24px.
+                 Figma vẽ viền kiểu INSIDE nên 648x188 đã bao gồm nét viền: padding tính từ
+                 mép ngoài là 24 trên/dưới · 20 trái · 30 phải, trừ đi 1px viền còn 19/29. -->
+            <div class="mt-6 rounded-[6px] border border-[#E0E0E0] dark:border-white/15 pt-6 pb-6 pl-[19px] pr-[29px]">
+              <!-- Inter Regular 18/26, màu #828282 -->
+              <p class="text-[18px] leading-[26px] text-[#828282]" data-i18n-html="cart.couponDesc">
+                Nhập mã giảm giá của bạn nếu có (mã dùng thử:
+                <span class="font-bold text-[#FF9F0D]">SAVORIA10</span> để được giảm 10%).
+              </p>
+
+              <!-- Inputfill &amp; Dropdown: 598x62 bo 6px viền #E0E0E0.
+                   Nút Apply 89x62 nằm ĐÈ lên viền phải (lệch -1px để phủ kín nét viền) -->
+              <div class="relative mt-6 h-[62px] rounded-[6px] border border-[#E0E0E0] dark:border-white/15">
+                <input
+                  type="text"
+                  id="coupon-input"
+                  placeholder="Enter Here code"
+                  data-i18n-placeholder="cart.couponPlaceholder"
+                  class="w-full h-full pl-5 pr-[105px] bg-transparent rounded-[6px] text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#828282] focus:outline-none"
+                />
+                <button
+                  id="apply-coupon-btn"
+                  class="absolute -top-px -right-px w-[89px] h-[62px] rounded-[6px] bg-[#FF9F0D] hover:bg-[#E88E00] transition-colors text-white text-[18px] leading-[26px] cursor-pointer"
+                  data-i18n="cart.apply"
+                >Apply</button>
+              </div>
             </div>
-            <p id="coupon-message" class="text-sm mt-2 hidden"></p>
+
+            <!-- Thông báo mã giảm giá — để NGOÀI hộp để hộp luôn giữ đúng chiều cao 188px như Figma -->
+            <p id="coupon-message" class="text-[14px] leading-[22px] mt-3 hidden"></p>
           </div>
 
-          <!-- Total Bill -->
-          <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 space-y-4">
-            <h3 class="text-xl font-bold pb-2 border-b border-gray-200 dark:border-gray-700">Total Bill</h3>
-            <div class="flex justify-between text-gray-600 dark:text-gray-300">
-              <span>Cart Subtotal</span>
-              <span id="cart-subtotal" class="font-semibold">$0.00</span>
+          <!-- ---------- Total Bill ---------- -->
+          <div>
+            <h3 class="font-heading font-bold text-[32px] leading-[40px] text-[#333333] dark:text-white" data-i18n="cart.totalBill">
+              Total Bill
+            </h3>
+
+            <!-- Rectangle 8935 — viền 1px #BDBDBD (INSIDE), bo 6px.
+                 Tổng cao đúng 185: 1 + [23+28+15+26+24] + 1 (Line 47) + [15+28+23] + 1 -->
+            <div class="mt-6 rounded-[6px] border border-[#BDBDBD] dark:border-white/20 overflow-hidden">
+              <div class="pt-[23px] pb-6 px-5">
+                <!-- Cart Subtotal: nhãn Helvetica Bold 20/28 #333 · số Inter Bold 18/26 #333 -->
+                <div class="flex items-center justify-between">
+                  <span class="font-heading font-bold text-[20px] leading-[28px] text-[#333333] dark:text-white" data-i18n="cart.subtotal">Cart Subtotal</span>
+                  <span id="cart-subtotal" class="font-bold text-[18px] leading-[26px] text-[#333333] dark:text-white">$0.00</span>
+                </div>
+
+                <!-- Discount — KHÔNG có trong Figma, chỉ hiện khi thực sự áp mã giảm giá.
+                     Mặc định ẩn nên trạng thái ban đầu khớp 100% bản thiết kế. -->
+                <div id="cart-discount-row" class="hidden items-center justify-between mt-[15px]">
+                  <span class="text-[18px] leading-[26px] text-[#4F4F4F] dark:text-white/70" data-i18n="cart.discount">Discount</span>
+                  <span id="cart-discount" class="text-[18px] leading-[26px] text-[#27AE60]">-$0.00</span>
+                </div>
+
+                <!-- Shipping Charge: Inter Regular 18/26 màu #4F4F4F -->
+                <div class="flex items-center justify-between mt-[15px]">
+                  <span class="text-[18px] leading-[26px] text-[#4F4F4F] dark:text-white/70" data-i18n="cart.shipping">Shipping Charge</span>
+                  <span id="cart-shipping" class="text-[18px] leading-[26px] text-[#4F4F4F] dark:text-white/70">$0.00</span>
+                </div>
+              </div>
+
+              <!-- Line 47 — kẻ ngang hết bề rộng hộp, 1px #BDBDBD -->
+              <div class="h-px bg-[#BDBDBD] dark:bg-white/20"></div>
+
+              <div class="pt-[15px] pb-[23px] px-5">
+                <div class="flex items-center justify-between">
+                  <span class="font-heading font-bold text-[20px] leading-[28px] text-[#333333] dark:text-white" data-i18n="cart.totalAmount">Total Amount</span>
+                  <span id="cart-total" class="font-bold text-[18px] leading-[26px] text-[#333333] dark:text-white">$0.00</span>
+                </div>
+              </div>
             </div>
-            <div class="flex justify-between text-gray-600 dark:text-gray-300">
-              <span>Discount</span>
-              <span id="cart-discount" class="font-semibold text-green-500">-$0.00</span>
-            </div>
-            <div class="flex justify-between text-gray-600 dark:text-gray-300">
-              <span>Shipping Charge</span>
-              <span id="cart-shipping" class="font-semibold">$0.00</span>
-            </div>
-            <hr class="border-gray-200 dark:border-gray-700" />
-            <div class="flex justify-between text-lg font-bold">
-              <span>Total Amount</span>
-              <span id="cart-total" class="text-[#FF9F0D]">$0.00</span>
-            </div>
-            <a href="/src/pages/checkout.html" class="block text-center w-full bg-[#FF9F0D] text-white font-bold py-3.5 rounded-lg hover:bg-opacity-90 transition mt-4">
-              Proceed to Checkout
+
+            <!-- Nút 648x64 nền #FF9F0D, chữ Inter Regular 18/26 trắng,
+                 icon CheckSquareOffset 20x20 cách chữ 10px -->
+            <a
+              href="/src/pages/checkout.html"
+              class="mt-6 flex h-16 w-full items-center justify-center gap-[10px] bg-[#FF9F0D] hover:bg-[#E88E00] transition-colors text-white text-[18px] leading-[26px]"
+            >
+              <span data-i18n="cart.checkout">Proceed to Checkout</span>
+              <img src="/assets/images/CheckSquareOffset.svg" alt="" class="w-5 h-5" />
             </a>
           </div>
 
