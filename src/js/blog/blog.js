@@ -1,6 +1,6 @@
 import { blogPostsData } from './data.js';
 import { renderSidebar } from './sidebar.js';
-import { getLang, t } from '../i18n.js';
+import { getLang, t, applyStaticTranslations } from '../i18n.js';
 import { countComments } from './comments.js';
 
 let currentPage = 1;
@@ -32,11 +32,12 @@ export function renderBlogList() {
       const title = lang === 'vi' ? (post.title_vi || post.title) : post.title;
       const excerpt = lang === 'vi' ? (post.excerpt_vi || post.excerpt) : post.excerpt;
       const date = lang === 'vi' ? (post.date_vi || post.date) : post.date;
+      const month = lang === 'vi' ? (post.month_vi || post.month) : post.month;
       const commentsNum = typeof countComments === 'function' ? countComments(post.id) : (post.commentsCount || 3);
-      const readMoreText = t('common.readMore') || (lang === 'vi' ? 'Xem thêm' : 'Read More');
+      const readMoreText = t('common.readMore');
 
       return `
-        <article class="bg-white dark:bg-bg-dark rounded-[2px] overflow-hidden mb-12">
+        <article class="bg-white dark:bg-[#0D0D0D] rounded-[2px] overflow-hidden mb-12">
           <div class="relative overflow-hidden group">
             <a href="/src/pages/blog-details.html?id=${post.id}" class="block overflow-hidden">
               <img 
@@ -46,30 +47,30 @@ export function renderBlogList() {
                 onerror="this.src='https://placehold.co/800x480?text=Food+Blog'"
               />
             </a>
-            <div class="absolute left-6 top-6 w-[56px] h-[56px] bg-primary rounded-[2px] flex flex-col items-center justify-center text-white shadow-md pointer-events-none">
+            <div class="absolute left-6 top-6 w-[56px] h-[56px] bg-[#FF9F0D] rounded-[2px] flex flex-col items-center justify-center text-white shadow-md pointer-events-none">
               <span class="text-lg font-bold leading-none">${post.day}</span>
-              <span class="text-xs font-normal leading-tight mt-1">${post.month}</span>
+              <span class="text-xs font-normal leading-tight mt-1">${month}</span>
             </div>
           </div>
 
           <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 mt-5 mb-3 font-normal">
             <span class="flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <svg class="w-4 h-4 text-[#FF9F0D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               ${date}
             </span>
             <span class="text-gray-300">/</span>
             <span class="flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              <svg class="w-4 h-4 text-[#FF9F0D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
               ${commentsNum}
             </span>
             <span class="text-gray-300">/</span>
             <span class="flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              <svg class="w-4 h-4 text-[#FF9F0D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
               ${post.author}
             </span>
           </div>
 
-          <h2 class="text-2xl md:text-[26px] font-bold text-[#333333] dark:text-white hover:text-primary transition mb-3 leading-snug">
+          <h2 class="text-2xl md:text-[26px] font-bold text-[#333333] dark:text-white hover:text-[#FF9F0D] transition mb-3 leading-snug">
             <a href="/src/pages/blog-details.html?id=${post.id}">${title}</a>
           </h2>
 
@@ -79,7 +80,7 @@ export function renderBlogList() {
 
           <a 
             href="/src/pages/blog-details.html?id=${post.id}" 
-            class="inline-flex items-center px-6 py-2.5 border border-primary text-primary font-normal text-sm rounded-[2px] hover:bg-primary hover:text-white transition gap-2 group"
+            class="inline-flex items-center px-6 py-2.5 border border-[#FF9F0D] text-[#FF9F0D] font-normal text-sm rounded-[2px] hover:bg-[#FF9F0D] hover:text-white transition gap-2 group"
           >
             <span>${readMoreText}</span>
             <svg class="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -107,12 +108,12 @@ function renderPagination(totalPages) {
       <button 
         id="btn-prev-page" 
         ${isFirstPage ? 'disabled' : ''}
-        class="w-11 h-11 flex items-center justify-center rounded-[2px] border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-bg-dark text-primary font-bold text-sm shadow-sm transition ${
+        class="w-11 h-11 flex items-center justify-center rounded-[2px] border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-[#0D0D0D] text-[#FF9F0D] font-bold text-sm shadow-sm transition ${
           isFirstPage 
             ? 'opacity-40 cursor-not-allowed border-gray-200' 
-            : 'hover:border-primary cursor-pointer'
+            : 'hover:border-[#FF9F0D] cursor-pointer'
         }"
-        aria-label="Previous Page"
+        aria-label="${t('common.prev')}"
       >
         &#171;
       </button>
@@ -122,8 +123,8 @@ function renderPagination(totalPages) {
           data-page="${p}" 
           class="btn-page-number w-11 h-11 flex items-center justify-center rounded-[2px] text-sm font-semibold transition shadow-sm ${
             p === currentPage 
-              ? 'bg-primary text-white border border-primary cursor-default' 
-              : 'border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-bg-dark text-primary hover:border-primary cursor-pointer'
+              ? 'bg-[#FF9F0D] text-white border border-[#FF9F0D] cursor-default' 
+              : 'border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-[#0D0D0D] text-[#FF9F0D] hover:border-[#FF9F0D] cursor-pointer'
           }"
         >
           ${p}
@@ -133,12 +134,12 @@ function renderPagination(totalPages) {
       <button 
         id="btn-next-page" 
         ${isLastPage ? 'disabled' : ''}
-        class="w-11 h-11 flex items-center justify-center rounded-[2px] border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-bg-dark text-primary font-bold text-sm shadow-sm transition ${
+        class="w-11 h-11 flex items-center justify-center rounded-[2px] border border-[#F2F2F2] dark:border-gray-700 bg-white dark:bg-[#0D0D0D] text-[#FF9F0D] font-bold text-sm shadow-sm transition ${
           isLastPage 
             ? 'opacity-40 cursor-not-allowed border-gray-200' 
-            : 'hover:border-primary cursor-pointer'
+            : 'hover:border-[#FF9F0D] cursor-pointer'
         }"
-        aria-label="Next Page"
+        aria-label="${t('common.next')}"
       >
         &#187;
       </button>
@@ -174,6 +175,7 @@ function renderPagination(totalPages) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  applyStaticTranslations();
   renderBlogList();
   try {
     await renderSidebar();
@@ -183,6 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.addEventListener('languageChanged', async () => {
+  applyStaticTranslations();
   renderBlogList();
   try {
     await renderSidebar();

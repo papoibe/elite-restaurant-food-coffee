@@ -74,6 +74,7 @@ const dict = {
     'common.readMore': 'Đọc thêm',
     'common.shopNow': 'Mua ngay',
     'common.inStock': 'Còn hàng',
+    'common.outOfStock': 'Hết hàng',
     'common.description': 'Mô tả',
     'common.reviews': 'Đánh giá',
     'common.compare': 'So sánh',
@@ -112,6 +113,11 @@ const dict = {
     'common.backToShop': 'Về trang cửa hàng',
     'common.notFound': 'Không tìm thấy sản phẩm!',
     'common.loading': 'Đang tải dữ liệu...',
+
+    'shopDetails.keyBenefits': 'Lợi ích chính',
+    'shopDetails.freshIngredients': 'Nguyên liệu sạch',
+    'shopDetails.fastDelivery': 'Giao hàng nhanh',
+    'shopDetails.qualityAssurance': 'Đảm bảo chất lượng',
 
     'tag.popularTags': 'Thẻ Phổ Biến',
     'tag.appetizers': 'Món khai vị',
@@ -317,6 +323,7 @@ const dict = {
     'common.readMore': 'Read More',
     'common.shopNow': 'Shop Now',
     'common.inStock': 'In stock',
+    'common.outOfStock': 'Out of stock',
     'common.description': 'Description',
     'common.reviews': 'Reviews',
     'common.compare': 'Compare',
@@ -355,6 +362,11 @@ const dict = {
     'common.backToShop': 'Back to Shop',
     'common.notFound': 'Product not found!',
     'common.loading': 'Loading...',
+
+    'shopDetails.keyBenefits': 'Key Benefits',
+    'shopDetails.freshIngredients': 'Fresh Ingredients',
+    'shopDetails.fastDelivery': 'Fast Delivery',
+    'shopDetails.qualityAssurance': 'Quality Assurance',
 
     'tag.popularTags': 'Popular Tags',
     'tag.appetizers': 'Appetizers',

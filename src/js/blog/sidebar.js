@@ -1,5 +1,5 @@
 import { sidebarData, blogPostsData } from './data.js';
-import { getLang } from '../i18n.js';
+import { getLang, t } from '../i18n.js';
 
 export async function renderSidebar() {
   const container = document.getElementById('sidebar-container');
@@ -48,7 +48,7 @@ export async function renderSidebar() {
 
   const tRecent = lang === 'vi' ? 'Bài Viết Gần Đây' : 'Recent Post';
   const tFilter = lang === 'vi' ? 'Lọc Theo Thực Đơn' : 'Filter By Menu';
-  const tTags = 'Popular Tags';
+  const tTags = t('tag.popularTags');
   const tGallery = lang === 'vi' ? 'Bộ Sưu Tập Ảnh' : 'Photo Gallery';
   const tFollow = lang === 'vi' ? 'Theo Dõi Chúng Tôi' : 'Follow Us';
   const tSearchPlaceholder = lang === 'vi' ? 'Tìm kiếm từ khóa...' : 'Search Your Keyword...';
@@ -58,22 +58,22 @@ export async function renderSidebar() {
       <input 
         type="text" 
         placeholder="${tSearchPlaceholder}" 
-        class="w-full bg-transparent border border-[#E0E0E0] dark:border-gray-700 text-sm px-5 py-3.5 rounded-[2px] focus:outline-none focus:border-primary text-[#333333] dark:text-white placeholder-gray-400"
+        class="w-full bg-transparent border border-[#E0E0E0] dark:border-gray-700 text-sm px-5 py-3.5 rounded-[2px] focus:outline-none focus:border-[#FF9F0D] text-[#333333] dark:text-white placeholder-gray-400"
       />
-      <button class="absolute right-0 top-0 bottom-0 bg-primary text-white w-14 flex items-center justify-center rounded-r-[2px] hover:bg-amber-600 transition cursor-pointer" aria-label="Search">
+      <button class="absolute right-0 top-0 bottom-0 bg-[#FF9F0D] text-white w-14 flex items-center justify-center rounded-r-[2px] hover:bg-amber-600 transition cursor-pointer" aria-label="${t('common.searchProduct')}">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
       </button>
     </div>
 
-    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] text-center bg-white dark:bg-bg-dark-2">
+    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] text-center bg-white dark:bg-[#1a1a1a]">
       <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 border border-gray-200 dark:border-gray-700">
         <img src="${author.avatar}" alt="${author.name}" class="w-full h-full object-cover" />
       </div>
       <h4 class="font-bold text-lg text-[#333333] dark:text-white">${author.name}</h4>
       <p class="text-xs text-gray-400 mt-1">${lang === 'vi' ? (author.role_vi || author.role) : author.role}</p>
       
-      <div class="flex justify-center items-center gap-1 text-primary text-xs my-2.5">
-        ★★★★★ <span class="text-gray-400 text-[11px] ml-1">(1 Review)</span>
+      <div class="flex justify-center items-center gap-1 text-[#FF9F0D] text-xs my-2.5">
+        ★★★★★ <span class="text-gray-400 text-[11px] ml-1">(1 ${t('common.review')})</span>
       </div>
 
       <p class="text-xs text-[#828282] dark:text-gray-400 leading-relaxed max-w-[260px] mx-auto mb-4">
@@ -81,14 +81,14 @@ export async function renderSidebar() {
       </p>
 
       <div class="flex justify-center items-center gap-3 text-[#333333] dark:text-white">
-        <a href="#" class="hover:text-primary transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" class="w-3.5 h-3.5" alt="FB" /></a>
-        <a href="#" class="hover:text-primary transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" class="w-3.5 h-3.5" alt="Twitter" /></a>
-        <a href="#" class="hover:text-primary transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" class="w-3.5 h-3.5" alt="Instagram" /></a>
-        <a href="#" class="hover:text-primary transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" class="w-3.5 h-3.5" alt="Pinterest" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" class="w-3.5 h-3.5" alt="FB" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" class="w-3.5 h-3.5" alt="Twitter" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" class="w-3.5 h-3.5" alt="Instagram" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" class="w-3.5 h-3.5" alt="Pinterest" /></a>
       </div>
     </div>
 
-    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-bg-dark-2">
+    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-[#1a1a1a]">
       <h4 class="font-bold text-lg text-[#333333] dark:text-white mb-6">${tRecent}</h4>
       <div class="space-y-4">
         ${recentPostsList.map(p => `
@@ -98,7 +98,7 @@ export async function renderSidebar() {
             </a>
             <div>
               <span class="text-[11px] text-gray-400 block mb-1">${lang === 'vi' ? (p.date_vi || p.date) : p.date}</span>
-              <a href="/src/pages/blog-details.html?id=${p.id}" class="text-xs text-[#333333] dark:text-white hover:text-primary transition line-clamp-2 leading-snug">
+              <a href="/src/pages/blog-details.html?id=${p.id}" class="text-xs text-[#333333] dark:text-white hover:text-[#FF9F0D] transition line-clamp-2 leading-snug">
                 ${lang === 'vi' ? (p.title_vi || p.title) : p.title}
               </a>
             </div>
@@ -107,33 +107,41 @@ export async function renderSidebar() {
       </div>
     </div>
 
-    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-bg-dark-2">
+    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-[#1a1a1a]">
       <h4 class="font-bold text-lg text-[#333333] dark:text-white mb-6">${tFilter}</h4>
       <div class="space-y-3.5">
-        ${dynamicFilterMenu.map(m => `
-          <a href="/src/pages/shop-list.html?category=${encodeURIComponent(m.name)}" class="flex items-center justify-between group cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="${m.image}" alt="${m.name}" class="w-12 h-12 object-cover rounded-[2px]" onerror="this.src='https://placehold.co/48x48?text=Food'" />
-              <span class="text-sm font-semibold text-[#333333] dark:text-white group-hover:text-primary transition">${m.name}</span>
-            </div>
-            <span class="text-xs text-[#333333] dark:text-gray-400 font-medium">${m.count}</span>
-          </a>
-        `).join('')}
+        ${dynamicFilterMenu.map(m => {
+          const key = 'cat.' + m.name.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (match, chr) => chr.toUpperCase());
+          const catName = t(key) !== key ? t(key) : m.name;
+          return `
+            <a href="/src/pages/shop-list.html?category=${encodeURIComponent(m.name)}" class="flex items-center justify-between group cursor-pointer">
+              <div class="flex items-center gap-3">
+                <img src="${m.image}" alt="${m.name}" class="w-12 h-12 object-cover rounded-[2px]" onerror="this.src='https://placehold.co/48x48?text=Food'" />
+                <span class="text-sm font-semibold text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition">${catName}</span>
+              </div>
+              <span class="text-xs text-[#333333] dark:text-gray-400 font-medium">${m.count}</span>
+            </a>
+          `;
+        }).join('')}
       </div>
     </div>
 
-    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-bg-dark-2">
+    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-[#1a1a1a]">
       <h4 class="font-bold text-lg text-[#333333] dark:text-white mb-6">${tTags}</h4>
       <div class="flex flex-wrap gap-4">
-        ${dynamicTags.map(tag => `
-          <a href="/src/pages/shop-list.html?tag=${encodeURIComponent(tag)}" class="text-xs text-[#4F4F4F] dark:text-gray-300 border border-[#E0E0E0] dark:border-gray-700 px-4 py-2.5 rounded-[2px] hover:border-primary hover:text-primary transition inline-block">
-            ${tag}
-          </a>
-        `).join('')}
+        ${dynamicTags.map(tag => {
+          const key = 'tag.' + tag.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (match, chr) => chr.toUpperCase());
+          const tagLabel = t(key) !== key ? t(key) : tag;
+          return `
+            <a href="/src/pages/shop-list.html?tag=${encodeURIComponent(tag)}" class="text-xs text-[#4F4F4F] dark:text-gray-300 border border-[#E0E0E0] dark:border-gray-700 px-4 py-2.5 rounded-[2px] hover:border-[#FF9F0D] hover:text-[#FF9F0D] transition inline-block">
+              ${tagLabel}
+            </a>
+          `;
+        }).join('')}
       </div>
     </div>
 
-    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-bg-dark-2">
+    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-[#1a1a1a]">
       <h4 class="font-bold text-lg text-[#333333] dark:text-white mb-6">${tGallery}</h4>
       <div class="grid grid-cols-3 gap-2.5">
         ${photoGallery.map(img => `
@@ -150,22 +158,22 @@ export async function renderSidebar() {
       </div>
     </div>
 
-    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-bg-dark-2">
+    <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] bg-white dark:bg-[#1a1a1a]">
       <h4 class="font-bold text-lg text-[#333333] dark:text-white mb-6">${tFollow}</h4>
       <div class="flex items-center gap-3">
-        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-primary hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Twitter">
+        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Twitter">
           <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/twitter.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/twitter.svg') no-repeat center / contain;"></span>
         </a>
-        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-primary hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="YouTube">
+        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="YouTube">
           <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/youtube.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/youtube.svg') no-repeat center / contain;"></span>
         </a>
-        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-primary hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Pinterest">
+        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Pinterest">
           <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain;"></span>
         </a>
-        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-primary hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Instagram">
+        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Instagram">
           <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/instagram.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/instagram.svg') no-repeat center / contain;"></span>
         </a>
-        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-primary hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Facebook">
+        <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Facebook">
           <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/facebook.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/facebook.svg') no-repeat center / contain;"></span>
         </a>
       </div>
@@ -186,7 +194,7 @@ function setupGalleryLightbox() {
     modal.className = 'fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300';
     modal.innerHTML = `
       <div class="relative max-w-4xl max-h-[90vh] flex items-center justify-center">
-        <button id="close-lightbox" class="absolute -top-10 right-0 text-white hover:text-primary text-3xl font-bold cursor-pointer transition">&times;</button>
+        <button id="close-lightbox" class="absolute -top-10 right-0 text-white hover:text-[#FF9F0D] text-3xl font-bold cursor-pointer transition">&times;</button>
         <img id="lightbox-img" src="" alt="Enlarged gallery photo" class="max-w-full max-h-[85vh] rounded-[2px] shadow-2xl object-contain" />
       </div>
     `;

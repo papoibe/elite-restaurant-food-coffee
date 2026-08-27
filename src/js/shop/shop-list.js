@@ -13,32 +13,41 @@ async function initShopList() {
   try {
     const response = await fetch('/src/data/menu.json')
     const menuData = await response.json()
+    const lang = getLang()
 
     productsData = menuData.map(item => ({
-  id: item.id,
-  name: item.name,
-  price: item.price,
-  oldPrice: item.oldPrice || null,
-  category: item.category,
-  tags: item.tags || [],
-  image: item.image,
-  description: getLang() === 'en' ? (item.description_en || item.description) : item.description,
-  rating: item.rating || 5,
-  tag: item.oldPrice ? 'Sell' : null
-}))
+      id: item.id,
+      name: lang === 'vi' ? (item.name_vi || item.name) : item.name,
+      price: item.price,
+      oldPrice: item.oldPrice || null,
+      category: item.category,
+      tags: item.tags || [],
+      image: item.image,
+      description: lang === 'en' ? (item.description_en || item.description) : (item.description || item.description_en),
+      rating: item.rating || 5,
+      tag: item.oldPrice ? (lang === 'vi' ? 'Giảm giá' : 'Sell') : null
+    }))
 
-    renderCategories(productsData)
+    renderCategories(menuData)
     renderLatestProducts(productsData)
-    renderProductTags(productsData   )
+    renderProductTags(menuData)
     setupEventListeners()
+
     const maxDataPrice = Math.ceil(Math.max(...productsData.map(p => p.price)))
-    const priceRange = document.getElementById('price-range')
-    const priceDisplay = document.getElementById('price-value')
-    if (priceRange) {
-      priceRange.max = maxDataPrice
-      priceRange.value = maxDataPrice
-      if (priceDisplay) priceDisplay.innerText = maxDataPrice
+    const minInput = document.getElementById('price-min')
+    const maxInput = document.getElementById('price-max')
+    const maxValDisplay = document.getElementById('price-max-val')
+
+    if (maxInput) {
+      maxInput.max = maxDataPrice
+      maxInput.value = maxDataPrice
     }
+    if (minInput) {
+      minInput.max = maxDataPrice
+      minInput.value = 0
+    }
+    if (maxValDisplay) maxValDisplay.innerText = maxDataPrice
+
     const urlCategory = new URLSearchParams(window.location.search).get('category')
     if (urlCategory) {
       const targetBox = document.querySelector(`.category-checkbox[value="${CSS.escape(urlCategory)}"]`)
@@ -56,7 +65,7 @@ function renderProducts() {
   if (!grid) return
 
   if (filteredProducts.length === 0) {
-    grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">Không tìm thấy món ăn nào.</div>`
+    grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">${t('shop.noResults')}</div>`
     renderPagination(0)
     return
   }
@@ -71,7 +80,6 @@ function renderProducts() {
     const wishlisted = isWishlisted(item.id)
     return `
       <div class="group cursor-pointer flex flex-col">
-        <!-- Khung ảnh + 3 Action Buttons -->
         <div class="relative bg-gray-200 aspect-square overflow-hidden rounded-[2px]">
           <img 
             src="${item.image}" 
@@ -81,7 +89,7 @@ function renderProducts() {
           />
           
           ${item.tag ? `
-            <span class="absolute top-6 left-6 bg-primary text-white text-[14px] px-4 py-0.5 rounded-[4px] shadow-sm font-normal">
+            <span class="absolute top-6 left-6 bg-[#FF9F0D] text-white text-[14px] px-4 py-0.5 rounded-[4px] shadow-sm font-normal">
               ${item.tag}
             </span>
           ` : ''}
@@ -89,8 +97,8 @@ function renderProducts() {
             
             <a 
               href="/src/pages/shop-details.html?id=${item.id}" 
-              class="w-9 h-9 bg-white text-primary rounded flex items-center justify-center hover:bg-primary hover:text-white transition shadow-sm"
-              title="Chi tiết"
+              class="w-9 h-9 bg-white text-[#FF9F0D] rounded flex items-center justify-center hover:bg-[#FF9F0D] hover:text-white transition shadow-sm"
+              title="${t('shop.viewDetails')}"
             >
               <span 
                 class="w-4 h-4 bg-current transition-colors"
@@ -98,11 +106,10 @@ function renderProducts() {
               ></span>
             </a>
 
-            <!-- Giỏ hàng (Tote.svg) -->
             <button 
               data-id="${item.id}" 
-              class="btn-add-cart w-9 h-9 bg-white text-primary rounded flex items-center justify-center hover:bg-primary hover:text-white transition shadow-sm"
-              title="Thêm vào giỏ"
+              class="btn-add-cart w-9 h-9 bg-white text-[#FF9F0D] rounded flex items-center justify-center hover:bg-[#FF9F0D] hover:text-white transition shadow-sm cursor-pointer"
+              title="${t('common.addToCart')}"
             >
               <span 
                 class="w-4 h-4 bg-current transition-colors"
@@ -110,15 +117,14 @@ function renderProducts() {
               ></span>
             </button>
 
-            <!-- Yêu thích (Heart.svg) -->
             <button 
               data-id="${item.id}" 
-              class="btn-wishlist w-9 h-9 rounded flex items-center justify-center transition shadow-sm ${
+              class="btn-wishlist w-9 h-9 rounded flex items-center justify-center transition shadow-sm cursor-pointer ${
                 wishlisted 
-                  ? 'bg-primary text-white' 
-                  : 'bg-white text-primary hover:bg-primary hover:text-white'
+                  ? 'bg-[#FF9F0D] text-white' 
+                  : 'bg-white text-[#FF9F0D] hover:bg-[#FF9F0D] hover:text-white'
               }"
-              title="Yêu thích"
+              title="${t('common.addToWishlist')}"
             >
               <span 
                 class="w-4 h-4 bg-current transition-colors"
@@ -129,14 +135,12 @@ function renderProducts() {
           </div>
         </div>
 
-        <!-- Tên món ăn -->
-        <h3 class="mt-2 font-bold text-[18px] text-[#333333] dark:text-white group-hover:text-primary transition line-clamp-1">
+        <h3 class="mt-2 font-bold text-[18px] text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition line-clamp-1">
           <a href="/src/pages/shop-details.html?id=${item.id}">${item.name}</a>
         </h3>
         
-        <!-- Giá món -->
         <div class="mt-1 text-base flex items-center">
-          <span class="text-primary font-semibold">$${item.price.toFixed(2)}</span>
+          <span class="text-[#FF9F0D] font-semibold">$${item.price.toFixed(2)}</span>
           ${item.oldPrice ? `<span class="text-gray-400 line-through ml-2 text-sm font-normal">$${item.oldPrice.toFixed(2)}</span>` : ''}
         </div>
       </div>
@@ -151,14 +155,19 @@ function renderCategories(items) {
   const container = document.getElementById('category-list')
   if (!container) return
 
-  const categories = [...new Set(items.map(i => i.category))]
+  const rawCategories = [...new Set(items.map(i => i.category))].filter(Boolean)
 
-  container.innerHTML = categories.map(cat => `
-    <label class="flex items-center gap-3 cursor-pointer hover:text-primary transition">
-      <input type="checkbox" value="${cat}" class="category-checkbox accent-primary w-4 h-4 cursor-pointer" />
-      <span>${cat}</span>
-    </label>
-  `).join('')
+  container.innerHTML = rawCategories.map(cat => {
+    const key = 'cat.' + cat.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+    const label = t(key) !== key ? t(key) : cat
+
+    return `
+      <label class="flex items-center gap-3 cursor-pointer hover:text-[#FF9F0D] transition">
+        <input type="checkbox" value="${cat}" class="category-checkbox accent-[#FF9F0D] w-4 h-4 cursor-pointer" />
+        <span>${label}</span>
+      </label>
+    `
+  }).join('')
 
   document.querySelectorAll('.category-checkbox').forEach(cb => {
     cb.addEventListener('change', () => {
@@ -178,7 +187,7 @@ function renderLatestProducts(items) {
     const starCount = Math.round(item.rating || 5)
     let starsHtml = ''
     for (let i = 1; i <= 5; i++) {
-      starsHtml += `<span class="${i <= starCount ? 'text-primary' : 'text-gray-300'}">★</span>`
+      starsHtml += `<span class="${i <= starCount ? 'text-[#FF9F0D]' : 'text-gray-300'}">★</span>`
     }
 
     return `
@@ -187,7 +196,7 @@ function renderLatestProducts(items) {
           <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" onerror="this.src='https://placehold.co/100x100?text=Dish'" />
         </div>
         <div>
-          <h5 class="text-base font-bold text-[#333333] dark:text-white group-hover:text-primary transition line-clamp-1">${item.name}</h5>
+          <h5 class="text-base font-bold text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition line-clamp-1">${item.name}</h5>
           <div class="flex items-center gap-0.5 mt-0.5 text-xs">${starsHtml}</div>
           <span class="text-sm text-gray-500 font-normal block mt-1">$${item.price.toFixed(2)}</span>
         </div>
@@ -195,7 +204,6 @@ function renderLatestProducts(items) {
     `
   }).join('')
 }
-
 
 function renderProductTags(items) {
   const container = document.getElementById('product-tags-list')
@@ -205,25 +213,29 @@ function renderProductTags(items) {
 
   container.innerHTML = uniqueTags.map(tag => {
     const isActive = activeTag === tag
+    const key = 'tag.' + tag.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+    const label = t(key) !== key ? t(key) : tag
+
     return `
       <button 
-        type="button"
+        type="button" 
         data-tag="${tag}" 
         class="tag-btn pb-1 text-base cursor-pointer transition border-b ${
           isActive 
-            ? 'text-primary border-primary font-medium' 
-            : 'text-[#4F4F4F] dark:text-gray-300 border-[#E0E0E0] dark:border-gray-700 hover:text-primary hover:border-primary'
+            ? 'text-[#FF9F0D] border-[#FF9F0D] font-medium' 
+            : 'text-[#4F4F4F] dark:text-gray-300 border-[#E0E0E0] dark:border-gray-700 hover:text-[#FF9F0D] hover:border-[#FF9F0D]'
         }"
       >
-        ${tag}
+        ${label}
       </button>
     `
   }).join('')
+
   container.querySelectorAll('.tag-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const selected = e.currentTarget.getAttribute('data-tag')
       activeTag = activeTag === selected ? null : selected
-      renderProductTags(productsData)
+      renderProductTags(items)
       currentPage = 1
       filterProducts()
     })
@@ -239,15 +251,15 @@ function renderPagination(totalPages) {
     return
   }
 
-  const baseBtn = "w-10 h-10 flex items-center justify-center bg-white border border-[#F2F2F2] text-primary text-sm font-medium hover:bg-primary hover:text-white transition shadow-[0px_1px_2px_rgba(0,0,0,0.05)]"
-  const activeBtn = "w-10 h-10 flex items-center justify-center bg-primary text-white text-sm font-medium shadow-sm"
+  const baseBtn = "w-10 h-10 flex items-center justify-center bg-white border border-[#F2F2F2] text-[#FF9F0D] text-sm font-medium hover:bg-[#FF9F0D] hover:text-white transition shadow-[0px_1px_2px_rgba(0,0,0,0.05)] cursor-pointer"
+  const activeBtn = "w-10 h-10 flex items-center justify-center bg-[#FF9F0D] text-white text-sm font-medium shadow-sm cursor-pointer"
 
   let html = ''
 
   html += `
     <button 
       ${currentPage === 1 ? 'disabled class="' + baseBtn + ' opacity-40 cursor-not-allowed"' : 'data-page="' + (currentPage - 1) + '" class="btn-page ' + baseBtn + '"'}
-      title="Trang trước"
+      title="${t('common.prev')}"
     >
       <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M18 17l-5-5 5-5M11 17l-5-5 5-5"/>
@@ -264,7 +276,7 @@ function renderPagination(totalPages) {
   html += `
     <button 
       ${currentPage === totalPages ? 'disabled class="' + baseBtn + ' opacity-40 cursor-not-allowed"' : 'data-page="' + (currentPage + 1) + '" class="btn-page ' + baseBtn + '"'}
-      title="Trang sau"
+      title="${t('common.next')}"
     >
       <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 17l5-5-5-5M13 17l5-5-5-5"/>
@@ -294,7 +306,7 @@ function attachCardEvents() {
       const product = productsData.find(p => String(p.id) === String(productId))
       if (product) {
         addToCart(product)
-        showSuccessToast(t('toast.addedToCart', { qty: 1, name: product.name }) || `Đã thêm ${product.name} vào giỏ`)
+        showSuccessToast(t('toast.addedToCart', { qty: 1, name: product.name }))
       }
     })
   })
@@ -306,13 +318,13 @@ function attachCardEvents() {
       const product = productsData.find(p => String(p.id) === String(productId))
       const nowWishlisted = toggleWishlist(productId)
 
-      btn.classList.toggle('bg-primary', nowWishlisted)
+      btn.classList.toggle('bg-[#FF9F0D]', nowWishlisted)
       btn.classList.toggle('text-white', nowWishlisted)
       btn.classList.toggle('bg-white', !nowWishlisted)
-      btn.classList.toggle('text-primary', !nowWishlisted)
+      btn.classList.toggle('text-[#FF9F0D]', !nowWishlisted)
 
       if (product) {
-        showSuccessToast(nowWishlisted ? `Đã thêm ${product.name} vào yêu thích` : `Đã xóa khỏi danh sách yêu thích`)
+        showSuccessToast(nowWishlisted ? t('toast.addedToWishlist', { name: product.name }) : t('toast.removedFromWishlist', { name: product.name }))
       }
     })
   })
@@ -344,20 +356,20 @@ function filterProducts() {
 
   renderProducts()
 }
-function updateSliderTrack() {
+
+function updatePriceDisplays(e) {
   const minInput = document.getElementById('price-min')
   const maxInput = document.getElementById('price-max')
-  const track = document.getElementById('slider-track')
-  const minValDisplay = document.getElementById('price-min-val')
-  const maxValDisplay = document.getElementById('price-max-val')
+  const minDisplay = document.getElementById('price-min-val')
+  const maxDisplay = document.getElementById('price-max-val')
 
-  if (!minInput || !maxInput || !track) return
+  if (!minInput || !maxInput) return
 
-  let minVal = parseFloat(minInput.value)
-  let maxVal = parseFloat(maxInput.value)
+  let minVal = parseInt(minInput.value)
+  let maxVal = parseInt(maxInput.value)
 
   if (minVal > maxVal - 2) {
-    if (event && event.target === minInput) {
+    if (e && e.target === minInput) {
       minInput.value = maxVal - 2
       minVal = maxVal - 2
     } else {
@@ -366,14 +378,8 @@ function updateSliderTrack() {
     }
   }
 
-  const minPercent = (minVal / minInput.max) * 100
-  const maxPercent = (maxVal / maxInput.max) * 100
-
-  track.style.left = `${minPercent}%`
-  track.style.width = `${maxPercent - minPercent}%`
-
-  if (minValDisplay) minValDisplay.innerText = minVal
-  if (maxValDisplay) maxValDisplay.innerText = maxVal
+  if (minDisplay) minDisplay.textContent = minVal
+  if (maxDisplay) maxDisplay.textContent = maxVal
 }
 
 function setupEventListeners() {
@@ -381,23 +387,21 @@ function setupEventListeners() {
   const searchBtn = document.getElementById('search-btn')
   const sortSelect = document.getElementById('sort-select')
   const showSelect = document.getElementById('show-select')
-  const priceRange = document.getElementById('price-range')
   const btnFilterPrice = document.getElementById('btn-filter-price')
   const minInput = document.getElementById('price-min')
   const maxInput = document.getElementById('price-max')
 
   if (minInput && maxInput) {
-    minInput.addEventListener('input', () => {
-      updateSliderTrack()
+    minInput.addEventListener('input', (e) => {
+      updatePriceDisplays(e)
       currentPage = 1
       filterProducts()
     })
-    maxInput.addEventListener('input', () => {
-      updateSliderTrack()
+    maxInput.addEventListener('input', (e) => {
+      updatePriceDisplays(e)
       currentPage = 1
       filterProducts()
     })
-    updateSliderTrack()
   }
 
   if (searchInput) searchInput.addEventListener('input', () => { currentPage = 1; filterProducts(); })
@@ -406,18 +410,9 @@ function setupEventListeners() {
 
   if (showSelect) {
     showSelect.addEventListener('change', (e) => {
-      itemsPerPage = parseInt(e.target.value) || 9
+      itemsPerPage = parseInt(e.target.value) || 15
       currentPage = 1
       renderProducts()
-    })
-  }
-
-  if (priceRange) {
-    priceRange.addEventListener('input', (e) => {
-      const priceDisplay = document.getElementById('price-value')
-      if (priceDisplay) priceDisplay.innerText = e.target.value
-      currentPage = 1
-      filterProducts()
     })
   }
 
@@ -428,30 +423,5 @@ function setupEventListeners() {
     })
   }
 }
-const minInput = document.getElementById('price-min')
-const maxInput = document.getElementById('price-max')
-const minDisplay = document.getElementById('price-min-val')
-const maxDisplay = document.getElementById('price-max-val')
-
-function updatePriceDisplays(e) {
-  let minVal = parseInt(minInput.value)
-  let maxVal = parseInt(maxInput.value)
-
-  if (minVal > maxVal - 50) {
-    if (e && e.target === minInput) {
-      minInput.value = maxVal - 50
-      minVal = maxVal - 50
-    } else {
-      maxInput.value = minVal + 50
-      maxVal = minVal + 50
-    }
-  }
-
-  if (minDisplay) minDisplay.textContent = minVal
-  if (maxDisplay) maxDisplay.textContent = maxVal
-}
-
-minInput?.addEventListener('input', updatePriceDisplays)
-maxInput?.addEventListener('input', updatePriceDisplays)
 
 document.addEventListener('DOMContentLoaded', initShopList)
