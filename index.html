@@ -6,51 +6,67 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-  <meta name="description" content="Savoria — Authentic & Modern Cuisine Experience" />
+  <meta name="description" content="Foodtuck — Authentic & Modern Cuisine Experience" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Savoria — Restaurant</title>
+  <title>Foodtuck — Restaurant</title>
 </head>
-<body class="bg-[#0D0D0D] text-white font-sans antialiased selection:bg-[#FF9F0D] selection:text-white">
+<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased selection:bg-primary selection:text-white pt-[140px] lg:pt-[160px]">
 
-  <header class="w-full z-50 bg-[#0D0D0D] pt-6 pb-4">
+  <!-- Fixed/Sticky Header -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-bg-dark/95 backdrop-blur-md pt-4 pb-4 shadow-lg border-b border-white/10 transition-all duration-300">
     <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
       
-      <div class="text-center mb-4">
-        <a href="/" class="text-3xl font-bold font-heading text-white inline-block">
-          Savo<span class="text-[#FF9F0D]">ria</span>
+      <!-- Logo Brand -->
+      <div class="text-center mb-3">
+        <a href="/" class="text-3xl font-bold font-heading text-white inline-block tracking-wide">
+          Food<span class="text-primary">tuck</span>
         </a>
       </div>
 
-      <div class="flex items-center justify-between border-b border-white/10 pb-4">
-        <nav class="hidden lg:flex items-center gap-8 text-sm">
-          <a href="/" class="text-[#FF9F0D] font-medium flex items-center gap-1" data-i18n="nav.home">Home <span class="w-1.5 h-1.5 rounded-full bg-[#FF9F0D] inline-block"></span></a>
-          <a href="/src/pages/menu.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.menu">Menu</a>
-          <a href="/src/pages/blog.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.blog">Blog</a>
-          <a href="/src/pages/about.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.about">About</a>
-          <a href="/src/pages/shop-list.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.shop">Shop</a>
-          <a href="/src/pages/contact.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.contact">Contact</a>
+      <!-- Navigation & Action Controls -->
+      <div class="flex items-center justify-between">
+        <nav class="hidden lg:flex items-center gap-8 text-sm text-white/90">
+          <a href="/" class="text-primary font-medium flex items-center gap-1" data-i18n="nav.home">Home <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span></a>
+          <a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a>
+          <a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a>
+          <a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a>
+          <a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a>
+          <a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
         </nav>
 
-        <div class="flex items-center gap-4 ml-auto lg:ml-0">
+        <div class="flex items-center gap-4 ml-auto lg:ml-0 text-white">
           <div class="relative hidden sm:block">
             <input 
               type="text" 
               placeholder="Search..." 
               data-i18n-placeholder="common.searchProduct"
-              class="w-60 bg-transparent border border-[#FF9F0D] rounded-full px-5 py-2 text-xs focus:outline-none placeholder-gray-400 text-white pr-10"
+              class="w-60 bg-transparent border border-primary rounded-full px-5 py-2 text-xs focus:outline-none placeholder-gray-400 text-white pr-10"
             />
-            <button class="absolute right-3.5 top-2 text-white hover:text-[#FF9F0D] transition" aria-label="Search">
+            <button class="absolute right-3.5 top-2 text-white hover:text-primary transition" aria-label="Search">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
           </div>
 
-          <a href="/src/pages/cart.html" class="relative p-2 text-white hover:text-[#FF9F0D] transition-colors" aria-label="Cart">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-            <span id="cart-count" class="absolute top-0 right-0 bg-[#FF9F0D] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          <!-- Nút Đăng nhập / Tài khoản -->
+          <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
           </a>
 
-          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-[#FF9F0D] hover:text-[#FF9F0D] transition-colors">EN</button>
+          <!-- Nút Chuyển đổi giao diện Sáng / Tối (Theme Toggle) -->
+          <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+          </button>
+
+          <!-- Giỏ hàng -->
+          <a href="/src/pages/cart.html" class="relative p-2 text-white hover:text-primary transition-colors" aria-label="Cart">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            <span id="cart-count" class="absolute top-0 right-0 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </a>
+
+          <!-- Đổi ngôn ngữ -->
+          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
           
+          <!-- Mobile Menu Toggle -->
           <button id="mobile-menu-btn" class="lg:hidden p-2 text-white" aria-label="Menu">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
@@ -58,20 +74,21 @@
       </div>
     </div>
 
-    <div id="mobile-menu" class="hidden lg:hidden bg-[#1a1a1a] px-6 py-4">
-      <ul class="flex flex-col gap-3 text-sm">
-        <li><a href="/" class="text-[#FF9F0D]" data-i18n="nav.home">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-[#FF9F0D]" data-i18n="nav.menu">Menu</a></li>
-        <li><a href="/src/pages/blog.html" class="hover:text-[#FF9F0D]" data-i18n="nav.blog">Blog</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-[#FF9F0D]" data-i18n="nav.about">About</a></li>
-        <li><a href="/src/pages/shop-list.html" class="hover:text-[#FF9F0D]" data-i18n="nav.shop">Shop</a></li>
-        <li><a href="/src/pages/contact.html" class="hover:text-[#FF9F0D]" data-i18n="nav.contact">Contact</a></li>
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 py-4 mt-3">
+      <ul class="flex flex-col gap-3 text-sm text-white/90">
+        <li><a href="/" class="text-primary font-medium" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary" data-i18n="nav.contact">Contact</a></li>
       </ul>
     </div>
   </header>
 
   <main>
-    <section class="min-h-[85vh] flex items-center py-12 px-4 sm:px-6 relative">
+    <section class="min-h-[80vh] flex items-center py-8 px-4 sm:px-6 relative">
       <div class="max-w-[1320px] mx-auto flex items-center w-full gap-8">
         
         <div class="hidden xl:flex flex-col items-center gap-6 pr-4">
@@ -113,6 +130,7 @@
 
       </div>
     </section>
+
 
     <section class="bg-[#0D0D0D] py-20 px-4 sm:px-6">
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-10 xl:gap-14 items-center">

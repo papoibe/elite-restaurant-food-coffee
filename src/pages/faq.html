@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Các câu hỏi thường gặp từ Savoria" />
+    <meta name="description" content="Các câu hỏi thường gặp từ Savoria — Hỗ trợ đặt hàng, thanh toán và dịch vụ" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>FAQ Page — Savoria</title>
     <style>
@@ -13,11 +13,13 @@
       .faq-item.active .faq-answer {
         display: block;
       }
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+      }
     </style>
   </head>
   <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased">
 
-    <!-- ========== HEADER (đồng bộ với index.html) ========== -->
     <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
       <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" class="text-2xl font-bold font-heading text-white">
@@ -33,9 +35,9 @@
         </ul>
         <div class="flex items-center gap-4 text-white">
           <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-        </a>
-        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </a>
+          <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
           <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
             <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
@@ -58,19 +60,16 @@
       </div>
     </header>
 
-    <main class="pt-16">
-  <section class="relative">
-    <img src="/assets/images/banner.jpg" alt="Banner" class="w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1495195129352-aeb325a55b65?q=80&w=1600'" />
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-      <h1 class="text-4xl md:text-5xl font-bold font-heading" data-i18n="page.faq.title">FAQ Page</h1>
-      <nav class="mt-3 text-sm">
-        <a href="/" class="hover:text-primary transition" data-i18n="page.home.tab">Home</a>
-        <span class="mx-2 text-white/60">&gt;</span>
-        <span class="text-primary font-medium" data-i18n="page.faq.crumb">faq</span>
+    <section class="absolute top-0 left-0 w-full h-100 bg-cover bg-center flex flex-col items-center justify-center text-center px-4 z-10" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
+      <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.faq.title">FAQ Page</h1>
+      <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
+        <a href="/" class="hover:text-primary transition-colors" data-i18n="page.home.tab">Home</a>
+        <span class="mx-2 text-primary">&gt;</span>
+        <span class="text-primary" data-i18n="page.faq.crumb">FAQ</span>
       </nav>
-    </div>
-  </section>
+    </section>
+
+    <main class="pt-130">
 
   <section class="py-16 md:py-24 px-4 sm:px-6">
     <div class="max-w-[1320px] mx-auto">
