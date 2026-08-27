@@ -56,83 +56,260 @@
       </nav>
     </section>
 
-    <!-- ========== ABOUT INTRO — Ảnh trái + text phải (theo Figma About Us) ========== -->
-    <section class="py-20 px-6 bg-white dark:bg-bg-dark" data-reveal>
-      <div class="max-w-[1320px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        <!-- Grid 2 ảnh giống Figma -->
-        <div class="grid grid-cols-2 gap-4">
-          <img src="/assets/images/about-tacos.jpg" alt="Tacos ngon" class="rounded-lg object-cover w-full h-64" />
-          <img src="/assets/images/about-juice.jpg" alt="Nước ép tươi" class="rounded-lg object-cover w-full h-64" />
-          <img src="/assets/images/about-salad.jpg" alt="Salad tươi" class="rounded-lg object-cover w-full h-48 col-span-2" />
+    <!-- ============================================================
+         1. ABOUT US — Figma: x=300 y=530, 1320x734
+            · Ảnh ghép 669x734 : trái 336x536 · phải trên 309x271 (lệch xuống 54)
+                                 · phải dưới 309x382, các khe đều bo 6px
+            · Khối chữ 526px   : cách ảnh 125px, lệch xuống 184px
+            · Nút Show more    : 195x58 bo 6px nền #FF9F0D, chữ Inter Bold 18/26
+            · Nút Watch video  : tròn 60x60 #FF9F0D + chữ Inter Bold 16/24 #333333
+         ============================================================ -->
+    <section class="max-w-[1368px] mx-auto px-4 sm:px-6 pt-20 lg:pt-[120px]" data-reveal>
+      <div class="flex flex-col lg:flex-row gap-10 lg:gap-[125px]">
+
+        <!-- Ảnh ghép — Figma group "Image" 669x734 -->
+        <div class="w-full lg:w-[669px] shrink-0 flex gap-6">
+          <img
+            src="/assets/images/about-tacos.jpg"
+            alt="Món tacos đặc trưng của nhà hàng"
+            class="w-1/2 lg:w-[336px] lg:h-[536px] h-[400px] object-cover rounded-[6px]"
+          />
+          <div class="w-1/2 lg:w-[309px] flex flex-col gap-[27px] lg:mt-[54px]">
+            <img
+              src="/assets/images/about-juice.jpg"
+              alt="Nước ép trái cây tươi"
+              class="w-full lg:h-[271px] h-[186px] object-cover rounded-[6px]"
+            />
+            <img
+              src="/assets/images/about-salad.jpg"
+              alt="Salad rau củ tươi"
+              class="w-full lg:h-[382px] h-[187px] object-cover rounded-[6px]"
+            />
+          </div>
         </div>
-        <!-- Nội dung giới thiệu -->
-        <div>
-          <p class="script-text text-xl mb-2">About us</p>
-          <h2 class="text-4xl font-bold text-text-dark dark:text-text-white font-heading mb-6 leading-tight">
+
+        <!-- Khối chữ — Figma group "Text" 526x366 -->
+        <div class="w-full lg:w-[526px] lg:mt-[184px]">
+          <!-- "About us" — Miniver Regular 18/26 #FF9F0D + gạch ngang 34x1px -->
+          <div class="flex items-start gap-[10px]">
+            <span class="text-[18px] leading-[26px] text-[#FF9F0D]" style="font-family:'Miniver',cursive" data-i18n="about.tag">About us</span>
+            <!-- Line 45: Figma đặt ở Top=732 trong khi chữ ở Top=714 -> thấp hơn đúng 18px -->
+            <span class="block w-[34px] h-px bg-[#FF9F0D] mt-[18px]"></span>
+          </div>
+
+          <!-- Helvetica Bold 48/56 màu #333333 -->
+          <h2 class="mt-2 font-heading font-bold text-[36px] leading-[44px] lg:text-[48px] lg:leading-[56px] text-[#333333] dark:text-white" data-i18n="about.headline">
             Food is an important part Of a balanced Diet
           </h2>
-          <p class="text-text-muted mb-6 leading-relaxed">
-            Elite Restaurant ra đời từ niềm đam mê ẩm thực Á Đông, kết hợp nguyên liệu tươi mỗi ngày với kỹ thuật chế biến hiện đại — mang đến bữa ăn cân bằng, tốt cho sức khoẻ mà vẫn trọn vị.
+
+          <!-- Helvetica Regular 16/24 màu #4F4F4F -->
+          <p class="mt-8 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="about.intro">
+            Elite Restaurant ra đời từ niềm đam mê ẩm thực Á Đông, kết hợp nguyên liệu tươi mỗi ngày
+            với kỹ thuật chế biến hiện đại — mang đến bữa ăn cân bằng, tốt cho sức khoẻ mà vẫn trọn vị.
           </p>
-          <div class="flex items-center gap-4">
-            <a href="/src/pages/menu.html" class="btn-primary">Show more</a>
-            <!-- Nút xem video theo Figma -->
-            <button class="flex items-center gap-2 text-primary font-semibold hover:underline">
-              <span class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white">
-                <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+
+          <!-- Figma group "Button": Show more 195x58, cách 16px, rồi Watch video -->
+          <div class="mt-8 flex items-center gap-4">
+            <a
+              href="/src/pages/menu.html"
+              class="inline-flex items-center justify-center h-[58px] min-w-[195px] px-12 rounded-[6px] bg-[#FF9F0D] hover:bg-[#E88E00] transition-colors text-white font-bold text-[18px] leading-[26px]"
+              data-i18n="about.showMore"
+            >Show more</a>
+
+            <button type="button" class="group inline-flex items-center gap-[10px] cursor-pointer">
+              <span class="w-[60px] h-[60px] rounded-full bg-[#FF9F0D] group-hover:bg-[#E88E00] transition-colors flex items-center justify-center shrink-0">
+                <!-- Figma "Play": vector 15x18 nét 1.875px màu trắng trong khung 24x24 -->
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="#FFFFFF" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6.75 3.75 21.75 12l-15 8.25V3.75Z" />
+                </svg>
               </span>
-              Watch video
+              <span class="font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="about.watchVideo">Watch video</span>
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== WHY CHOOSE US ========== -->
-    <section class="py-20 px-6 bg-bg-section dark:bg-bg-dark-2" data-reveal>
-      <div class="max-w-[1320px] mx-auto text-center">
-        <h2 class="text-4xl font-bold text-text-dark dark:text-text-white font-heading mb-4">Why Choose us</h2>
-        <p class="text-text-muted max-w-2xl mx-auto mb-10">3 lý do thực khách chọn quay lại Elite Restaurant mỗi tuần.</p>
-        <!-- Ảnh lớn full width -->
-        <img src="/assets/images/banner-bg.jpg" alt="Why choose us" class="w-full h-64 md:h-96 object-cover rounded-lg mb-12" />
-        <!-- 3 features nổi bật -->
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="text-center">
-            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-              <span class="text-primary text-3xl">&#x1F468;&#x200D;&#x1F373;</span>
-            </div>
-            <h4 class="font-bold text-text-dark dark:text-text-white text-lg mb-2">Best Chef</h4>
-            <p class="text-text-muted text-sm">Đội ngũ đầu bếp giàu kinh nghiệm, tuyển chọn kỹ càng từ các nhà hàng lớn.</p>
-          </div>
-          <div class="text-center">
-            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-              <span class="text-primary text-3xl">&#x1F355;</span>
-            </div>
-            <h4 class="font-bold text-text-dark dark:text-text-white text-lg mb-2">120 Item food</h4>
-            <p class="text-text-muted text-sm">Thực đơn đa dạng hơn 120 món, cập nhật theo mùa và nguyên liệu tươi mới.</p>
-          </div>
-          <div class="text-center">
-            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-              <span class="text-primary text-3xl">&#x2728;</span>
-            </div>
-            <h4 class="font-bold text-text-dark dark:text-text-white text-lg mb-2">Clean Environment</h4>
-            <p class="text-text-muted text-sm">Không gian sạch sẽ, thoáng đãng, đạt chuẩn vệ sinh an toàn thực phẩm.</p>
-          </div>
+    <!-- ============================================================
+         2. WHY CHOOSE US — Figma: x=300 y=1384, 1320x865
+            · Khối chữ 579px canh giữa · ảnh 1320x386 (cách chữ 56px)
+            · 3 cột 359px, khe 121px : icon 80x80 · tiêu đề 24/32 · mô tả 16/24
+              (icon là SVG xuất thẳng từ Figma, KHÔNG có nền tròn)
+         ============================================================ -->
+    <section class="max-w-[1368px] mx-auto px-4 sm:px-6 pt-20 lg:pt-[120px]" data-reveal>
+      <div class="max-w-[579px] mx-auto text-center">
+        <h2 class="font-heading font-bold text-[36px] leading-[44px] lg:text-[48px] lg:leading-[56px] text-[#333333] dark:text-white" data-i18n="about.whyTitle">
+          Why Choose us
+        </h2>
+        <p class="mt-2 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="about.whyDesc">
+          Ba lý do khiến thực khách chọn quay lại Elite Restaurant mỗi tuần: đội ngũ, thực đơn và không gian.
+        </p>
+      </div>
+
+      <img
+        src="/assets/images/banner-bg.jpg"
+        alt="Không gian và món ăn tại nhà hàng"
+        class="mt-14 w-full h-[240px] md:h-[386px] object-cover"
+      />
+
+      <div class="mt-14 grid gap-12 md:grid-cols-3 md:gap-[121px]">
+        <!-- Best chef — icon Student.svg (mũ tốt nghiệp) -->
+        <div class="text-center">
+          <img src="/assets/images/Student.svg" alt="" class="w-20 h-20 mx-auto dark:invert" />
+          <h3 class="mt-6 font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white" data-i18n="about.feature1Title">Best Chef</h3>
+          <p class="mt-4 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="about.feature1Desc">
+            Đội ngũ đầu bếp giàu kinh nghiệm, tuyển chọn kỹ càng từ các nhà hàng lớn.
+          </p>
+        </div>
+
+        <!-- 120 item food — icon Coffee_aboutus.svg (tách cà phê) -->
+        <div class="text-center">
+          <img src="/assets/images/Coffee_aboutus.svg" alt="" class="w-20 h-20 mx-auto dark:invert" />
+          <h3 class="mt-6 font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white" data-i18n="about.feature2Title">120 Item food</h3>
+          <p class="mt-4 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="about.feature2Desc">
+            Thực đơn đa dạng hơn 120 món, cập nhật theo mùa và nguyên liệu tươi mới.
+          </p>
+        </div>
+
+        <!-- Clean environment — icon Person.svg -->
+        <div class="text-center">
+          <img src="/assets/images/Person.svg" alt="" class="w-20 h-20 mx-auto dark:invert" />
+          <h3 class="mt-6 font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white" data-i18n="about.feature3Title">Clean Environment</h3>
+          <p class="mt-4 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="about.feature3Desc">
+            Không gian sạch sẽ, thoáng đãng, đạt chuẩn vệ sinh an toàn thực phẩm.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ========== TEAM MEMBERS — render động từ chefs.json (dữ liệu thật, đồng bộ với chefs.html) ========== -->
-    <section class="py-20 px-6 bg-white dark:bg-bg-dark" data-reveal>
-      <div class="max-w-[1320px] mx-auto text-center">
-        <h2 class="text-4xl font-bold text-text-dark dark:text-text-white font-heading mb-12" data-i18n="about.team">Team Member</h2>
-        <div id="team-preview" class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
-          <div class="bg-gray-100 dark:bg-bg-dark-2 aspect-[3/4] rounded-lg animate-pulse"></div>
+    <!-- ============================================================
+         3. TEAM MEMBER — Figma: y=2369, 1920x686 (tràn hết bề ngang)
+            · Bg   : ảnh unsplash_OzBLe_Eg1mg nằm DƯỚI, Rectangle 8795
+                     (#FF9F0D 85%) phủ LÊN TRÊN nên ảnh chỉ hiện mờ mờ
+            · Text : lệch xuống 88px, rộng 418px, ảnh trang trí x1ZZWyDU8sU nằm sau chữ
+            · Thẻ  : 312x398 lệch xuống 288px nên ĐÈ ra khỏi dải vàng
+                     thanh trắng 312x88 ở đáy · hover mới hiện social_icon
+         ============================================================ -->
+    <section class="relative mt-20 lg:mt-[120px]" data-reveal>
+      <!-- Bg: dải 1920x460 -->
+      <div class="absolute inset-x-0 top-0 h-[300px] md:h-[460px] overflow-hidden">
+        <img src="/assets/images/unsplash_OzBLe_Eg1mg.png" alt="" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-[#FF9F0D]/85"></div>
+      </div>
+
+      <div class="relative max-w-[1368px] mx-auto px-4 sm:px-6">
+        <!-- Text 418x176, ảnh trang trí 161x176 nằm sau chữ -->
+        <div class="relative w-full max-w-[418px] mx-auto pt-[88px] text-center">
+          <img
+            src="/assets/images/unsplash_x1ZZWyDU8sU.png"
+            alt=""
+            class="pointer-events-none absolute left-1/2 -translate-x-1/2 top-[88px] w-[161px] h-[176px] object-contain"
+          />
+          <h2 class="relative font-heading font-bold text-[36px] leading-[44px] lg:text-[48px] lg:leading-[56px] text-white" data-i18n="about.team">
+            Team Member
+          </h2>
+          <p class="relative mt-2 text-[16px] leading-[24px] text-white" data-i18n="about.teamDesc">
+            Những gương mặt đứng sau từng món ăn — đầu bếp, quản lý và đội ngũ phục vụ của chúng tôi.
+          </p>
         </div>
-        <a href="/src/pages/chefs.html" class="btn-outline mt-10 inline-block" data-i18n="common.seeMore">See More</a>
+
+        <!-- 4 thẻ 312x398, khe 24px, lệch xuống 288px tính từ đầu section -->
+        <div id="team-preview" class="mt-[64px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="h-[398px] bg-white/40 animate-pulse"></div>
+          <div class="h-[398px] bg-white/40 animate-pulse"></div>
+          <div class="h-[398px] bg-white/40 animate-pulse"></div>
+          <div class="h-[398px] bg-white/40 animate-pulse"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. TESTIMONIALS — Figma: x=300 y=3175, 1273x770
+            · "Testimonials" Great Vibes 32/40 #FF9F0D
+            · Thẻ trắng 868x451 (shadow 0 0 80 #CDCDCD 25%)
+            · Avatar tròn 133px đè lên mép trên thẻ 67px
+            · Ảnh hoa unsplash_Ioq6qEibtbU 502x580 (đã mờ sẵn) ở góc phải thẻ
+            · Icon Quotes 48x48 · 5 sao 24x24 (4 vàng + 1 xám) · 4 chấm chuyển slide
+         ============================================================ -->
+    <section class="max-w-[1368px] mx-auto px-4 sm:px-6 pt-20 lg:pt-[120px]" data-reveal>
+      <p class="text-[32px] leading-[40px] text-[#FF9F0D]" style="font-family:'Great Vibes',cursive" data-i18n="about.testimonialsTag">Testimonials</p>
+      <h2 class="mt-2 font-heading font-bold text-[36px] leading-[44px] lg:text-[48px] lg:leading-[56px] text-[#333333] dark:text-white" data-i18n="about.testimonialsTitle">
+        What our client are saying
+      </h2>
+
+      <!-- Thẻ nhận xét — nội dung do about-page.js đổ vào để đổi được slide -->
+      <div class="mt-[100px] flex justify-center">
+        <div class="relative w-full max-w-[868px]">
+          <!-- Avatar đè lên mép trên thẻ -->
+          <img
+            id="testimonial-avatar"
+            src="/assets/images/chef-1.jpg"
+            alt=""
+            class="absolute left-1/2 -translate-x-1/2 -top-[67px] w-[133px] h-[133px] rounded-full object-cover z-10 bg-[#E9E9E9]"
+          />
+
+          <div class="relative overflow-hidden min-h-[451px] bg-white dark:bg-[#1A1A1A] shadow-[0_0_80px_0_rgba(205,205,205,0.25)] px-6 pt-[99px] pb-8 text-center">
+            <!-- Ảnh hoa trang trí, đã mờ sẵn 8% từ Figma -->
+            <img
+              src="/assets/images/unsplash_Ioq6qEibtbU.png"
+              alt=""
+              class="pointer-events-none absolute -right-[60px] -bottom-[60px] w-[502px] h-[580px] object-contain"
+            />
+
+            <img src="/assets/images/Quotes.svg" alt="" class="relative w-12 h-12 mx-auto" />
+
+            <p id="testimonial-quote" class="relative mt-8 mx-auto max-w-[697px] text-[18px] leading-[26px] text-[#4F4F4F] dark:text-white/70"></p>
+
+            <div id="testimonial-stars" class="relative mt-8 flex justify-center gap-2"></div>
+
+            <h3 id="testimonial-name" class="relative mt-4 font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white"></h3>
+            <p id="testimonial-role" class="relative mt-2 text-[16px] leading-[24px] text-[#828282]"></p>
+          </div>
+
+          <!-- 4 chấm: chấm đang chọn #FF9F0D, còn lại #FF9F0D 30% -->
+          <div id="testimonial-dots" class="mt-14 flex justify-center gap-[11px]"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. OUR FOOD MENU — Figma: x=300 y=4065, 1320x941
+            · Ảnh trang trí x1ZZWyDU8sU nằm sau tiêu đề
+            · 6 tab Inter 20/28 (đang chọn #FF9F0D) trên đường kẻ 1320x1px #E0E0E0
+              + gạch chân 91x2px #FF9F0D
+            · Danh sách 2 cột 648px, khe 24px, mỗi dòng cao 111px + kẻ #E0E0E0
+            · Nút View menu 143x52 viền 1px #FF9F0D, chữ 16/24 #FF9F0D
+            Dữ liệu lấy từ menu.json, lọc theo trường mealType (trùng đúng 6 tab).
+         ============================================================ -->
+    <section class="max-w-[1368px] mx-auto px-4 sm:px-6 pt-20 lg:pt-[120px] pb-20 lg:pb-[120px]" data-reveal>
+      <div class="relative text-center">
+        <img
+          src="/assets/images/unsplash_x1ZZWyDU8sU.png"
+          alt=""
+          class="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-6 w-[161px] h-[176px] object-contain"
+        />
+        <h2 class="relative font-heading font-bold text-[36px] leading-[44px] lg:text-[48px] lg:leading-[56px] text-[#333333] dark:text-white" data-i18n="about.menuTitle">
+          Our Food Menu
+        </h2>
+        <p class="relative mt-2 mx-auto max-w-[418px] text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="about.menuDesc">
+          Chọn theo bữa trong ngày — mỗi nhóm là những món được gọi nhiều nhất tại nhà hàng.
+        </p>
+      </div>
+
+      <!-- Tab: gạch chân chạy theo tab đang chọn -->
+      <div class="mt-14 border-b border-[#E0E0E0] dark:border-white/15">
+        <div id="menu-tabs" class="flex flex-wrap justify-center gap-x-[46px] gap-y-2"></div>
+      </div>
+
+      <!-- Danh sách món: 2 cột 648px, khe 24px -->
+      <div id="menu-list" class="mt-14 grid gap-x-6 md:grid-cols-2"></div>
+
+      <div class="mt-12 flex justify-center">
+        <a
+          href="/src/pages/menu.html"
+          class="inline-flex items-center justify-center h-[52px] min-w-[143px] px-8 border border-[#FF9F0D] text-[#FF9F0D] text-[16px] leading-[24px] hover:bg-[#FF9F0D] hover:text-white transition-colors"
+          data-i18n="about.viewMenu"
+        >View menu</a>
       </div>
     </section>
   </main>
@@ -236,7 +413,7 @@
 </div>
 
   <div class="bg-[#4F4F4F] dark:bg-primary py-7 text-gray-200 dark:text-white text-sm transition-colors">
-    <div class="max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="max-w-[1368px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
       <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
       <div class="flex space-x-3">
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Facebook">
@@ -262,19 +439,11 @@
   <script type="module" src="/src/js/main.js"></script>
   <script type="module">
     import { initScrollReveal } from '/src/js/dom.js'
-    import { fetchChefs, renderChefCard } from '/src/js/chefs.js'
-
-    // Team Member — render động từ chefs.json (dữ liệu thật, đồng bộ với chefs.html)
-    async function renderTeamPreview() {
-      const container = document.getElementById('team-preview')
-      if (!container) return
-      const chefs = await fetchChefs()
-      container.innerHTML = chefs.slice(0, 4).map(renderChefCard).join('')
-    }
+    import { initAboutPage } from '/src/js/about-page.js'
 
     document.addEventListener('DOMContentLoaded', () => {
       initScrollReveal()
-      renderTeamPreview()
+      initAboutPage()   // Team Member + Testimonials + Our Food Menu
     })
   </script>
 </body>

@@ -4,7 +4,7 @@
    ============================================================ */
 
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&family=Miniver&display=swap');
 
 /* Tailwind v4 đổi cách bật dark mode: mặc định "dark:" chạy theo prefers-color-scheme.
    Khai báo dòng dưới để "dark:" bám theo class .dark trên <html> mà theme.js đang toggle,
@@ -100,6 +100,18 @@ html {
   font-size: 48px;
   font-weight: 700;
   color: var(--color-text-white);
+}
+
+/* Select trang Checkout — Figma vẽ icon "CaretDown" 24x24 màu #828282 cách mép
+   phải 16px. Trình duyệt tự vẽ mũi tên riêng mỗi hệ điều hành một kiểu nên phải
+   tắt (appearance:none) rồi vẽ lại bằng background-image cho khớp thiết kế. */
+.checkout-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4.5 9L12 16.5L19.5 9' stroke='%23828282' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 24px 24px;
 }
 
 /* Breadcrumb — Đường dẫn trang */

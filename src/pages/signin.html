@@ -59,46 +59,83 @@
     </nav>
   </section>
 
-    <!-- FORM ĐĂNG NHẬP — Kết nối auth.js -->
-    <section class="py-24 px-6 bg-white">
-      <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-[0_4px_25px_rgba(0,0,0,0.15)]">
-        <h2 class="text-xl font-bold mb-6 text-left text-gray-900" data-i18n="page.signin.title">Sign In</h2>
+    <!-- ============================================================
+         THẺ "Sign in" — Figma 16. Sign in page: x=748 y=530, 424x564
+           · Nền trắng + đổ bóng 0 4px 80px #FF9F0D 15% (quầng vàng nhạt)
+           · Đệm trong 32px · ô nhập 360x44 viền 1px #E0E0E0, KHÔNG bo góc
+           · Icon 24x24 cách trái 16px, chữ bắt đầu ở 48px
+           · Ô tick 20x20 nền #FF9F0D · nút 360x44 nền #FF9F0D
+           · Dải OR: 2 đường kẻ + ô vuông 32x32 · 2 nút Google / Apple 360x44
+         ============================================================ -->
+    <section class="py-24 px-4 sm:px-6 bg-white dark:bg-[#0D0D0D]">
+      <div class="w-full max-w-[424px] mx-auto p-8 bg-white dark:bg-[#1A1A1A] shadow-[0_4px_80px_0_rgba(255,159,13,0.15)]">
+        <!-- Figma: Helvetica Bold 20/28 màu #333333 -->
+        <h2 class="font-heading font-bold text-[20px] leading-[28px] text-[#333333] dark:text-white" data-i18n="page.signin.title">Sign In</h2>
 
         <!-- Thông báo lỗi/thành công -->
-        <div id="signin-alert" class="hidden mb-4 p-3 rounded text-sm font-medium"></div>
+        <div id="signin-alert" class="hidden mt-4 p-3 text-[14px] leading-[22px] font-medium"></div>
 
-        <form id="signin-form" class="space-y-4">
-          <!-- Email -->
-          <div>
-            <label for="signin-email" class="block text-xs font-semibold mb-1 text-gray-600" data-i18n="common.email">Email</label>
-            <input type="email" id="signin-email" placeholder="Enter your email" data-i18n-placeholder="auth.emailPlaceholder" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900">
+        <form id="signin-form" novalidate>
+          <!-- Component 89 — Email: icon EnvelopeSimple 24x24 -->
+          <div class="relative mt-8">
+            <img src="/assets/images/EnvelopeSimple.svg" alt="" class="pointer-events-none absolute left-4 top-[10px] w-6 h-6 dark:invert" />
+            <input type="email" id="signin-email" required
+                   placeholder="Email" data-i18n-placeholder="common.email"
+                   class="w-full h-11 pl-12 pr-4 bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#4F4F4F] dark:placeholder-white/50 focus:outline-none focus:border-[#FF9F0D] transition-colors" />
           </div>
 
-          <!-- Mật khẩu -->
-          <div>
-            <label for="signin-password" class="block text-xs font-semibold mb-1 text-gray-600" data-i18n="common.password">Password</label>
-            <input type="password" id="signin-password" placeholder="Enter your password" data-i18n-placeholder="auth.passwordPlaceholder" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:outline-none focus:border-primary text-sm text-gray-900">
+          <!-- Component 91 — Password: icon Lock 24x24 -->
+          <div class="relative mt-4">
+            <img src="/assets/images/Lock.svg" alt="" class="pointer-events-none absolute left-4 top-[10px] w-6 h-6 dark:invert" />
+            <input type="password" id="signin-password" required
+                   placeholder="Passward" data-i18n-placeholder="common.password"
+                   class="w-full h-11 pl-12 pr-4 bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#4F4F4F] dark:placeholder-white/50 focus:outline-none focus:border-[#FF9F0D] transition-colors" />
           </div>
 
-          <!-- Ghi nhớ & Quên mật khẩu -->
-          <div class="flex items-center justify-between pt-1">
-            <div class="flex items-center">
-              <input type="checkbox" id="remember" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary accent-primary">
-              <label for="remember" class="ml-2 text-xs text-gray-600 cursor-pointer" data-i18n="common.remember">Remember me?</label>
-            </div>
-            <a href="#" class="text-xs text-gray-400 hover:text-primary transition-colors" data-i18n="common.forgotPassword">Forgot password?</a>
-          </div>
+          <!-- Remember me: ô tick 20x20 nền #FF9F0D, nhãn 14/22 #333333 cách 8px -->
+          <label class="mt-4 flex items-center gap-2 w-fit cursor-pointer">
+            <input type="checkbox" id="remember" checked
+                   class="appearance-none w-5 h-5 shrink-0 border border-[#E0E0E0] bg-transparent cursor-pointer
+                          checked:bg-[#FF9F0D] checked:border-[#FF9F0D]
+                          checked:bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22 fill=%22none%22><path d=%22M3 8.5l3 3 7-7%22 stroke=%22white%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')]
+                          bg-center bg-no-repeat" />
+            <span class="text-[14px] leading-[22px] text-[#333333] dark:text-white/80" data-i18n="common.remember">Remember me?</span>
+          </label>
 
-          <!-- Nút Submit -->
-          <button type="submit" class="w-full bg-primary hover:bg-amber-600 text-white font-semibold py-2.5 rounded text-sm transition duration-200 mt-2 cursor-pointer" data-i18n="page.signin.title">
-            Sign In
-          </button>
+          <!-- Nút 360x44 nền #FF9F0D, chữ Helvetica Regular 16/24 trắng -->
+          <button type="submit"
+                  class="mt-8 w-full h-11 rounded-none bg-[#FF9F0D] hover:bg-[#E88E00] text-white text-[16px] leading-[24px] transition-colors cursor-pointer"
+                  data-i18n="page.signin.title">Sign In</button>
         </form>
 
-        <p class="text-center text-xs text-gray-500 mt-6">
-          <span data-i18n="auth.noAccount">Don't have an account?</span> <a href="signup.html" class="text-primary hover:underline font-medium" data-i18n="auth.signupHere">Sign Up here</a>
+        <!-- Forget password? — canh phải, Helvetica Regular 14/22 #828282 -->
+        <div class="mt-4 text-right text-[14px] leading-[22px]">
+          <a href="#" class="text-[14px] leading-[22px] text-[#828282] hover:text-[#FF9F0D] transition-colors" data-i18n="common.forgotPassword">Forget password?</a>
+        </div>
+
+        <!-- Dải OR: 2 đường kẻ #E0E0E0 + ô vuông 32x32 viền #E0E0E0 -->
+        <div class="mt-8 flex items-center">
+          <span class="flex-1 h-px bg-[#E0E0E0] dark:bg-white/15"></span>
+          <span class="mx-[15px] w-8 h-8 shrink-0 flex items-center justify-center border border-[#E0E0E0] dark:border-white/15 text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70">OR</span>
+          <span class="flex-1 h-px bg-[#E0E0E0] dark:bg-white/15"></span>
+        </div>
+
+        <!-- Component 94 / 95 — 2 nút 360x44, icon 20x20 cách trái 16px -->
+        <button type="button"
+                class="mt-4 relative w-full h-11 border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/80 hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors cursor-pointer">
+          <img src="/assets/images/Google.png" alt="" class="absolute left-4 top-3 w-5 h-5" />
+          <span data-i18n="auth.signinGoogle">Sign in with Google</span>
+        </button>
+
+        <button type="button"
+                class="mt-4 relative w-full h-11 border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/80 hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors cursor-pointer">
+          <img src="/assets/images/Apple.png" alt="" class="absolute left-4 top-3 w-5 h-5 dark:invert" />
+          <span data-i18n="auth.signinApple">Sign in with Apple</span>
+        </button>
+
+        <p class="mt-6 text-center text-[14px] leading-[22px] text-[#828282]">
+          <span data-i18n="auth.noAccount">Don't have an account?</span>
+          <a href="signup.html" class="text-[#FF9F0D] hover:underline" data-i18n="auth.signupHere">Sign Up here</a>
         </p>
       </div>
     </section>

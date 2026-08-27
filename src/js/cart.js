@@ -136,6 +136,7 @@ function calculateTotal(subtotal) {
 
   const subtotalEl = document.getElementById('cart-subtotal')
   const discountEl = document.getElementById('cart-discount')
+  const discountRow = document.getElementById('cart-discount-row')
   const shippingEl = document.getElementById('cart-shipping')
   const totalEl = document.getElementById('cart-total')
 
@@ -143,6 +144,15 @@ function calculateTotal(subtotal) {
   if (discountEl) discountEl.textContent = `-$${discount.toFixed(2)}`
   if (shippingEl) shippingEl.textContent = `$${shipping.toFixed(2)}`
   if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`
+
+  // Bang Total Bill trong Figma chi co 2 dong: Cart Subtotal + Shipping Charge.
+  // Hang Discount la phan mo rong cua nhom (ma SAVORIA10) nen chi hien khi
+  // thuc su ap duoc ma — giu trang thai mac dinh khop 100% ban thiet ke.
+  if (discountRow) {
+    const hasDiscount = discount > 0
+    discountRow.classList.toggle('hidden', !hasDiscount)
+    discountRow.classList.toggle('flex', hasDiscount)
+  }
 }
 
 function attachCartEvents(cart) {

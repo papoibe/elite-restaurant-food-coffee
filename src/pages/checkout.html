@@ -67,143 +67,171 @@
       </div>
     </section>
 
-    <section id="checkout-content" class="py-24 px-6">
+    <!-- ============================================================
+         KHỐI "Cheekout" — Figma 12. Cheek out page: x=300 y=530, 1320x723
+           · Cột trái  "Shipping adress" 872px · cột phải "Side ber" 424px · khe 24px
+           · Mỗi ô nhập: nhãn 16/24 #333333 + ô 424x56 viền 1px #E0E0E0, KHÔNG bo góc
+           · Hàng cách nhau 16px (bước 104 = 88 + 16), cột cách nhau 24px
+           · 2 nút dưới 424x56 vuông góc · nút "Place an order" 376x58 bo 6px
+         ============================================================ -->
+    <section id="checkout-content" class="py-24 px-4 sm:px-6">
       <div class="max-w-[1320px] mx-auto">
-        <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8" novalidate>
-          
-          <div class="lg:col-span-8 space-y-5">
-            <h2 class="text-xl font-bold mb-4">Shipping Address</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label for="checkout-firstName" class="block text-sm font-medium mb-1">First name</label>
-                <input id="checkout-firstName" type="text" name="firstName" autocomplete="given-name" required data-validate="required" aria-describedby="err-firstName" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p id="err-firstName" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
-              </div>
-              <div>
-                <label for="checkout-lastName" class="block text-sm font-medium mb-1">Last name</label>
-                <input id="checkout-lastName" type="text" name="lastName" autocomplete="family-name" required data-validate="required" aria-describedby="err-lastName" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p id="err-lastName" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
-              </div>
-            </div>
+        <form id="checkout-form" class="flex flex-col lg:flex-row gap-6" novalidate>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label for="checkout-email" class="block text-sm font-medium mb-1">Email address</label>
-                <input id="checkout-email" type="email" name="email" autocomplete="email" required data-validate="required,email" aria-describedby="err-email" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p id="err-email" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
-              </div>
-              <div>
-                <label for="checkout-phone" class="block text-sm font-medium mb-1">Phone number</label>
-                <input id="checkout-phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" required data-validate="required,phone" aria-describedby="err-phone" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p id="err-phone" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
-              </div>
-            </div>
+          <!-- ============ CỘT TRÁI — Shipping adress (872px) ============ -->
+          <div class="w-full lg:w-[872px] shrink-0">
+            <!-- Figma: Helvetica Bold 20/28 màu #333333 -->
+            <h2 class="font-heading font-bold text-[20px] leading-[28px] text-[#333333] dark:text-white" data-i18n="checkout.shippingAddress">
+              Shipping Address
+            </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Lưới ô nhập: 2 cột 424px, khe ngang 24px, khe dọc 16px -->
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
               <div>
-                <label for="checkout-company" class="block text-sm font-medium mb-1">Company</label>
-                <input id="checkout-company" type="text" name="company" autocomplete="organization" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
+                <label for="checkout-firstName" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.firstName">First name</label>
+                <input id="checkout-firstName" type="text" name="firstName" autocomplete="given-name" required data-validate="required" aria-describedby="err-firstName"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-firstName" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label for="checkout-country" class="block text-sm font-medium mb-1">Country</label>
-                <select id="checkout-country" name="country" autocomplete="country" required data-validate="required" aria-describedby="err-country" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2 text-text-muted">
-                  <option value="">Choose country</option>
+                <label for="checkout-lastName" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.lastName">Last name</label>
+                <input id="checkout-lastName" type="text" name="lastName" autocomplete="family-name" required data-validate="required" aria-describedby="err-lastName"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-lastName" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
+              </div>
+
+              <div>
+                <label for="checkout-email" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.email">Email address</label>
+                <input id="checkout-email" type="email" name="email" autocomplete="email" required data-validate="required,email" aria-describedby="err-email"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-email" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
+              </div>
+              <div>
+                <label for="checkout-phone" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.phone">Phone number</label>
+                <input id="checkout-phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" required data-validate="required,phone" aria-describedby="err-phone"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-phone" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
+              </div>
+
+              <div>
+                <label for="checkout-company" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.company">Company</label>
+                <input id="checkout-company" type="text" name="company" autocomplete="organization"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+              </div>
+              <div>
+                <label for="checkout-country" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.country">Country</label>
+                <!-- CaretDown 24x24 #828282 cách mép phải 16px — vẽ bằng background-image để bỏ mũi tên mặc định của trình duyệt -->
+                <select id="checkout-country" name="country" autocomplete="country" required data-validate="required" aria-describedby="err-country"
+                        class="checkout-select mt-2 w-full h-14 pl-[15px] pr-12 bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#828282] focus:outline-none focus:border-[#FF9F0D] transition-colors">
+                  <option value="" data-i18n="checkout.chooseCountry">Choose country</option>
                   <option value="VN">Vietnam</option>
                   <option value="US">United States</option>
                 </select>
-                <p id="err-country" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
+                <p id="err-country" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
               </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label for="checkout-city" class="block text-sm font-medium mb-1">City</label>
-                <select id="checkout-city" name="city" autocomplete="address-level2" required data-validate="required" aria-describedby="err-city" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2 text-text-muted">
-                  <option value="">Choose city</option>
+                <label for="checkout-city" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.city">City</label>
+                <select id="checkout-city" name="city" autocomplete="address-level2" required data-validate="required" aria-describedby="err-city"
+                        class="checkout-select mt-2 w-full h-14 pl-[15px] pr-12 bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#828282] focus:outline-none focus:border-[#FF9F0D] transition-colors">
+                  <option value="" data-i18n="checkout.chooseCity">Choose city</option>
                   <option value="HCM">Ho Chi Minh</option>
                   <option value="HN">Ha Noi</option>
                 </select>
-                <p id="err-city" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
+                <p id="err-city" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label for="checkout-zipCode" class="block text-sm font-medium mb-1">Zip code</label>
-                <input id="checkout-zipCode" type="text" name="zipCode" autocomplete="postal-code" required data-validate="required" aria-describedby="err-zipCode" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p id="err-zipCode" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
+                <label for="checkout-zipCode" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.zipCode">Zip code</label>
+                <input id="checkout-zipCode" type="text" name="zipCode" autocomplete="postal-code" required data-validate="required" aria-describedby="err-zipCode"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-zipCode" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
+              </div>
+
+              <div>
+                <label for="checkout-address1" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.address1">Address 1</label>
+                <input id="checkout-address1" type="text" name="address1" autocomplete="address-line1" required data-validate="required" aria-describedby="err-address1"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-address1" class="error-message text-red-500 text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
+              </div>
+              <div>
+                <label for="checkout-address2" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.address2">Address 2</label>
+                <input id="checkout-address2" type="text" name="address2" autocomplete="address-line2"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors" />
               </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label for="checkout-address1" class="block text-sm font-medium mb-1">Address 1</label>
-                <input id="checkout-address1" type="text" name="address1" autocomplete="address-line1" required data-validate="required" aria-describedby="err-address1" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-                <p id="err-address1" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
-              </div>
-              <div>
-                <label for="checkout-address2" class="block text-sm font-medium mb-1">Address 2</label>
-                <input id="checkout-address2" type="text" name="address2" autocomplete="address-line2" class="w-full border border-gray-300 dark:border-gray-700 p-3 rounded focus:outline-none focus:border-primary dark:bg-bg-dark-2" />
-              </div>
-            </div>
+            <!-- Billing Address — cách hàng cuối 32px -->
+            <h2 class="mt-8 font-heading font-bold text-[20px] leading-[28px] text-[#333333] dark:text-white" data-i18n="checkout.billingAddress">
+              Billing Address
+            </h2>
 
-            <div class="pt-2">
-              <h3 class="text-base font-bold mb-2">Billing Address</h3>
-              <label class="flex items-center gap-2 cursor-pointer text-sm text-text-muted">
-                <input type="checkbox" name="sameAddress" checked class="w-4 h-4 accent-primary rounded" />
-                <span>Same as shipping address</span>
-              </label>
-            </div>
+            <!-- Rectangle 8965: ô tick 20x20 viền 1px #BDBDBD, nhãn 14/22 #4F4F4F cách 8px -->
+            <label class="mt-[5px] flex items-center gap-2 cursor-pointer w-fit">
+              <input type="checkbox" name="sameAddress"
+                     class="appearance-none w-5 h-5 shrink-0 border border-[#BDBDBD] bg-transparent cursor-pointer
+                            checked:bg-[#FF9F0D] checked:border-[#FF9F0D]
+                            checked:bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22 fill=%22none%22><path d=%22M3 8.5l3 3 7-7%22 stroke=%22white%22 stroke-width=%221.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')]
+                            bg-center bg-no-repeat" />
+              <span class="text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70" data-i18n="checkout.sameAddress">Same as shipping address</span>
+            </label>
 
-            <div class="flex justify-between items-center pt-4 gap-4">
-              <a href="cart.html" class="w-1/2 border border-gray-300 dark:border-gray-700 text-center py-3 rounded text-sm hover:bg-gray-50 dark:hover:bg-bg-dark-2 transition">
-                &lt; Back to cart
+            <!-- 2 nút 424x56 VUÔNG GÓC, khe 24px -->
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <a href="/src/pages/cart.html"
+                 class="h-14 flex items-center justify-center gap-2 border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/80 hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors">
+                <img src="/assets/images/Vector.svg" alt="" class="w-[9px] h-[17px] dark:invert" />
+                <span data-i18n="checkout.backToCart">Back to cart</span>
               </a>
-              <button type="submit" class="btn-primary w-1/2 py-3 rounded text-sm flex items-center justify-center gap-2">
-                <span>Proceed to shipping</span>
-                <span>→</span>
+              <button type="submit"
+                      class="h-14 flex items-center justify-center gap-2 bg-[#FF9F0D] hover:bg-[#E88E00] rounded-none text-[16px] leading-[24px] text-white transition-colors cursor-pointer">
+                <span data-i18n="checkout.proceedShipping">Proceed to shipping</span>
+                <img src="/assets/images/ArrowRight.svg" alt="" class="w-5 h-5" />
               </button>
             </div>
           </div>
 
-          <div class="lg:col-span-4 border border-gray-200 dark:border-gray-700 p-6 rounded h-fit space-y-4">
-            <h3 class="text-base font-bold mb-2">Order Summary</h3>
+          <!-- ============ CỘT PHẢI — Side ber (424px) ============ -->
+          <!-- Rectangle 8966: 424x700 viền 1px #E0E0E0, không bo góc, padding 24 -->
+          <aside class="w-full lg:w-[424px] shrink-0 h-fit border border-[#E0E0E0] dark:border-white/15 rounded-none p-[23px]">
+            <!-- Danh sách món: mỗi món 376x104 (ảnh 83x88 + chữ), cách nhau 16px, có kẻ ngăn -->
+            <div id="checkout-cart-list"></div>
 
-            <div id="checkout-cart-list" class="space-y-4 max-h-[280px] overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800">
-
-            </div>
-
-            <hr class="border-gray-200 dark:border-gray-700" />
-
-            <div class="space-y-2 text-xs text-text-muted">
-              <div class="flex justify-between">
-                <span>Sub-total</span>
-                <span id="summary-subtotal" class="font-medium text-gray-800 dark:text-gray-200">$0.00</span>
+            <!-- Contant: 4 dòng 24px cách nhau 16px, rồi Line 50, rồi Total -->
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="checkout.subtotal">Sub-total</span>
+                <span id="summary-subtotal" class="text-[16px] leading-[24px] text-[#333333] dark:text-white">$0.00</span>
               </div>
-              <div class="flex justify-between">
-                <span>Shipping</span>
-                <span class="font-medium text-gray-800 dark:text-gray-200">Free</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="checkout.shipping">Shipping</span>
+                <span class="text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="checkout.free">Free</span>
               </div>
-              <div class="flex justify-between">
-                <span>Discount</span>
-                <span class="font-medium text-gray-800 dark:text-gray-200">0%</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="checkout.discount">Discount</span>
+                <span id="summary-discount" class="text-[16px] leading-[24px] text-[#333333] dark:text-white">0%</span>
               </div>
-              <div class="flex justify-between">
-                <span>Tax (10%)</span>
-                <span id="summary-tax" class="font-medium text-gray-800 dark:text-gray-200">$0.00</span>
-              </div>
-              
-              <hr class="border-gray-200 dark:border-gray-700 my-2" />
-              
-              <div class="flex justify-between font-bold text-sm text-gray-900 dark:text-white pt-1">
-                <span>Total</span>
-                <span id="summary-total" class="text-primary">$0.00</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="checkout.tax">Tax</span>
+                <span id="summary-tax" class="text-[16px] leading-[24px] text-[#333333] dark:text-white">$0.00</span>
               </div>
             </div>
 
-            <button id="btn-place-order" type="button" class="btn-primary w-full py-3 rounded text-sm flex items-center justify-center gap-2 mt-4">
-              <span>Place an order</span>
-              <span>→</span>
+            <!-- Line 50: kẻ ngang 1px #E0E0E0 -->
+            <div class="mt-4 h-px bg-[#E0E0E0] dark:bg-white/15"></div>
+
+            <!-- Total: nhãn Helvetica Regular 18/26, số Helvetica Bold 18/26, cùng màu #333333 -->
+            <div class="mt-[15px] flex items-center justify-between">
+              <span class="text-[18px] leading-[26px] text-[#333333] dark:text-white" data-i18n="checkout.total">Total</span>
+              <span id="summary-total" class="font-bold text-[18px] leading-[26px] text-[#333333] dark:text-white">$0.00</span>
+            </div>
+
+            <!-- Nút 376x58 BO 6px nền #FF9F0D, chữ 18/26 + ArrowRight 20x20 cách 10px -->
+            <button id="btn-place-order" type="button"
+                    class="mt-6 w-full h-[58px] flex items-center justify-center gap-[10px] rounded-[6px] bg-[#FF9F0D] hover:bg-[#E88E00] text-white text-[18px] leading-[26px] transition-colors cursor-pointer">
+              <span data-i18n="checkout.placeOrder">Place an order</span>
+              <img src="/assets/images/ArrowRight.svg" alt="" class="w-5 h-5" />
             </button>
-          </div>
+          </aside>
         </form>
       </div>
     </section>
