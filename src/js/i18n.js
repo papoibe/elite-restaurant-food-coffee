@@ -1,36 +1,16 @@
-/* ============================================================
-   i18n.js — Chuyển đổi ngôn ngữ Tiếng Việt / English cho toàn site
-   Lưu lựa chọn vào localStorage, áp dụng qua thuộc tính data-i18n.
-   Vanilla JS thuần, không dùng thư viện ngoài — đúng yêu cầu Đề 01.
-   ============================================================ */
-
 const LANG_KEY = 'elite-lang'
 
-/**
- * getLang — Ngôn ngữ hiện tại. Mặc định "vi" nếu chưa từng chọn.
- */
 export function getLang() {
   return localStorage.getItem(LANG_KEY) === 'en' ? 'en' : 'vi'
 }
 
-/**
- * setLang — Lưu ngôn ngữ mới rồi tải lại trang.
- * Dùng reload (thay vì re-render tay từng phần) vì rất nhiều nội dung
- * trên trang là do JS khác render động (menu, chefs, blog, giỏ hàng...) —
- * reload đảm bảo áp dụng đúng ngôn ngữ cho toàn bộ trang, không sót chỗ nào.
- */
 export function setLang(lang) {
   localStorage.setItem(LANG_KEY, lang === 'en' ? 'en' : 'vi')
   location.reload()
 }
 
-/**
- * dict — Từ điển tra cứu theo khoá dùng chung cho cả thuộc tính data-i18n
- * (áp dụng lên text tĩnh trong HTML) lẫn hàm t() (dùng trong chuỗi JS render động).
- */
 const dict = {
   vi: {
-    // Header / nav
     'nav.home': 'Trang chủ',
     'nav.menu': 'Thực đơn',
     'nav.blog': 'Blog',
@@ -57,7 +37,6 @@ const dict = {
     'auth.welcome': 'Chào mừng {name}!',
     'auth.passwordMismatch': 'Mật khẩu xác nhận không khớp!',
 
-    // Footer
     'footer.supportTitle1': 'V',
     'footer.supportTitle2': 'ẫn cần chúng tôi hỗ trợ?',
     'footer.supportDesc': 'Đừng ngại để lại lời nhắn thông minh & hợp lý. Rất đơn giản thôi.',
@@ -82,6 +61,9 @@ const dict = {
     'footer.link.support': 'Chính sách hỗ trợ',
     'footer.link.privacy': 'Bảo mật',
     'footer.recentPost': 'Bài viết gần đây',
+    'footer.recentPost1': 'Bí quyết kinh doanh ẩm thực',
+    'footer.recentPost2': 'Hương vị độc đáo mỗi ngày',
+    'footer.recentPost3': 'Nghệ thuật thưởng thức đồ uống',
     'footer.copyright': 'Bản quyền © 2026 thuộc về Elite Restaurant. Đã đăng ký bảo hộ.',
     'footer.copyrightAyeman': 'Bản quyền © 2022 thuộc về Ayeman. Đã đăng ký bảo hộ.',
     'footer.aboutDesc2': 'Khách hàng doanh nghiệp và du khách luôn tin tưởng lựa chọn dịch vụ đưa đón đáng tin cậy, an toàn và chuyên nghiệp tại nhiều thành phố lớn trên thế giới.',
@@ -89,7 +71,6 @@ const dict = {
     'footer.link.partners': 'Đối tác',
     'footer.link.team2': 'Đội ngũ',
 
-    // Buttons / common labels dùng lại nhiều nơi
     'common.addToCart': 'Thêm vào giỏ',
     'common.buyNow': 'Mua ngay',
     'common.seeMore': 'Xem thêm',
@@ -142,7 +123,6 @@ const dict = {
     'common.backToShop': 'Về trang cửa hàng',
     'common.notFound': 'Không tìm thấy sản phẩm!',
 
-    // Toast / thông báo (JS)
     'toast.addedToCart': 'Đã thêm {qty}x "{name}" vào giỏ hàng!',
     'toast.addedToWishlist': 'Đã thêm "{name}" vào Yêu thích!',
     'toast.removedFromWishlist': 'Đã bỏ "{name}" khỏi Yêu thích.',
@@ -151,7 +131,6 @@ const dict = {
     'toast.orderSuccess': 'Đặt hàng thành công!',
     'toast.emptyCart': 'Giỏ hàng chưa có sản phẩm nào.',
 
-    // Tiêu đề trang (breadcrumb / hero mỗi trang)
     'page.home.tab': 'Trang chủ',
     'page.menu.title': 'Thực Đơn Của Chúng Tôi',
     'page.menu.crumb': 'Thực đơn',
@@ -181,7 +160,6 @@ const dict = {
     'page.signup.title': 'Đăng Ký',
     'page.404.title': 'Không Tìm Thấy Trang',
 
-    // Trang chủ
     'home.hero.tag': 'Tất Cả Về Món Ngon',
     'home.hero.title': '<span class="text-primary">Ngh</span>ệ Thuật Ẩm Thực<br/>Nhanh Mà Chất',
     'home.hero.desc': 'Hương vị Á Đông tinh tế hoà quyện cùng kỹ thuật chế biến hiện đại, phục vụ nhanh mà vẫn giữ trọn chất lượng từng món ăn.',
@@ -210,20 +188,28 @@ const dict = {
     'home.blog.title': '<span class="text-primary">Ti</span>n Tức & Blog Mới Nhất',
     'common.loading': 'Đang tải...',
 
-    // Trang 404
+    'menuPage.starterTitle': 'Món Khai Vị',
+    'menuPage.mainTitle': 'Món Chính',
+    'menuPage.dessertTitle': 'Món Tráng Miệng',
+    'menuPage.drinksTitle': 'Đồ Uống',
+    'menuPage.statChefs': 'Đầu Bếp Chuyên Nghiệp',
+    'menuPage.statItems': 'Món Ăn',
+    'menuPage.statExp': 'Năm Kinh Nghiệm',
+    'menuPage.statCustomers': 'Khách Hàng Hài Lòng',
+    'menuPage.partnersSubtitle': 'Đối Tác & Khách Hàng',
+    'menuPage.partnersTitle': 'Chúng tôi hợp tác với những đối tác tốt nhất',
+
     'page.404.error': 'Lỗi 404',
     'page.404.crumb': '404',
     'page.404.oops': 'Ôi! Có gì đó không ổn rồi',
     'page.404.desc': 'Không tìm thấy trang bạn cần! Chúng tôi sẽ khắc phục sớm nhất.<br/>Trong lúc chờ đợi, bạn có thể thử các gợi ý sau:',
 
-    // Trang Coffee Shop
     'page.coffeeShop.tag': 'Cà Phê Của Chúng Tôi',
     'page.coffeeShop.heroTitle': '<span class="text-primary">Trải Nghiệm</span> Cà Phê<br/>Thượng Hạng',
     'page.coffeeShop.heroDesc': 'Tận hưởng hương vị cà phê thượng hạng từ những hạt cà phê được chọn lọc kỹ lưỡng, rang xay thủ công mỗi ngày.',
     'page.coffeeShop.viewMenu': 'Xem thực đơn đầy đủ',
     'about.team': 'Đội Ngũ Đầu Bếp',
 
-    // Shop
     'shop.showingResults': 'Hiển thị {count} kết quả',
     'shop.noResults': 'Không tìm thấy sản phẩm phù hợp.',
     'shop.viewDetails': 'Xem chi tiết',
@@ -313,6 +299,9 @@ const dict = {
     'footer.link.support': 'Support Policy',
     'footer.link.privacy': 'Privacy',
     'footer.recentPost': 'Recent Post',
+    'footer.recentPost1': 'Keep Your Business',
+    'footer.recentPost2': 'Keep Your Business',
+    'footer.recentPost3': 'Keep Your Business',
     'footer.copyright': 'Copyright © 2026 by Elite Restaurant. All Rights Reserved.',
     'footer.copyrightAyeman': 'Copyright © 2022 by Ayeman. All Rights Reserved.',
     'footer.aboutDesc2': 'Corporate clients and leisure travelers have been relying on Groundlink for dependable, safe, and professional chauffeured car service in major cities across the World.',
@@ -409,7 +398,6 @@ const dict = {
     'page.signup.title': 'Sign Up',
     'page.404.title': 'Page Not Found',
 
-    // Home page
     'home.hero.tag': "Its all about Good Food",
     'home.hero.title': '<span class="text-primary">Th</span>e Art of speed<br/>food Quality',
     'home.hero.desc': 'Sophisticated Asian flavours meet modern cooking technique, served fast without ever compromising on quality.',
@@ -438,20 +426,28 @@ const dict = {
     'home.blog.title': '<span class="text-primary">La</span>test News & Blog',
     'common.loading': 'Loading...',
 
-    // 404 page
+    'menuPage.starterTitle': 'Starter Menu',
+    'menuPage.mainTitle': 'Main Course',
+    'menuPage.dessertTitle': 'Dessert',
+    'menuPage.drinksTitle': 'Drinks',
+    'menuPage.statChefs': 'Professional Chefs',
+    'menuPage.statItems': 'Items Of Food',
+    'menuPage.statExp': 'Years Of Experienced',
+    'menuPage.statCustomers': 'Happy Customers',
+    'menuPage.partnersSubtitle': 'Partners & Clients',
+    'menuPage.partnersTitle': 'We work with the best pepole',
+
     'page.404.error': 'Error 404',
     'page.404.crumb': '404',
     'page.404.oops': 'Oops! Look likes something going wrong',
     'page.404.desc': "Page Cannot be found! we'll have it figured out in no time.<br/>Meanwhile, check out these fresh ideas:",
 
-    // Coffee Shop page
     'page.coffeeShop.tag': 'Our Coffee',
     'page.coffeeShop.heroTitle': '<span class="text-primary">Premium</span> Coffee<br/>Experience',
     'page.coffeeShop.heroDesc': 'Enjoy premium coffee flavour from carefully selected beans, hand-roasted every day.',
     'page.coffeeShop.viewMenu': 'View Full Menu',
     'about.team': 'Team Member',
 
-    // Shop
     'shop.showingResults': 'Showing {count} results',
     'shop.noResults': 'No products found matching your search.',
     'shop.viewDetails': 'View details',
@@ -491,11 +487,6 @@ const dict = {
   },
 }
 
-/**
- * t — Tra cứu chuỗi dịch theo khoá, dùng trong JS render động (template string).
- * @param {string} key
- * @param {Record<string,string|number>} [vars] - thay thế {placeholder} trong chuỗi
- */
 export function t(key, vars) {
   const lang = getLang()
   let str = dict[lang]?.[key] ?? dict.vi[key] ?? key
@@ -507,11 +498,6 @@ export function t(key, vars) {
   return str
 }
 
-/**
- * applyStaticTranslations — Duyệt toàn bộ [data-i18n] trong DOM và gán textContent
- * theo ngôn ngữ hiện tại. Hỗ trợ thêm [data-i18n-placeholder] cho input/textarea.
- * Chạy 1 lần lúc DOMContentLoaded — vì chuyển ngôn ngữ luôn reload trang (xem setLang).
- */
 export function applyStaticTranslations() {
   const lang = getLang()
   document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'vi')
@@ -520,25 +506,23 @@ export function applyStaticTranslations() {
     const key = el.getAttribute('data-i18n')
     if (dict[lang]?.[key] !== undefined) el.textContent = dict[lang][key]
   })
-  // data-i18n-html — dùng cho tiêu đề có span highlight màu (vd 2 ký tự đầu tô màu primary)
+
   document.querySelectorAll('[data-i18n-html]').forEach((el) => {
     const key = el.getAttribute('data-i18n-html')
     if (dict[lang]?.[key] !== undefined) el.innerHTML = dict[lang][key]
   })
+
   document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
     const key = el.getAttribute('data-i18n-placeholder')
     if (dict[lang]?.[key] !== undefined) el.setAttribute('placeholder', dict[lang][key])
   })
+
   document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
     const key = el.getAttribute('data-i18n-aria-label')
     if (dict[lang]?.[key] !== undefined) el.setAttribute('aria-label', dict[lang][key])
   })
 }
 
-/**
- * initLangToggle — Gắn nút chuyển ngôn ngữ trong header (#lang-toggle).
- * Hiển thị chữ của ngôn ngữ SẼ chuyển sang khi bấm (giống pattern nút dark-mode).
- */
 export function initLangToggle() {
   const btn = document.getElementById('lang-toggle')
   if (!btn) return

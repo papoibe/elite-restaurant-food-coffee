@@ -1,100 +1,79 @@
-/* ============================================================
-   menu-page.js — Logic riêng cho trang Menu (menu.html)
-   Render 4 nhóm món (Starter/Main Course/Dessert/Drinks) từ menu.json.
-   Starter Menu & Main Course: bấm vào tên món để đổi ảnh minh hoạ bên cạnh
-   (đúng hành vi item đang chọn tô màu cam như thiết kế).
-   ============================================================ */
-import { t, getLang } from '/src/js/i18n.js' // Chuyển ngôn ngữ VN/EN
+import { initCounters } from './dom.js';
+import { getLang } from './i18n.js';
 
-/**
- * renderMenuSectionWithImage — Nhóm món có ảnh sticky đi kèm (Starter, Main Course)
- * Bấm 1 món trong danh sách sẽ đổi ảnh sang đúng món đó.
- */
-function renderMenuSectionWithImage({ listId, imageId, category, items }) {
-  const list = document.getElementById(listId)
-  const image = document.getElementById(imageId)
-  if (!list) return
+let menuData = [];
 
-  const categoryItems = items.filter(i => i.category === category)
-  if (!categoryItems.length) {
-    list.innerHTML = `<p class="text-text-muted text-sm">${t('menu.emptyCategory')}</p>`
-    return
+function renderCategoryList(containerId, imageId, items) {
+  const container = document.getElementById(containerId);
+  const imgElement = document.getElementById(imageId);
+  if (!container || !items || !items.length) return;
+
+  const lang = typeof getLang === 'function' ? getLang() : 'vi';
+  const displayItems = items.slice(0, 4);
+
+  if (imgElement && displayItems[0]) {
+    imgElement.src = displayItems[0].image;
   }
 
-  list.innerHTML = categoryItems.map((item, idx) => `
-    <button type="button" data-id="${item.id}" class="menu-item-btn w-full flex justify-between items-start gap-4 border-b border-gray-200 dark:border-gray-800 pb-4 text-left cursor-pointer group">
-      <div>
-        <h4 class="item-title font-bold text-lg transition-colors ${idx === 0 ? 'text-primary' : 'text-text-dark dark:text-text-white group-hover:text-primary'}">${item.name}</h4>
-        <p class="text-text-muted text-sm">${getLang() === 'en' ? (item.description_en || item.description) : item.description}</p>
-        <p class="text-text-muted text-xs mt-1">★ ${item.rating.toFixed(1)}</p>
+  container.innerHTML = displayItems.map(item => {
+    const name = lang === 'vi' ? (item.name_vi || item.name) : item.name;
+    const desc = lang === 'vi' ? (item.description || item.description_en) : (item.description_en || item.description);
+
+    return `
+      <div class="border-b border-gray-200/80 pb-4 cursor-pointer group hover:border-[#FF9F0D] transition-colors" data-img="${item.image}">
+        <div class="flex justify-between items-baseline gap-4">
+          <h4 class="font-bold text-xl md:text-2xl text-[#333333] group-hover:text-[#FF9F0D] transition-colors">
+            ${name}
+          </h4>
+          <span class="text-xl md:text-2xl font-bold text-[#FF9F0D] shrink-0">
+            $${parseFloat(item.price).toFixed(0)}
+          </span>
+        </div>
+        <p class="text-sm text-[#4F4F4F] mt-1.5 line-clamp-1">
+          ${desc || 'Ground cumin, avocados, peeled and cubed'}
+        </p>
+        <span class="text-xs text-[#828282] block mt-1">${item.calories || '1000'} CAL</span>
       </div>
-      <span class="text-primary font-bold text-lg whitespace-nowrap">$${item.price.toFixed(2)}</span>
-    </button>
-  `).join('')
+    `;
+  }).join('');
 
-  if (image) {
-    image.src = categoryItems[0].image
-    image.alt = categoryItems[0].name
-  }
-
-  // Event delegation: 1 listener duy nhất trên list thay vì gắn từng nút
-  list.addEventListener('click', (e) => {
-    const btn = e.target.closest('.menu-item-btn')
-    if (!btn) return
-    const item = categoryItems.find(i => String(i.id) === btn.dataset.id)
-    if (!item) return
-
-    if (image) {
-      image.src = item.image
-      image.alt = item.name
-    }
-
-    list.querySelectorAll('.item-title').forEach((title) => {
-      title.classList.remove('text-primary')
-      title.classList.add('text-text-dark', 'dark:text-text-white')
-    })
-    const activeTitle = btn.querySelector('.item-title')
-    activeTitle.classList.add('text-primary')
-    activeTitle.classList.remove('text-text-dark', 'dark:text-text-white')
-  })
+  container.querySelectorAll('[data-img]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      if (imgElement) imgElement.src = el.dataset.img;
+    });
+  });
 }
 
-/**
- * renderSimpleMenuGrid — Nhóm món dạng lưới 2 cột, không có ảnh đi kèm (Dessert, Drinks)
- */
-function renderSimpleMenuGrid(listId, category, items) {
-  const list = document.getElementById(listId)
-  if (!list) return
+function renderAllCategories() {
+  if (!menuData.length) return;
 
-  const categoryItems = items.filter(i => i.category === category)
-  if (!categoryItems.length) {
-    list.innerHTML = `<p class="text-text-muted text-sm col-span-full">${t('menu.emptyCategory')}</p>`
-    return
-  }
+  const appetizers = menuData.filter(i => i.category === 'Appetizers' || (i.tags && i.tags.includes('Appetizers')));
+  const mainCourses = menuData.filter(i => i.category === 'Main Course' || (i.tags && i.tags.includes('Main Course')));
+  const desserts = menuData.filter(i => i.category === 'Desserts' || (i.tags && i.tags.includes('Desserts')));
+  const drinks = menuData.filter(i => i.category === 'Drinks' || (i.tags && i.tags.includes('Drinks')));
 
-  list.innerHTML = categoryItems.map(item => `
-    <div class="flex justify-between items-start border-b border-gray-200 dark:border-gray-800 pb-4">
-      <div>
-        <h4 class="font-bold text-text-dark dark:text-text-white">${item.name}</h4>
-        <p class="text-text-muted text-sm">${getLang() === 'en' ? (item.description_en || item.description) : item.description}</p>
-      </div>
-      <span class="text-primary font-bold ml-4 whitespace-nowrap">$${item.price.toFixed(2)}</span>
-    </div>
-  `).join('')
+  renderCategoryList('starter-list', 'starter-image', appetizers.length ? appetizers : menuData.slice(0, 4));
+  renderCategoryList('main-course-list', 'main-course-image', mainCourses.length ? mainCourses : menuData.slice(4, 8));
+  renderCategoryList('dessert-list', 'dessert-image', desserts.length ? desserts : menuData.slice(8, 12));
+  renderCategoryList('drinks-list', 'drinks-image', drinks.length ? drinks : menuData.slice(12, 16));
 }
 
-async function initMenuPage() {
+export async function initMenuPage() {
   try {
-    const res = await fetch('/src/data/menu.json')
-    const items = await res.json()
-
-    renderMenuSectionWithImage({ listId: 'starter-list', imageId: 'starter-image', category: 'Appetizers', items })
-    renderMenuSectionWithImage({ listId: 'main-course-list', imageId: 'main-course-image', category: 'Main Course', items })
-    renderSimpleMenuGrid('dessert-list', 'Desserts', items)
-    renderSimpleMenuGrid('drinks-list', 'Drinks', items)
-  } catch (error) {
-    console.error('❌ Lỗi khi tải thực đơn:', error)
+    const res = await fetch('/src/data/menu.json');
+    if (!res.ok) throw new Error('Cannot load menu.json');
+    menuData = await res.json();
+    renderAllCategories();
+  } catch (err) {
+    console.error('Error loading menu page data:', err);
   }
 }
 
-document.addEventListener('DOMContentLoaded', initMenuPage)
+document.addEventListener('DOMContentLoaded', () => {
+  initMenuPage();
+  if (typeof initCounters === 'function') initCounters();
+});
+
+window.addEventListener('languageChanged', () => {
+  renderAllCategories();
+});
