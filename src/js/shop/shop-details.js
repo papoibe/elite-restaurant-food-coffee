@@ -20,7 +20,7 @@ async function initShopDetails() {
   if (!detailContainer) return
 
   try {
-    const response = await fetch('/src/data/menu.json')
+    const response = await fetch('/data/menu.json')
     if (!response.ok) throw new Error(`May chu tra ve ${response.status}`)
     const menuData = await response.json()
 

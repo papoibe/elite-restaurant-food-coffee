@@ -6,6 +6,22 @@
     <meta name="description" content="Danh sách món ăn & đồ uống tại Savoria — lọc theo danh mục, giá và tìm kiếm" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Our Shop — Savoria</title>
+
+  <!-- OpenGraph: quyet dinh anh va tieu de hien ra khi dan link len
+       Facebook, Zalo, Messenger... Khong co the nay thi link chia se
+       chi hien URL tran, khong co anh. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Savoria" />
+  <meta property="og:locale" content="vi_VN" />
+  <meta property="og:title" content="Cửa hàng — Savoria" />
+  <meta property="og:description" content="Danh sách món ăn & đồ uống tại Savoria — lọc theo danh mục, giá và tìm kiếm" />
+  <meta property="og:image" content="/assets/images/banner-bg.jpg" />
+  <meta property="og:url" content="/src/pages/shop-list.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cửa hàng — Savoria" />
+  <meta name="twitter:description" content="Danh sách món ăn & đồ uống tại Savoria — lọc theo danh mục, giá và tìm kiếm" />
+  <meta name="twitter:image" content="/assets/images/banner-bg.jpg" />
+  <link rel="canonical" href="/src/pages/shop-list.html" />
     <script>
     // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
     // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
@@ -123,7 +139,7 @@
               </div>
 
               <div>
-                <h4 class="font-bold text-xl mb-4 text-[#333333] dark:text-white" data-i18n="common.category">Category</h4>
+                <h2 class="font-bold text-xl mb-4 text-[#333333] dark:text-white" data-i18n="common.category">Category</h2>
                 <div id="category-list" class="space-y-3 text-base text-[#333333] dark:text-gray-300"></div>
               </div>
 
@@ -136,7 +152,7 @@
                 />
                 <div class="relative z-10">
                   <p class="text-sm font-sans pt-2 text-gray-300" data-i18n="shop.bannerSubtitle">Perfect Taste</p>
-                  <h5 class="font-bold text-xl mt-1 leading-snug" data-i18n="shop.bannerTitle">Classic Restaurant</h5>
+                  <h3 class="font-bold text-xl mt-1 leading-snug" data-i18n="shop.bannerTitle">Classic Restaurant</h3>
                   <p class="text-[#FF9F0D] font-bold text-base mt-2">45.00$</p>
                 </div>
                 <div class="relative z-10">
@@ -150,7 +166,7 @@
               </div>
 
               <div>
-                <h4 class="font-bold text-lg mb-4 text-[#333333] dark:text-white" data-i18n="common.filterByPrice">Filter By Price</h4>
+                <h2 class="font-bold text-lg mb-4 text-[#333333] dark:text-white" data-i18n="common.filterByPrice">Filter By Price</h2>
                 
                 <style>
                   .dual-range-container {
@@ -227,7 +243,7 @@
               </div>
 
               <div>
-                <h4 class="font-bold text-xl mb-4 text-[#333333] dark:text-white" data-i18n="shop.productTags">Product Tags</h4>
+                <h2 class="font-bold text-xl mb-4 text-[#333333] dark:text-white" data-i18n="shop.productTags">Product Tags</h2>
                 <div id="product-tags-list" class="flex flex-wrap gap-x-6 gap-y-4 text-base"></div>
               </div>
             </aside>
@@ -240,9 +256,9 @@
     <footer class="bg-[#0D0D0D] text-gray-400 text-sm pt-20 font-sans">
       <div class="max-w-[1170px] mx-auto px-4 sm:px-6 pb-12 border-b border-[#FF9F0D]/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h4 class="text-white text-3xl font-bold mb-3 font-heading">
+          <h2 class="text-white text-3xl font-bold mb-3 font-heading">
             <span class="text-[#FF9F0D]" data-i18n="footer.supportTitle1">St</span><span data-i18n="footer.supportTitle2">ill You Need Our Support ?</span>
-          </h4>
+          </h2>
           <p class="text-sm text-gray-400" data-i18n="footer.supportDesc">
             Don't wait make a smart & logical quote here. Its pretty easy.
           </p>
@@ -262,7 +278,7 @@
 
       <div class="max-w-[1320px] mx-auto px-6 py-14 flex flex-col lg:flex-row justify-between items-start gap-8">
         <div class="w-full lg:w-[395px] space-y-6">
-          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.aboutTitle">About Us.</h5>
+          <h3 class="text-white font-bold text-xl font-heading" data-i18n="footer.aboutTitle">About Us.</h3>
           <p class="text-sm leading-relaxed text-white/75" data-i18n="footer.aboutDesc">
             Corporate clients and leisure travelers have been relying on Groundlink for dependable, safe, and professional chauffeured car service in major cities across the World.
           </p>
@@ -278,7 +294,7 @@
           </div>
         </div>
         <div class="w-full lg:w-[140px] space-y-4">
-          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.usefulLinks">Useful Links</h5>
+          <h3 class="text-white font-bold text-xl font-heading" data-i18n="footer.usefulLinks">Useful Links</h3>
           <ul class="space-y-3.5 text-sm text-white/75">
             <li><a href="/src/pages/about.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="footer.link.about">About</a></li>
             <li><a href="/src/pages/blog.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="footer.link.news">News</a></li>
@@ -289,7 +305,7 @@
           </ul>
         </div>
         <div class="w-full lg:w-[140px] space-y-4">
-          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.help">Help?</h5>
+          <h3 class="text-white font-bold text-xl font-heading" data-i18n="footer.help">Help?</h3>
           <ul class="space-y-3.5 text-sm text-white/75">
             <li><a href="/src/pages/faq.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="footer.link.faq">FAQ</a></li>
             <li><a href="#" class="hover:text-[#FF9F0D] transition-colors" data-i18n="footer.link.terms">Term & conditions</a></li>
@@ -300,7 +316,7 @@
           </ul>
         </div>
         <div class="w-full lg:w-[274px] space-y-5">
-          <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
+          <h3 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h3>
           <div id="footer-recent-posts" class="space-y-4">
             <div class="flex items-center gap-4">
               <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />

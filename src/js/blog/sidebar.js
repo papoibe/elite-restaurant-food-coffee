@@ -12,7 +12,7 @@ export async function renderSidebar() {
   let dynamicTags = [];
 
   try {
-    const res = await fetch('/src/data/menu.json');
+    const res = await fetch('/data/menu.json');
     // fetch KHÔNG tự ném lỗi với mã 404/500, phải tự kiểm tra rồi throw để
     // khối catch bên dưới xử lý chung một chỗ.
     if (!res.ok) throw new Error(`Máy chủ trả về ${res.status}`);

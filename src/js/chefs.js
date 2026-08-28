@@ -17,7 +17,7 @@ let cachedChefs = null
 export async function fetchChefs() {
   if (cachedChefs) return cachedChefs
   try {
-    const res = await fetch('/src/data/chefs.json')
+    const res = await fetch('/data/chefs.json')
     // fetch khong tu nem loi voi ma 404/500 nen phai tu kiem tra
     if (!res.ok) throw new Error(`May chu tra ve ${res.status}`)
     cachedChefs = await res.json()

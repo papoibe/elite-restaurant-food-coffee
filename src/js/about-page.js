@@ -297,7 +297,7 @@ export async function initAboutPage() {
   // Hai nguồn dữ liệu độc lập — tải song song cho nhanh
   const [chefs, menu] = await Promise.all([
     fetchChefs(),
-    fetch('/src/data/menu.json')
+    fetch('/data/menu.json')
       .then(res => {
         // fetch KHÔNG tự ném lỗi khi máy chủ trả về 404/500 — phải tự kiểm tra.
         // Trước đây chỗ này nuốt lỗi thành mảng rỗng nên khi file hỏng thì

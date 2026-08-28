@@ -99,7 +99,7 @@ async function initShopList() {
   showLoading()
 
   try {
-    const response = await fetch('/src/data/menu.json')
+    const response = await fetch('/data/menu.json')
     // fetch KHÔNG tự ném lỗi khi máy chủ trả về 404/500 — phải tự kiểm tra,
     // nếu không thì response.json() mới ném và thông báo lỗi sẽ rất khó hiểu.
     if (!response.ok) throw new Error(`Máy chủ trả về ${response.status}`)

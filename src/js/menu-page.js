@@ -61,7 +61,7 @@ function renderAllCategories() {
 
 export async function initMenuPage() {
   try {
-    const res = await fetch('/src/data/menu.json');
+    const res = await fetch('/data/menu.json');
     if (!res.ok) throw new Error('Cannot load menu.json');
     menuData = await res.json();
     renderAllCategories();
