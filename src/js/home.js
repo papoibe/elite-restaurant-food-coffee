@@ -14,7 +14,7 @@ export async function initMenuPreview() {
   if (!gridContainer) return
 
   try {
-    const res = await fetch('/src/data/menu.json')
+    const res = await fetch('/data/menu.json')
     if (!res.ok) throw new Error('Cannot load menu.json')
     allMenuItems = await res.json()
     renderMenuItems('Breakfast')
