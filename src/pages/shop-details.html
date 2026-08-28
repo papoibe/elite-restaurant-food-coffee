@@ -3,16 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Shop Details — Foodtuck" />
+    <meta name="description" content="Shop Details — Savoria" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Shop Details — Foodtuck</title>
-  </head>
+    <title>Shop Details — Savoria</title>
+    <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
+</head>
   <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
     <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
       <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" class="text-2xl font-bold font-heading text-white">
-          Food<span class="text-primary">tuck</span>
+          Savo<span class="text-primary">ria</span>
         </a>
         <ul class="hidden lg:flex items-center gap-8 text-sm text-white/90">
           <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
@@ -49,16 +65,16 @@
       </div>
     </header>
 
-    <section class="absolute top-0 left-0 w-full h-100 bg-cover bg-center flex flex-col items-center justify-center text-center px-4 z-10" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
-      <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.shopDetails.title">Shop Details</h1>
-      <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
-        <a href="/" class="hover:text-[#FF9F0D] transition-colors" data-i18n="page.home.tab">Home</a>
-        <span class="mx-2 text-[#FF9F0D]">&gt;</span>
-        <span class="text-[#FF9F0D]" data-i18n="page.shopDetails.crumb">Shop details</span>
-      </nav>
-    </section>
+    <main class="pt-16">
+  <section class="relative w-full h-[320px] md:h-[410px] bg-cover bg-center flex flex-col items-center justify-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
+    <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.shopDetails.title">Shop Details</h1>
+    <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
+      <a href="/" class="hover:text-[#FF9F0D] transition-colors" data-i18n="page.home.tab">Home</a>
+      <span class="mx-2 text-[#FF9F0D]">&gt;</span>
+      <span class="text-[#FF9F0D]" data-i18n="page.shopDetails.crumb">Shop details</span>
+    </nav>
+  </section>
 
-    <main class="pt-130">
       <section class="py-12 md:py-20 px-4 sm:px-6">
         <div class="max-w-[1320px] mx-auto space-y-16">
           <div id="product-detail-container"></div>
@@ -99,7 +115,7 @@
           </p>
           <div class="flex items-center gap-4 pt-1">
             <div class="bg-[#FF9F0D] text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-              <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+              <img src="/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
             </div>
             <div>
               <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -134,14 +150,14 @@
           <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
           <div id="footer-recent-posts" class="space-y-4">
             <div class="flex items-center gap-4">
-              <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+              <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
               <div>
                 <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
                 <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost1">Keep Your Business</a>
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+              <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
               <div>
                 <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
                 <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost2">Keep Your Business</a>
@@ -162,11 +178,11 @@
         <div class="max-w-[1320px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
           <div class="flex space-x-3">
-            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
-            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
-            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
-            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
-            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
+            <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
           </div>
         </div>
       </div>

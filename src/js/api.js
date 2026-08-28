@@ -16,7 +16,10 @@ export async function fetchRandomMeals(count = 6) {
   try {
     // Gọi đồng thời nhiều request random bằng Promise.all
     const promises = Array.from({ length: count }, () =>
-      fetch(`${BASE_URL}/random.php`).then(res => res.json())
+      fetch(`${BASE_URL}/random.php`).then(res => {
+        if (!res.ok) throw new Error(`API tra ve ${res.status}`)
+        return res.json()
+      })
     )
     const results = await Promise.all(promises)
 
@@ -25,7 +28,7 @@ export async function fetchRandomMeals(count = 6) {
       .map(r => r.meals?.[0])
       .filter(Boolean) // Loại bỏ null/undefined
   } catch (error) {
-    console.error('❌ Lỗi khi fetch random meals:', error)
+    console.error('Lỗi khi fetch random meals:', error)
     return []
   }
 }
@@ -39,10 +42,11 @@ export async function fetchRandomMeals(count = 6) {
 export async function fetchMealsByCategory(category) {
   try {
     const response = await fetch(`${BASE_URL}/filter.php?c=${category}`)
+    if (!response.ok) throw new Error(`API tra ve ${response.status}`)
     const data = await response.json()
     return data.meals || []
   } catch (error) {
-    console.error(`❌ Lỗi khi fetch meals theo category "${category}":`, error)
+    console.error(`Lỗi khi fetch meals theo category "${category}":`, error)
     return []
   }
 }
@@ -56,10 +60,11 @@ export async function fetchMealsByCategory(category) {
 export async function fetchMealById(id) {
   try {
     const response = await fetch(`${BASE_URL}/lookup.php?i=${id}`)
+    if (!response.ok) throw new Error(`API tra ve ${response.status}`)
     const data = await response.json()
     return data.meals?.[0] || null
   } catch (error) {
-    console.error(`❌ Lỗi khi fetch meal ID "${id}":`, error)
+    console.error(`Lỗi khi fetch meal ID "${id}":`, error)
     return null
   }
 }
@@ -73,10 +78,11 @@ export async function fetchMealById(id) {
 export async function searchMeals(query) {
   try {
     const response = await fetch(`${BASE_URL}/search.php?s=${encodeURIComponent(query)}`)
+    if (!response.ok) throw new Error(`API tra ve ${response.status}`)
     const data = await response.json()
     return data.meals || []
   } catch (error) {
-    console.error(`❌ Lỗi khi search meals "${query}":`, error)
+    console.error(`Lỗi khi search meals "${query}":`, error)
     return []
   }
 }
@@ -89,10 +95,11 @@ export async function searchMeals(query) {
 export async function fetchCategories() {
   try {
     const response = await fetch(`${BASE_URL}/categories.php`)
+    if (!response.ok) throw new Error(`API tra ve ${response.status}`)
     const data = await response.json()
     return data.categories || []
   } catch (error) {
-    console.error('❌ Lỗi khi fetch categories:', error)
+    console.error('Lỗi khi fetch categories:', error)
     return []
   }
 }

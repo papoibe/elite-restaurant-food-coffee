@@ -6,67 +6,67 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-  <meta name="description" content="Foodtuck — Authentic & Modern Cuisine Experience" />
+  <meta name="description" content="Savoria — Authentic & Modern Cuisine Experience" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Foodtuck — Restaurant</title>
+  <title>Savoria — Restaurant</title>
+  <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
 </head>
-<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased selection:bg-primary selection:text-white pt-[140px] lg:pt-[160px]">
+<body class="bg-[#0D0D0D] text-white font-sans antialiased selection:bg-[#FF9F0D] selection:text-white">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
-  <!-- Fixed/Sticky Header -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-bg-dark/95 backdrop-blur-md pt-4 pb-4 shadow-lg border-b border-white/10 transition-all duration-300">
+  <header class="w-full z-50 bg-[#0D0D0D] pt-6 pb-4">
     <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
       
-      <!-- Logo Brand -->
-      <div class="text-center mb-3">
-        <a href="/" class="text-3xl font-bold font-heading text-white inline-block tracking-wide">
-          Food<span class="text-primary">tuck</span>
+      <div class="text-center mb-4">
+        <a href="/" class="text-3xl font-bold font-heading text-white inline-block">
+          Savo<span class="text-[#FF9F0D]">ria</span>
         </a>
       </div>
 
-      <!-- Navigation & Action Controls -->
-      <div class="flex items-center justify-between">
-        <nav class="hidden lg:flex items-center gap-8 text-sm text-white/90">
-          <a href="/" class="text-primary font-medium flex items-center gap-1" data-i18n="nav.home">Home <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span></a>
-          <a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a>
-          <a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a>
-          <a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a>
-          <a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a>
-          <a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <nav class="hidden lg:flex items-center gap-8 text-sm">
+          <a href="/" class="text-[#FF9F0D] font-medium flex items-center gap-1" data-i18n="nav.home">Home <span class="w-1.5 h-1.5 rounded-full bg-[#FF9F0D] inline-block"></span></a>
+          <a href="/src/pages/menu.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.menu">Menu</a>
+          <a href="/src/pages/blog.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.blog">Blog</a>
+          <a href="/src/pages/about.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.about">About</a>
+          <a href="/src/pages/shop-list.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.shop">Shop</a>
+          <a href="/src/pages/contact.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.contact">Contact</a>
         </nav>
 
-        <div class="flex items-center gap-4 ml-auto lg:ml-0 text-white">
+        <div class="flex items-center gap-4 ml-auto lg:ml-0">
           <div class="relative hidden sm:block">
             <input 
               type="text" 
               placeholder="Search..." 
               data-i18n-placeholder="common.searchProduct"
-              class="w-60 bg-transparent border border-primary rounded-full px-5 py-2 text-xs focus:outline-none placeholder-gray-400 text-white pr-10"
+              class="w-60 bg-transparent border border-[#FF9F0D] rounded-full px-5 py-2 text-xs focus:outline-none placeholder-gray-400 text-white pr-10"
             />
-            <button class="absolute right-3.5 top-2 text-white hover:text-primary transition" aria-label="Search">
+            <button class="absolute right-3.5 top-2 text-white hover:text-[#FF9F0D] transition" aria-label="Search">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
           </div>
 
-          <!-- Nút Đăng nhập / Tài khoản -->
-          <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-          </a>
-
-          <!-- Nút Chuyển đổi giao diện Sáng / Tối (Theme Toggle) -->
-          <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-          </button>
-
-          <!-- Giỏ hàng -->
-          <a href="/src/pages/cart.html" class="relative p-2 text-white hover:text-primary transition-colors" aria-label="Cart">
+          <a href="/src/pages/cart.html" class="relative p-2 text-white hover:text-[#FF9F0D] transition-colors" aria-label="Cart">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-            <span id="cart-count" class="absolute top-0 right-0 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+            <span id="cart-count" class="absolute top-0 right-0 bg-[#FF9F0D] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
           </a>
 
-          <!-- Đổi ngôn ngữ -->
-          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
+          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-[#FF9F0D] hover:text-[#FF9F0D] transition-colors">EN</button>
           
-          <!-- Mobile Menu Toggle -->
           <button id="mobile-menu-btn" class="lg:hidden p-2 text-white" aria-label="Menu">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
@@ -74,33 +74,32 @@
       </div>
     </div>
 
-    <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 py-4 mt-3">
-      <ul class="flex flex-col gap-3 text-sm text-white/90">
-        <li><a href="/" class="text-primary font-medium" data-i18n="nav.home">Home</a></li>
-        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
-        <li><a href="/src/pages/blog.html" class="hover:text-primary" data-i18n="nav.blog">Blog</a></li>
-        <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
-        <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
-        <li><a href="/src/pages/contact.html" class="hover:text-primary" data-i18n="nav.contact">Contact</a></li>
+    <div id="mobile-menu" class="hidden lg:hidden bg-[#1a1a1a] px-6 py-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="text-[#FF9F0D]" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-[#FF9F0D]" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-[#FF9F0D]" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-[#FF9F0D]" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-[#FF9F0D]" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-[#FF9F0D]" data-i18n="nav.contact">Contact</a></li>
       </ul>
     </div>
   </header>
 
   <main>
-    <section class="min-h-[80vh] flex items-center py-8 px-4 sm:px-6 relative">
+    <section class="min-h-[85vh] flex items-center py-12 px-4 sm:px-6 relative">
       <div class="max-w-[1320px] mx-auto flex items-center w-full gap-8">
         
         <div class="hidden xl:flex flex-col items-center gap-6 pr-4">
           <div class="w-[1px] h-24 bg-white/30"></div>
           <a href="#" class="text-white hover:text-[#FF9F0D] transition duration-300">
-            <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/public/assets/images/facebook.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/facebook.svg') no-repeat center / contain;" aria-label="Facebook"></span>
+            <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/assets/images/facebook.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/facebook.svg') no-repeat center / contain;" aria-label="Facebook"></span>
           </a>
           <a href="#" class="text-white hover:text-[#FF9F0D] transition duration-300">
-            <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/public/assets/images/twitter.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/twitter.svg') no-repeat center / contain;" aria-label="Twitter"></span>
+            <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/assets/images/twitter.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/twitter.svg') no-repeat center / contain;" aria-label="Twitter"></span>
           </a>
           <a href="#" class="text-white hover:text-[#FF9F0D] transition duration-300">
-            <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain;" aria-label="Pinterest"></span>
+            <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/assets/images/pinterest.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/pinterest.svg') no-repeat center / contain;" aria-label="Pinterest"></span>
           </a>
           <div class="w-[1px] h-24 bg-white/30"></div>
         </div>
@@ -130,7 +129,6 @@
 
       </div>
     </section>
-
 
     <section class="bg-[#0D0D0D] py-20 px-4 sm:px-6">
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-10 xl:gap-14 items-center">
@@ -172,14 +170,14 @@
 
         <div class="lg:col-span-6 flex flex-col gap-4">
           <div class="w-full h-72 sm:h-80 md:h-[330px] rounded-md overflow-hidden">
-            <img src="/public/assets/images/index/egg.jpg" alt="Egg and Avocado Toast" class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500" />
+            <img src="/assets/images/index/egg.jpg" alt="Egg and Avocado Toast" class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500" />
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div class="h-44 sm:h-48 md:h-[190px] rounded-md overflow-hidden">
-              <img src="/public/assets/images/index/beef.jpg" alt="Grilled Dish" class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500" />
+              <img loading="lazy" src="/assets/images/index/beef.jpg" alt="Grilled Dish" class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500" />
             </div>
             <div class="h-44 sm:h-48 md:h-[190px] rounded-md overflow-hidden">
-              <img src="/public/assets/images/index/sandwich.jpg" alt="Sandwich" class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500" />
+              <img loading="lazy" src="/assets/images/index/sandwich.jpg" alt="Sandwich" class="w-full h-full object-cover rounded-md hover:scale-105 transition duration-500" />
             </div>
           </div>
         </div>
@@ -196,18 +194,18 @@
 
         <div id="food-categories" class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div class="relative group rounded-[4px] overflow-hidden aspect-square">
-            <img src="/assets/images/category-1.jpg" alt="Dish 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400'" />
+            <img loading="lazy" src="/assets/images/category-1.jpg" alt="Dish 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400'" />
             <span class="absolute top-4 left-4 bg-[#FF9F0D] text-white text-[11px] font-bold px-3 py-1 rounded-[2px]" data-i18n="home.foodCat.saveBadge">Save 30%</span>
           </div>
           <div class="relative group rounded-[4px] overflow-hidden aspect-square">
-            <img src="/assets/images/category-2.jpg" alt="Dish 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400'" />
+            <img loading="lazy" src="/assets/images/category-2.jpg" alt="Dish 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400'" />
             <span class="absolute top-4 left-4 bg-[#FF9F0D] text-white text-[11px] font-bold px-3 py-1 rounded-[2px]" data-i18n="home.foodCat.fastFoodBadge">Fast Food Dish</span>
           </div>
           <div class="relative group rounded-[4px] overflow-hidden aspect-square">
-            <img src="/assets/images/category-3.jpg" alt="Dish 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=400'" />
+            <img loading="lazy" src="/assets/images/category-3.jpg" alt="Dish 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=400'" />
           </div>
           <div class="relative group rounded-[4px] overflow-hidden aspect-square">
-            <img src="/assets/images/category-4.jpg" alt="Dish 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=400'" />
+            <img loading="lazy" src="/assets/images/category-4.jpg" alt="Dish 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=400'" />
           </div>
         </div>
       </div>
@@ -218,23 +216,23 @@
         
         <div class="lg:col-span-6 grid grid-cols-12 gap-3 sm:gap-4 items-start">
           <div class="col-span-7 h-56 sm:h-72 md:h-80 rounded-[6px] overflow-hidden">
-            <img src="/public/assets/images/blog/blog1.jpg" alt="Fresh Tacos" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+            <img loading="lazy" src="/assets/images/blog/blog1.jpg" alt="Fresh Tacos" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
           </div>
           <div class="col-span-5 h-44 sm:h-56 md:h-60 rounded-[6px] overflow-hidden self-end">
-            <img src="/public/assets/images/index/burger.jpg" alt="Beef Burger" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+            <img loading="lazy" src="/assets/images/index/burger.jpg" alt="Beef Burger" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
           </div>
           <div class="col-span-5 h-48 sm:h-64 md:h-72 rounded-[6px] overflow-hidden">
-            <img src="/public/assets/images/recent_post.jpg" alt="Dipping Chicken" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Dipping Chicken" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
           </div>
           <div class="col-span-4 h-36 sm:h-48 md:h-52 rounded-[6px] overflow-hidden">
-            <img src="/public/assets/images/burger.jpg" alt="Cheese Burger" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+            <img loading="lazy" src="/assets/images/burger.jpg" alt="Cheese Burger" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
           </div>
           <div class="col-span-3 flex flex-col gap-3 sm:gap-4">
             <div class="h-20 sm:h-24 md:h-28 rounded-[6px] overflow-hidden">
-              <img src="/public/assets/images/index/chip.jpg" alt="Burger with Sauce" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+              <img loading="lazy" src="/assets/images/index/chip.jpg" alt="Burger with Sauce" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
             </div>
             <div class="h-20 sm:h-24 md:h-28 rounded-[6px] overflow-hidden">
-              <img src="/public/assets/images/index/salad.jpg" alt="Salad Bowl" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+              <img loading="lazy" src="/assets/images/index/salad.jpg" alt="Salad Bowl" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
             </div>
           </div>
         </div>
@@ -255,21 +253,21 @@
           <div class="flex items-center gap-6 sm:gap-8 pt-2">
             <div class="text-center">
               <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#FF9F0D] rounded-[6px] flex items-center justify-center mb-2.5 mx-auto transition-transform hover:scale-105">
-                <img src="/public/assets/images/index/Hamburger.svg" alt="Fast Food" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+                <img src="/assets/images/index/Hamburger.svg" alt="Fast Food" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
               </div>
               <span class="text-xs sm:text-sm text-white font-normal" data-i18n="home.why.fastFood">Fast Food</span>
             </div>
 
             <div class="text-center">
               <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#FF9F0D] rounded-[6px] flex items-center justify-center mb-2.5 mx-auto transition-transform hover:scale-105">
-                <img src="/public/assets/images/index/Cookie.svg" alt="Lunch" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+                <img src="/assets/images/index/Cookie.svg" alt="Lunch" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
               </div>
               <span class="text-xs sm:text-sm text-white font-normal" data-i18n="home.why.lunch">Lunch</span>
             </div>
 
             <div class="text-center">
               <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#FF9F0D] rounded-[6px] flex items-center justify-center mb-2.5 mx-auto transition-transform hover:scale-105">
-                <img src="/public/assets/images/index/Wine.svg" alt="Dinner" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+                <img src="/assets/images/index/Wine.svg" alt="Dinner" class="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
               </div>
               <span class="text-xs sm:text-sm text-white font-normal" data-i18n="home.why.dinner">Dinner</span>
             </div>
@@ -290,13 +288,13 @@
       </div>
     </section>
 
-    <section class="relative w-full h-[469px] flex items-center justify-center px-4 sm:px-6 bg-cover bg-center overflow-hidden" style="background-image: url('/public/assets/images/index/stats-bg.jpg');">
+    <section class="relative w-full h-[469px] flex items-center justify-center px-4 sm:px-6 bg-cover bg-center overflow-hidden" style="background-image: url('/assets/images/index/stats-bg.jpg');">
       <div class="absolute inset-0 bg-[#0D0D0D]/85"></div>
 
       <div class="relative z-10 w-full max-w-[1320px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="420">420</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="home.stats.chefs">Professional Chefs</p>
@@ -304,7 +302,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="320">320</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="home.stats.items">Items Of Food</p>
@@ -312,7 +310,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="30" data-count-suffix="+">30+</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="home.stats.years">Years Of Experienced</p>
@@ -320,7 +318,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="220">220</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="home.stats.customers">Happy Customers</p>
@@ -351,7 +349,7 @@
         <div class="grid lg:grid-cols-12 gap-8 items-center text-left">
           <div class="lg:col-span-4 flex justify-center items-center">
             <div class="relative w-[320px] h-[320px] md:w-[360px] md:h-[360px] rounded-full p-2 border border-white/10 flex items-center justify-center">
-              <img id="menu-featured-img" src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=600" alt="Featured Dish" class="w-full h-full rounded-full object-cover shadow-2xl" />
+              <img loading="lazy" id="menu-featured-img" src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=600" alt="Featured Dish" class="w-full h-full rounded-full object-cover shadow-2xl" />
             </div>
           </div>
 
@@ -400,17 +398,17 @@
 
           <div class="relative z-10 w-full bg-white text-[#1E1E1E] rounded-[2px] shadow-2xl pt-16 pb-12 px-6 sm:px-12 md:px-20 text-center flex flex-col items-center">
             <div class="absolute -top-[55px] left-1/2 -translate-x-1/2 w-[110px] h-[110px] rounded-full overflow-hidden border-[6px] border-[#0D0D0D] shadow-xl bg-gray-200">
-              <img id="testimonial-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200" alt="Client" class="w-full h-full object-cover transition-opacity duration-300" />
+              <img loading="lazy" id="testimonial-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200" alt="Client" class="w-full h-full object-cover transition-opacity duration-300" />
             </div>
 
-            <div class="text-[#FF9F0D] text-4xl mb-4 font-serif select-none">❝</div>
+            <div class="text-[#FF9F0D] text-4xl mb-4 font-serif select-none"></div>
 
             <p id="testimonial-comment" class="text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4F4F4F] max-w-[650px] mx-auto min-h-[75px] transition-opacity duration-300">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non dui volutpat fringilla bibendum.
             </p>
 
             <div id="testimonial-rating" class="flex justify-center items-center gap-1 text-[#FF9F0D] text-base md:text-lg my-4">
-              ★ ★ ★ ★ <span class="text-gray-300">★</span>
+              <span class="text-gray-300"></span>
             </div>
 
             <h4 id="testimonial-name" class="font-bold text-lg md:text-xl text-[#333333] transition-opacity duration-300">Alamin Hasan</h4>
@@ -423,7 +421,7 @@
       </div>
     </section>
 
-    <section class="relative w-full h-[558px] bg-cover bg-center overflow-hidden flex items-center" style="background-image: url('/public/assets/images/index/restaurant.jpg');">
+    <section class="relative w-full h-[558px] bg-cover bg-center overflow-hidden flex items-center" style="background-image: url('/assets/images/index/restaurant.jpg');">
       <div class="relative z-10 max-w-[1320px] w-full mx-auto px-4 sm:px-6 flex justify-end">
         <div class="max-w-[705px] text-right space-y-6">
           <p class="text-[#FF9F0D] italic text-3xl font-normal" style="font-family: 'Great Vibes', cursive, serif;" data-i18n="home.process.tag">
@@ -497,7 +495,7 @@
         </p>
         <div class="flex items-center gap-4 pt-1">
           <div class="bg-[#FF9F0D] text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-            <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+            <img src="/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
           </div>
           <div>
             <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -532,21 +530,21 @@
         <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
         <div id="footer-recent-posts" class="space-y-4">
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost1">Keep Your Business</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost2">Keep Your Business</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost3">Keep Your Business</a>
@@ -560,11 +558,11 @@
       <div class="max-w-[1320px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
         <div class="flex space-x-3">
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
         </div>
       </div>
     </div>

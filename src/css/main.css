@@ -34,6 +34,7 @@
   --color-text-light: #BCBCBC;       /* Text xám nhạt (mô tả, sub) */
   --color-text-dark: #333333;        /* Text đen chính (light mode) */
   --color-text-muted: #828282;       /* Text xám (meta, caption) */
+  --color-error: #EB5757;            /* State/Error trong Figma — báo lỗi form */
 
   /* === FONT FAMILIES === */
   --font-heading: 'Helvetica Neue', 'Inter', sans-serif;  /* Font heading */
@@ -100,6 +101,52 @@ html {
   font-size: 48px;
   font-weight: 700;
   color: var(--color-text-white);
+}
+
+/* ============================================================
+   TIẾP CẬN BÀN PHÍM & TRẠNG THÁI LỖI
+   ============================================================ */
+
+/* :focus-visible chỉ hiện viền khi người dùng điều hướng bằng BÀN PHÍM,
+   không hiện khi bấm chuột — nhờ vậy vừa giữ được đường dẫn tiêu điểm rõ
+   ràng cho người dùng Tab, vừa không làm bẩn giao diện khi bấm chuột.
+   Đặt tay lên Tab đi từ đầu tới cuối trang phải luôn nhìn thấy mình đang ở đâu. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Bỏ viền mặc định của trình duyệt khi bấm chuột (đã có :focus-visible lo) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* CSS bắt thẳng aria-invalid thay vì thêm class riêng — trạng thái "ô này
+   đang sai" chỉ khai báo ở MỘT chỗ trong JS, CSS và trình đọc màn hình
+   cùng đọc từ đó. */
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #EB5757;
+}
+input[aria-invalid="true"]:focus,
+select[aria-invalid="true"]:focus,
+textarea[aria-invalid="true"]:focus {
+  border-color: #EB5757;
+  outline-color: #EB5757;
+}
+
+/* Bỏ qua hiệu ứng chuyển động nếu hệ điều hành đã bật giảm chuyển động */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Select trang Checkout — Figma vẽ icon "CaretDown" 24x24 màu #828282 cách mép

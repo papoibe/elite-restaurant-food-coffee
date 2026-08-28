@@ -1,64 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Thực đơn nhà hàng Foodtuck — Starter, Main Course, Dessert, Drinks" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Our Menu — Foodtuck</title>
-  </head>
-  <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Thực đơn nhà hàng Savoria — Starter, Main Course, Dessert, Drinks" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Our Menu — Savoria</title>
+  <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
+</head>
+<body class="bg-white text-[#333333] font-sans antialiased">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
-    <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
-      <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="/" class="text-2xl font-bold font-heading text-white">
-          Food<span class="text-primary">tuck</span>
+  <header class="fixed top-0 w-full z-50 bg-[#0D0D0D]/95 backdrop-blur-sm text-white">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold font-heading text-white">Savo<span class="text-[#FF9F0D]">ria</span></a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="text-[#FF9F0D] font-semibold" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-[#FF9F0D] transition-colors" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-[#FF9F0D] transition-colors" aria-label="Tài khoản">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
         </a>
-        <ul class="hidden lg:flex items-center gap-8 text-sm text-white/90">
-          <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
-          <li><a href="/src/pages/menu.html" class="text-primary font-semibold" data-i18n="nav.menu">Menu</a></li>
-          <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
-          <li><a href="/src/pages/about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">About</a></li>
-          <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
-          <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
-        </ul>
-        <div class="flex items-center gap-4 text-white">
-          <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-          </a>
-          <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
-          <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
-          </a>
-          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
-          <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          </button>
-        </div>
-      </nav>
-      <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
-        <ul class="flex flex-col gap-3 text-sm text-white/90">
-          <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
-          <li><a href="/src/pages/menu.html" class="text-primary font-semibold" data-i18n="nav.menu">Menu</a></li>
-          <li><a href="/src/pages/blog.html" class="hover:text-primary" data-i18n="nav.blog">Blog</a></li>
-          <li><a href="/src/pages/about.html" class="hover:text-primary" data-i18n="nav.about">About</a></li>
-          <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
-          <li><a href="/src/pages/contact.html" class="hover:text-primary" data-i18n="nav.contact">Contact</a></li>
-        </ul>
+        <a href="/src/pages/cart.html" class="relative p-2 hover:text-[#FF9F0D] transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-[#FF9F0D] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+        </a>
+        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-[#FF9F0D] hover:text-[#FF9F0D] transition-colors" title="Switch language">EN</button>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
-    </header>
+    </nav>
+  </header>
 
-    <section class="absolute top-0 left-0 w-full h-[400px] bg-cover bg-center flex flex-col items-center justify-center text-center px-4 z-10" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
+  <main class="pt-16">
+    <section class="relative w-full h-[320px] md:h-[410px] bg-cover bg-center flex flex-col items-center justify-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
       <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.menu.title">Our Menu</h1>
       <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
-        <a href="/" class="hover:text-primary transition-colors" data-i18n="page.home.tab">Home</a>
-        <span class="mx-2 text-primary">&gt;</span>
-        <span class="text-primary" data-i18n="page.menu.crumb">Menu</span>
+        <a href="/" class="hover:text-[#FF9F0D] transition-colors" data-i18n="page.home.tab">Home</a>
+        <span class="mx-2 text-[#FF9F0D]">&gt;</span>
+        <span class="text-[#FF9F0D]" data-i18n="page.menu.crumb">Menu</span>
       </nav>
     </section>
-
-    <main class="pt-130">
 
     <section class="py-24 px-4 sm:px-6 bg-white">
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-12 xl:gap-20 items-center">
@@ -69,7 +71,7 @@
         <div class="lg:col-span-7 space-y-8">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Starter Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Starter Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.starterTitle">Starter Menu</h2>
           </div>
@@ -86,7 +88,7 @@
         <div class="lg:col-span-7 space-y-8 order-2 lg:order-1">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Main Course Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Main Course Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.mainTitle">Main Course</h2>
           </div>
@@ -97,7 +99,7 @@
         </div>
 
         <div class="lg:col-span-5 w-full h-[500px] md:h-[626px] rounded-[6px] overflow-hidden order-1 lg:order-2">
-          <img id="main-course-image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800" alt="Main Course Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+          <img loading="lazy" id="main-course-image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800" alt="Main Course Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
         </div>
       </div>
     </section>
@@ -108,7 +110,7 @@
       <div class="relative z-10 w-full max-w-[1320px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="420">420</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statChefs">Professional Chefs</p>
@@ -116,7 +118,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="320">320</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statItems">Items Of Food</p>
@@ -124,7 +126,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="30" data-count-suffix="+">30+</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statExp">Years Of Experienced</p>
@@ -132,7 +134,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="220">220</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statCustomers">Happy Customers</p>
@@ -143,13 +145,13 @@
     <section class="py-24 px-4 sm:px-6 bg-white">
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-12 xl:gap-20 items-center">
         <div class="lg:col-span-5 w-full h-[500px] md:h-[626px] rounded-[6px] overflow-hidden">
-          <img id="dessert-image" src="https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=800" alt="Dessert Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+          <img loading="lazy" id="dessert-image" src="https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=800" alt="Dessert Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
         </div>
 
         <div class="lg:col-span-7 space-y-8">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Dessert Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Dessert Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.dessertTitle">Dessert</h2>
           </div>
@@ -166,7 +168,7 @@
         <div class="lg:col-span-7 space-y-8 order-2 lg:order-1">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Drinks Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Drinks Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.drinksTitle">Drinks</h2>
           </div>
@@ -177,7 +179,7 @@
         </div>
 
         <div class="lg:col-span-5 w-full h-[500px] md:h-[626px] rounded-[6px] overflow-hidden order-1 lg:order-2">
-          <img id="drinks-image" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800" alt="Drinks Collection" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+          <img loading="lazy" id="drinks-image" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800" alt="Drinks Collection" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
         </div>
       </div>
     </section>
@@ -191,27 +193,27 @@
 
         <div class="grid grid-cols-6 items-center justify-items-center gap-4 md:gap-8 opacity-40 hover:opacity-100 transition duration-300">
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-1.svg" alt="Partner Restaurant" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Restaurant'" />
+            <img src="/assets/images/partner-1.svg" alt="Partner Restaurant" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Restaurant'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-2.svg" alt="Partner Bakery" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Bakery'" />
+            <img src="/assets/images/partner-2.svg" alt="Partner Bakery" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Bakery'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-3.svg" alt="Partner Fork Spoon" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=ForkSpoon'" />
+            <img src="/assets/images/partner-3.svg" alt="Partner Fork Spoon" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=ForkSpoon'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-4.svg" alt="Partner Coffee" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Coffee'" />
+            <img src="/assets/images/partner-4.svg" alt="Partner Coffee" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Coffee'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-5.svg" alt="Partner Bistro" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BISTRO'" />
+            <img src="/assets/images/partner-5.svg" alt="Partner Bistro" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BISTRO'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-6.svg" alt="Partner Bakery Cake" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BakeryCake'" />
+            <img src="/assets/images/partner-6.svg" alt="Partner Bakery Cake" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BakeryCake'" />
           </div>
         </div>
       </div>
@@ -249,7 +251,7 @@
         </p>
         <div class="flex items-center gap-4 pt-1">
           <div class="bg-[#FF9F0D] text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-            <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+            <img src="/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
           </div>
           <div>
             <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -284,21 +286,21 @@
         <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
         <div id="footer-recent-posts" class="space-y-4">
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost1">Keep Your Business</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost2">Keep Your Business</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost3">Keep Your Business</a>
@@ -312,11 +314,11 @@
       <div class="max-w-[1320px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <p data-i18n="footer.copyright">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
         <div class="flex space-x-3">
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
         </div>
       </div>
     </div>

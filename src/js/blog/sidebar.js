@@ -13,7 +13,10 @@ export async function renderSidebar() {
 
   try {
     const res = await fetch('/src/data/menu.json');
-    if (res.ok) {
+    // fetch KHÔNG tự ném lỗi với mã 404/500, phải tự kiểm tra rồi throw để
+    // khối catch bên dưới xử lý chung một chỗ.
+    if (!res.ok) throw new Error(`Máy chủ trả về ${res.status}`);
+    {
       const menuList = await res.json();
       const categoryMap = {};
       const tagsSet = new Set();
@@ -67,13 +70,13 @@ export async function renderSidebar() {
 
     <div class="border border-[#E0E0E0] dark:border-gray-800 rounded-[2px] pt-[32px] pb-[32px] pl-[55px] pr-[32px] text-center bg-white dark:bg-[#1a1a1a]">
       <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 border border-gray-200 dark:border-gray-700">
-        <img src="${author.avatar}" alt="${author.name}" class="w-full h-full object-cover" />
+        <img loading="lazy" src="${author.avatar}" alt="${author.name}" class="w-full h-full object-cover" />
       </div>
       <h4 class="font-bold text-lg text-[#333333] dark:text-white">${author.name}</h4>
       <p class="text-xs text-gray-400 mt-1">${lang === 'vi' ? (author.role_vi || author.role) : author.role}</p>
       
       <div class="flex justify-center items-center gap-1 text-[#FF9F0D] text-xs my-2.5">
-        ★★★★★ <span class="text-gray-400 text-[11px] ml-1">(1 ${t('common.review')})</span>
+        <span class="text-gray-400 text-[11px] ml-1">(1 ${t('common.review')})</span>
       </div>
 
       <p class="text-xs text-[#828282] dark:text-gray-400 leading-relaxed max-w-[260px] mx-auto mb-4">
@@ -81,10 +84,10 @@ export async function renderSidebar() {
       </p>
 
       <div class="flex justify-center items-center gap-3 text-[#333333] dark:text-white">
-        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" class="w-3.5 h-3.5" alt="FB" /></a>
-        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" class="w-3.5 h-3.5" alt="Twitter" /></a>
-        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" class="w-3.5 h-3.5" alt="Instagram" /></a>
-        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" class="w-3.5 h-3.5" alt="Pinterest" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Facebook"><img src="/assets/images/facebook.svg" class="w-3.5 h-3.5" alt="FB" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Twitter"><img src="/assets/images/twitter.svg" class="w-3.5 h-3.5" alt="Twitter" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Instagram"><img src="/assets/images/instagram.svg" class="w-3.5 h-3.5" alt="Instagram" /></a>
+        <a href="#" class="hover:text-[#FF9F0D] transition" aria-label="Pinterest"><img src="/assets/images/pinterest.svg" class="w-3.5 h-3.5" alt="Pinterest" /></a>
       </div>
     </div>
 
@@ -94,7 +97,7 @@ export async function renderSidebar() {
         ${recentPostsList.map(p => `
           <div class="flex items-center gap-4">
             <a href="/src/pages/blog-details.html?id=${p.id}" class="w-16 h-16 rounded-[2px] overflow-hidden shrink-0">
-              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition" onerror="this.src='https://placehold.co/64x64?text=Post'" />
+              <img loading="lazy" src="${p.image}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition" onerror="this.src='https://placehold.co/64x64?text=Post'" />
             </a>
             <div>
               <span class="text-[11px] text-gray-400 block mb-1">${lang === 'vi' ? (p.date_vi || p.date) : p.date}</span>
@@ -116,7 +119,7 @@ export async function renderSidebar() {
           return `
             <a href="/src/pages/shop-list.html?category=${encodeURIComponent(m.name)}" class="flex items-center justify-between group cursor-pointer">
               <div class="flex items-center gap-3">
-                <img src="${m.image}" alt="${m.name}" class="w-12 h-12 object-cover rounded-[2px]" onerror="this.src='https://placehold.co/48x48?text=Food'" />
+                <img loading="lazy" src="${m.image}" alt="${m.name}" class="w-12 h-12 object-cover rounded-[2px]" onerror="this.src='https://placehold.co/48x48?text=Food'" />
                 <span class="text-sm font-semibold text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition">${catName}</span>
               </div>
               <span class="text-xs text-[#333333] dark:text-gray-400 font-medium">${m.count}</span>
@@ -146,7 +149,7 @@ export async function renderSidebar() {
       <div class="grid grid-cols-3 gap-2.5">
         ${photoGallery.map(img => `
           <div class="gallery-item relative aspect-square rounded-[2px] overflow-hidden group cursor-pointer" data-img-url="${img}">
-            <img src="${img}" alt="Gallery photo" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
+            <img loading="lazy" src="${img}" alt="Gallery photo" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -162,19 +165,19 @@ export async function renderSidebar() {
       <h4 class="font-bold text-lg text-[#333333] dark:text-white mb-6">${tFollow}</h4>
       <div class="flex items-center gap-3">
         <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Twitter">
-          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/twitter.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/twitter.svg') no-repeat center / contain;"></span>
+          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/assets/images/twitter.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/twitter.svg') no-repeat center / contain;"></span>
         </a>
         <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="YouTube">
-          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/youtube.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/youtube.svg') no-repeat center / contain;"></span>
+          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/assets/images/youtube.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/youtube.svg') no-repeat center / contain;"></span>
         </a>
         <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Pinterest">
-          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/pinterest.svg') no-repeat center / contain;"></span>
+          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/assets/images/pinterest.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/pinterest.svg') no-repeat center / contain;"></span>
         </a>
         <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Instagram">
-          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/instagram.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/instagram.svg') no-repeat center / contain;"></span>
+          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/assets/images/instagram.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/instagram.svg') no-repeat center / contain;"></span>
         </a>
         <a href="#" class="w-9 h-9 bg-[#FAF7F2] dark:bg-gray-800 text-[#333333] dark:text-white hover:bg-[#FF9F0D] hover:text-white rounded-[2px] flex items-center justify-center transition group" aria-label="Facebook">
-          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/public/assets/images/facebook.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/facebook.svg') no-repeat center / contain;"></span>
+          <span class="w-4 h-4 bg-current inline-block" style="mask: url('/assets/images/facebook.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/facebook.svg') no-repeat center / contain;"></span>
         </a>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { addToCart } from '/src/js/cart.js'
+import { formatPrice } from '../format.js'
 import { showSuccessToast } from '/src/js/validate.js'
 import { isWishlisted, toggleWishlist } from '/src/js/wishlist.js'
 import { t, getLang, applyStaticTranslations } from '/src/js/i18n.js'
@@ -20,6 +21,7 @@ async function initShopDetails() {
 
   try {
     const response = await fetch('/src/data/menu.json')
+    if (!response.ok) throw new Error(`May chu tra ve ${response.status}`)
     const menuData = await response.json()
 
     const productIndex = menuData.findIndex(p => String(p.id) === String(productId))
@@ -61,13 +63,13 @@ async function initShopDetails() {
           <div class="flex sm:flex-col gap-3.5 shrink-0">
             ${thumbnails.map((imgUrl, idx) => `
               <div class="thumb-item w-20 h-20 sm:w-24 sm:h-24 rounded-[2px] overflow-hidden border ${idx === 0 ? 'border-[#FF9F0D]' : 'border-gray-200 dark:border-gray-700'} cursor-pointer hover:border-[#FF9F0D] transition">
-                <img src="${imgUrl}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover" />
+                <img loading="lazy" src="${imgUrl}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover" />
               </div>
             `).join('')}
           </div>
 
           <div class="flex-1 aspect-[4/5] sm:aspect-square bg-gray-100 rounded-[2px] overflow-hidden border border-gray-200 dark:border-gray-800">
-            <img id="main-product-image" src="${product.image}" alt="${productName}" class="w-full h-full object-cover transition-all duration-300" />
+            <img loading="lazy" id="main-product-image" src="${product.image}" alt="${productName}" class="w-full h-full object-cover transition-all duration-300" />
           </div>
         </div>
 
@@ -95,7 +97,7 @@ async function initShopDetails() {
           </div>
 
           <div class="flex items-center gap-3 text-xs text-gray-400 pt-1">
-            <div class="flex items-center text-[#FF9F0D] text-sm tracking-widest">★★★★★</div>
+            <div class="flex items-center text-[#FF9F0D] text-sm tracking-widest"></div>
             <span>|</span>
             <span class="text-gray-500 dark:text-gray-400 font-normal">5.0 ${t('common.rating')}</span>
             <span>|</span>
@@ -112,7 +114,7 @@ async function initShopDetails() {
             </div>
 
             <button id="btn-add-to-cart" class="bg-[#FF9F0D] text-white font-normal px-8 h-11 rounded-[2px] hover:bg-amber-600 transition flex items-center gap-2 text-sm shadow-sm cursor-pointer">
-              <span class="w-4 h-4 bg-white inline-block" style="mask: url('/public/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Tote.svg') no-repeat center / contain;"></span>
+              <span class="w-4 h-4 bg-white inline-block" style="mask: url('/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/Tote.svg') no-repeat center / contain;"></span>
               <span>${t('common.addToCart')}</span>
             </button>
           </div>
@@ -121,11 +123,11 @@ async function initShopDetails() {
 
           <div class="flex items-center gap-6 text-sm text-[#4F4F4F] dark:text-gray-300">
             <button id="btn-wishlist" type="button" class="flex items-center gap-2 hover:text-[#FF9F0D] transition cursor-pointer ${wishlisted ? 'text-[#FF9F0D]' : ''}">
-              <span class="w-4 h-4 bg-current inline-block transition-colors" style="mask: url('/public/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Heart.svg') no-repeat center / contain;"></span>
+              <span class="w-4 h-4 bg-current inline-block transition-colors" style="mask: url('/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/Heart.svg') no-repeat center / contain;"></span>
               <span id="wishlist-label">${wishlisted ? t('common.wishlisted') : t('common.addToWishlist')}</span>
             </button>
             <button type="button" class="flex items-center gap-2 hover:text-[#FF9F0D] transition cursor-pointer">
-              <span class="w-4 h-4 bg-current inline-block transition-colors" style="mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain;"></span>
+              <span class="w-4 h-4 bg-current inline-block transition-colors" style="mask: url('/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/ProjectStatus.svg') no-repeat center / contain;"></span>
               <span>${t('common.compare')}</span>
             </button>
           </div>
@@ -138,19 +140,19 @@ async function initShopDetails() {
               <span class="text-gray-600 dark:text-gray-400">${t('common.share')} :</span>
               <div class="flex items-center gap-2.5">
                 <a href="#" class="w-6 h-6 flex items-center justify-center hover:opacity-80 transition" aria-label="YouTube">
-                  <img src="/public/assets/images/vector/youtube.svg" alt="YouTube" class="w-full h-full object-contain" />
+                  <img src="/assets/images/vector/youtube.svg" alt="YouTube" class="w-full h-full object-contain" />
                 </a>
                 <a href="#" class="w-6 h-6 flex items-center justify-center hover:opacity-80 transition" aria-label="Facebook">
-                  <img src="/public/assets/images/vector/fb.svg" alt="Facebook" class="w-full h-full object-contain" />
+                  <img src="/assets/images/vector/fb.svg" alt="Facebook" class="w-full h-full object-contain" />
                 </a>
                 <a href="#" class="w-6 h-6 flex items-center justify-center hover:opacity-80 transition" aria-label="Twitter">
-                  <img src="/public/assets/images/vector/twitter.svg" alt="Twitter" class="w-full h-full object-contain" />
+                  <img src="/assets/images/vector/twitter.svg" alt="Twitter" class="w-full h-full object-contain" />
                 </a>
                 <a href="#" class="w-6 h-6 flex items-center justify-center hover:opacity-80 transition" aria-label="VK">
-                  <img src="/public/assets/images/vector/vk.svg" alt="VK" class="w-full h-full object-contain" />
+                  <img src="/assets/images/vector/vk.svg" alt="VK" class="w-full h-full object-contain" />
                 </a>
                 <a href="#" class="w-6 h-6 flex items-center justify-center hover:opacity-80 transition" aria-label="Instagram">
-                  <img src="/public/assets/images/vector/instagram.svg" alt="Instagram" class="w-full h-full object-contain" />
+                  <img src="/assets/images/vector/instagram.svg" alt="Instagram" class="w-full h-full object-contain" />
                 </a>
               </div>
             </div>
@@ -223,7 +225,7 @@ function renderTabs(product, description) {
 
       <div id="tab-rev-content" class="hidden pt-8 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
         <p class="text-base text-[#333333] dark:text-white font-semibold mb-2">${lang === 'en' ? 'Customer Reviews' : 'Đánh giá từ khách hàng'}</p>
-        <p>${lang === 'en' ? 'Average Rating:' : 'Điểm trung bình:'} <strong class="text-[#FF9F0D] font-bold">5.0 / 5 ★</strong> (${lang === 'en' ? 'Based on 22 real reviews' : 'Dựa trên 22 lượt đánh giá thực tế'})</p>
+        <p>${lang === 'en' ? 'Average Rating:' : 'Điểm trung bình:'} <strong class="text-[#FF9F0D] font-bold">5.0 / 5 </strong> (${lang === 'en' ? 'Based on 22 real reviews' : 'Dựa trên 22 lượt đánh giá thực tế'})</p>
       </div>
     </div>
   `
@@ -271,7 +273,7 @@ function renderSimilarSection() {
           return `
             <div class="group cursor-pointer flex flex-col" onclick="window.location.href='/src/pages/shop-details.html?id=${item.id}'">
               <div class="relative bg-gray-100 aspect-square overflow-hidden rounded-[2px]">
-                <img 
+                <img loading="lazy" 
                   src="${item.image}" 
                   alt="${itemName}" 
                   class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
@@ -280,21 +282,21 @@ function renderSimilarSection() {
                 
                 <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button type="button" class="w-8 h-8 bg-white rounded flex items-center justify-center text-[#333333] hover:bg-[#FF9F0D] hover:text-white transition" title="${t('common.compare')}">
-                    <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain;"></span>
+                    <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/ProjectStatus.svg') no-repeat center / contain;"></span>
                   </button>
                   <button type="button" class="w-8 h-8 bg-[#FF9F0D] rounded flex items-center justify-center text-white hover:bg-amber-600 transition" title="${t('common.addToCart')}">
-                    <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/public/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Tote.svg') no-repeat center / contain;"></span>
+                    <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/Tote.svg') no-repeat center / contain;"></span>
                   </button>
                   <button type="button" class="w-8 h-8 bg-white rounded flex items-center justify-center text-[#333333] hover:bg-[#FF9F0D] hover:text-white transition" title="${t('common.addToWishlist')}">
-                    <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/public/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Heart.svg') no-repeat center / contain;"></span>
+                    <span class="w-3.5 h-3.5 bg-current inline-block" style="mask: url('/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/Heart.svg') no-repeat center / contain;"></span>
                   </button>
                 </div>
               </div>
               
               <h4 class="mt-3 font-bold text-base text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition line-clamp-1">${itemName}</h4>
               <div class="mt-1 text-sm flex items-center">
-                <span class="text-[#FF9F0D] font-semibold">$${item.price.toFixed(2)}</span>
-                ${item.oldPrice ? `<span class="text-gray-400 line-through ml-2 text-xs font-normal">$${item.oldPrice.toFixed(2)}</span>` : ''}
+                <span class="text-[#FF9F0D] font-semibold">${formatPrice(item.price)}</span>
+                ${item.oldPrice ? `<span class="text-gray-400 line-through ml-2 text-xs font-normal">${formatPrice(item.oldPrice)}</span>` : ''}
               </div>
             </div>
           `

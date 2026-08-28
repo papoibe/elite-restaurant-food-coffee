@@ -1,64 +1,77 @@
-<!doctype html>
+<!-- ===== TRANG ABOUT US — PHỤ TRÁCH: THỊNH (Nhóm trưởng) ===== -->
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Giới thiệu về nhà hàng Foodtuck — Câu chuyện, tầm nhìn và đội ngũ đầu bếp" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>About Us — Foodtuck</title>
-  </head>
-  <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Về chúng tôi — Câu chuyện và giá trị cốt lõi của Elite Restaurant" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>About Us — Savoria</title>
+  <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
+</head>
+<body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
-    <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
-      <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="/" class="text-2xl font-bold font-heading text-white">
-          Food<span class="text-primary">tuck</span>
+  <!-- ========== HEADER (Copy từ index.html) ========== -->
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+    <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold font-heading">Savo<span class="text-primary">ria</span></a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
+        <li><a href="/src/pages/about.html" class="text-primary font-semibold" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
         </a>
-        <ul class="hidden lg:flex items-center gap-8 text-sm text-white/90">
-          <li><a href="/" class="hover:text-primary transition-colors" data-i18n="nav.home">Home</a></li>
-          <li><a href="/src/pages/menu.html" class="hover:text-primary transition-colors" data-i18n="nav.menu">Menu</a></li>
-          <li><a href="/src/pages/blog.html" class="hover:text-primary transition-colors" data-i18n="nav.blog">Blog</a></li>
-          <li><a href="/src/pages/about.html" class="text-primary font-semibold" data-i18n="nav.about">About</a></li>
-          <li><a href="/src/pages/shop-list.html" class="hover:text-primary transition-colors" data-i18n="nav.shop">Shop</a></li>
-          <li><a href="/src/pages/contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
-        </ul>
-        <div class="flex items-center gap-4 text-white">
-          <a id="user-account-link" href="/src/pages/signin.html" class="p-2 hover:text-primary transition-colors" aria-label="Tài khoản">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-          </a>
-          <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
-          <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
-          </a>
-          <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
-          <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          </button>
-        </div>
-      </nav>
-      <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
-        <ul class="flex flex-col gap-3 text-sm text-white/90">
-          <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
-          <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
-          <li><a href="/src/pages/blog.html" class="hover:text-primary" data-i18n="nav.blog">Blog</a></li>
-          <li><a href="/src/pages/about.html" class="text-primary font-semibold" data-i18n="nav.about">About</a></li>
-          <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
-          <li><a href="/src/pages/contact.html" class="hover:text-primary" data-i18n="nav.contact">Contact</a></li>
-        </ul>
+        <button id="theme-toggle" class="p-2 hover:text-primary transition-colors" aria-label="Toggle theme"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></button>
+        <a href="/src/pages/cart.html" class="relative p-2 hover:text-primary transition-colors" aria-label="Giỏ hàng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+        </a>
+        <button id="lang-toggle" type="button" class="px-2 py-1 text-xs font-bold border border-white/30 rounded hover:border-primary hover:text-primary transition-colors" aria-label="Đổi ngôn ngữ" title="Switch language">EN</button>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
-    </header>
+    </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-bg-dark-2 px-6 pb-4">
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary" data-i18n="nav.home">Home</a></li>
+        <li><a href="/src/pages/menu.html" class="hover:text-primary" data-i18n="nav.menu">Menu</a></li>
+        <li><a href="/src/pages/about.html" class="text-primary" data-i18n="nav.about">About</a></li>
+        <li><a href="/src/pages/shop-list.html" class="hover:text-primary" data-i18n="nav.shop">Shop</a></li>
+      </ul>
+    </div>
+  </header>
 
-    <section class="absolute top-0 left-0 w-full h-[400px] bg-cover bg-center flex flex-col items-center justify-center text-center px-4 z-10" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
-      <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.about.title">About Us</h1>
-      <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
-        <a href="/" class="hover:text-primary transition-colors" data-i18n="page.home.tab">Home</a>
-        <span class="mx-2 text-primary">&gt;</span>
-        <span class="text-primary" data-i18n="page.about.crumb">About</span>
+  <main>
+    <!-- ========== PAGE BANNER ========== -->
+    <section class="page-banner" style="background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('/assets/images/banner-bg.jpg'); background-size:cover; background-position:center; padding:80px 0; text-align:center;">
+      <h1 class="text-5xl font-bold text-white font-heading" data-i18n="page.about.title">About Us</h1>
+      <nav class="breadcrumb mt-3">
+        <a href="/" data-i18n="page.home.tab">Home</a> &gt; <span class="current" data-i18n="page.about.crumb">About</span>
       </nav>
     </section>
 
-    <main class="pt-130">
     <!-- ============================================================
          1. ABOUT US — Figma: x=300 y=530, 1320x734
             · Ảnh ghép 669x734 : trái 336x536 · phải trên 309x271 (lệch xuống 54)
@@ -78,12 +91,12 @@
             class="w-1/2 lg:w-[336px] lg:h-[536px] h-[400px] object-cover rounded-[6px]"
           />
           <div class="w-1/2 lg:w-[309px] flex flex-col gap-[27px] lg:mt-[54px]">
-            <img
+            <img loading="lazy"
               src="/assets/images/about-juice.jpg"
               alt="Nước ép trái cây tươi"
               class="w-full lg:h-[271px] h-[186px] object-cover rounded-[6px]"
             />
-            <img
+            <img loading="lazy"
               src="/assets/images/about-salad.jpg"
               alt="Salad rau củ tươi"
               class="w-full lg:h-[382px] h-[187px] object-cover rounded-[6px]"
@@ -149,7 +162,7 @@
         </p>
       </div>
 
-      <img
+      <img loading="lazy"
         src="/assets/images/banner-bg.jpg"
         alt="Không gian và món ăn tại nhà hàng"
         class="mt-14 w-full h-[240px] md:h-[386px] object-cover"
@@ -196,14 +209,14 @@
     <section class="relative mt-20 lg:mt-[120px]" data-reveal>
       <!-- Bg: dải 1920x460 -->
       <div class="absolute inset-x-0 top-0 h-[300px] md:h-[460px] overflow-hidden">
-        <img src="/assets/images/unsplash_OzBLe_Eg1mg.png" alt="" class="w-full h-full object-cover" />
+        <img loading="lazy" src="/assets/images/unsplash_OzBLe_Eg1mg.png" alt="" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-[#FF9F0D]/85"></div>
       </div>
 
       <div class="relative max-w-[1368px] mx-auto px-4 sm:px-6">
         <!-- Text 418x176, ảnh trang trí 161x176 nằm sau chữ -->
         <div class="relative w-full max-w-[418px] mx-auto pt-[88px] text-center">
-          <img
+          <img loading="lazy"
             src="/assets/images/unsplash_x1ZZWyDU8sU.png"
             alt=""
             class="pointer-events-none absolute left-1/2 -translate-x-1/2 top-[88px] w-[161px] h-[176px] object-contain"
@@ -240,39 +253,34 @@
         What our client are saying
       </h2>
 
-      <!-- Thẻ nhận xét — nội dung do about-page.js đổ vào để đổi được slide -->
-      <div class="mt-[100px] flex justify-center">
-        <div class="relative w-full max-w-[868px]">
-          <!-- Avatar đè lên mép trên thẻ -->
-          <img
-            id="testimonial-avatar"
-            src="/assets/images/chef-1.jpg"
-            alt=""
-            class="absolute left-1/2 -translate-x-1/2 -top-[67px] w-[133px] h-[133px] rounded-full object-cover z-10 bg-[#E9E9E9]"
-          />
+      <!-- Slider: viewport cắt ngang + track trượt bằng translateX.
+           pt-[67px] chừa chỗ cho avatar nhô lên khỏi mép thẻ, nếu không
+           overflow-hidden sẽ cắt mất avatar. -->
+      <div class="relative mt-[33px]"
+           id="testimonial-slider"
+           role="region"
+           aria-roledescription="carousel"
+           aria-label="Nhận xét của khách hàng">
 
-          <div class="relative overflow-hidden min-h-[451px] bg-white dark:bg-[#1A1A1A] shadow-[0_0_80px_0_rgba(205,205,205,0.25)] px-6 pt-[99px] pb-8 text-center">
-            <!-- Ảnh hoa trang trí, đã mờ sẵn 8% từ Figma -->
-            <img
-              src="/assets/images/unsplash_Ioq6qEibtbU.png"
-              alt=""
-              class="pointer-events-none absolute -right-[60px] -bottom-[60px] w-[502px] h-[580px] object-contain"
-            />
-
-            <img src="/assets/images/Quotes.svg" alt="" class="relative w-12 h-12 mx-auto" />
-
-            <p id="testimonial-quote" class="relative mt-8 mx-auto max-w-[697px] text-[18px] leading-[26px] text-[#4F4F4F] dark:text-white/70"></p>
-
-            <div id="testimonial-stars" class="relative mt-8 flex justify-center gap-2"></div>
-
-            <h3 id="testimonial-name" class="relative mt-4 font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white"></h3>
-            <p id="testimonial-role" class="relative mt-2 text-[16px] leading-[24px] text-[#828282]"></p>
-          </div>
-
-          <!-- 4 chấm: chấm đang chọn #FF9F0D, còn lại #FF9F0D 30% -->
-          <div id="testimonial-dots" class="mt-14 flex justify-center gap-[11px]"></div>
+        <div class="overflow-hidden pt-[67px]">
+          <!-- Track: 4 slide xếp ngang, mỗi slide rộng đúng 100% -->
+          <div id="testimonial-track" class="flex transition-transform duration-500 ease-out motion-reduce:transition-none"></div>
         </div>
+
+        <!-- Nút lùi / tới -->
+        <button type="button" id="testimonial-prev"
+                class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white dark:bg-[#1A1A1A] border border-[#E0E0E0] dark:border-white/15 flex items-center justify-center text-[#4F4F4F] dark:text-white hover:bg-[#FF9F0D] hover:text-white hover:border-[#FF9F0D] transition-colors cursor-pointer">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button type="button" id="testimonial-next"
+                class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white dark:bg-[#1A1A1A] border border-[#E0E0E0] dark:border-white/15 flex items-center justify-center text-[#4F4F4F] dark:text-white hover:bg-[#FF9F0D] hover:text-white hover:border-[#FF9F0D] transition-colors cursor-pointer">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <!-- 4 chấm: sinh bằng JS từ số slide thật -->
+        <div id="testimonial-dots" class="mt-14 flex justify-center gap-[11px]"></div>
       </div>
+
     </section>
 
     <!-- ============================================================
@@ -286,7 +294,7 @@
          ============================================================ -->
     <section class="max-w-[1368px] mx-auto px-4 sm:px-6 pt-20 lg:pt-[120px] pb-20 lg:pb-[120px]" data-reveal>
       <div class="relative text-center">
-        <img
+        <img loading="lazy"
           src="/assets/images/unsplash_x1ZZWyDU8sU.png"
           alt=""
           class="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-6 w-[161px] h-[176px] object-contain"
@@ -349,7 +357,7 @@
     </p>
     <div class="flex items-center gap-4 pt-1">
       <div class="bg-primary text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-        <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+        <img src="/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
       </div>
       <div>
         <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -384,7 +392,7 @@
     <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
     <div id="footer-recent-posts" class="space-y-4">
       <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+        <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
         <div>
           <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
           <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
@@ -393,7 +401,7 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+        <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
         <div>
           <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
           <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
@@ -402,7 +410,7 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+        <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
         <div>
           <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
           <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
@@ -420,19 +428,19 @@
       <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
       <div class="flex space-x-3">
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Facebook">
-          <img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
+          <img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Twitter">
-          <img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
+          <img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Instagram">
-          <img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
+          <img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="YouTube">
-          <img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
+          <img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Pinterest">
-          <img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
+          <img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
         </a>
       </div>
     </div>

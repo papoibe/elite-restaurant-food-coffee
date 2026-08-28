@@ -18,10 +18,12 @@ export async function fetchChefs() {
   if (cachedChefs) return cachedChefs
   try {
     const res = await fetch('/src/data/chefs.json')
+    // fetch khong tu nem loi voi ma 404/500 nen phai tu kiem tra
+    if (!res.ok) throw new Error(`May chu tra ve ${res.status}`)
     cachedChefs = await res.json()
     return cachedChefs
   } catch (error) {
-    console.error('❌ Lỗi khi tải danh sách đầu bếp:', error)
+    console.error('Lỗi khi tải danh sách đầu bếp:', error)
     return []
   }
 }
@@ -105,7 +107,7 @@ export function renderChefCardFull(chef, index = 0) {
         <h4 class="text-text-dark dark:text-text-white font-semibold text-lg">${chef.name}</h4>
         <p class="text-primary text-sm font-medium mb-2">${title}</p>
         <p class="text-text-muted text-xs leading-relaxed mb-2">${bio}</p>
-        <p class="text-text-muted text-xs">📍 ${location} · ${t('chefs.specialty')}: ${specialty}</p>
+        <p class="text-text-muted text-xs">${location} · ${t('chefs.specialty')}: ${specialty}</p>
       </div>
     </div>
   `

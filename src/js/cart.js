@@ -2,6 +2,7 @@
    cart.js — Logic Giỏ hàng (Shopping Cart)
    ============================================================ */
 import { t } from '/src/js/i18n.js' // Chuyển ngôn ngữ VN/EN
+import { formatPrice } from './format.js'
 
 const CART_KEY = 'elite-cart'
 
@@ -77,7 +78,7 @@ let discountRate = 0
 function renderStars(rating = 4) {
   let starsHtml = ''
   for (let i = 1; i <= 5; i++) {
-    starsHtml += `<span class="${i <= rating ? 'text-[#FF9F0D]' : 'text-gray-300'} text-xs">★</span>`
+    starsHtml += `<span class="${i <= rating ? 'text-[#FF9F0D]' : 'text-gray-300'} text-xs"></span>`
   }
   return `<div class="flex gap-0.5 mt-1">${starsHtml}</div>`
 }
@@ -103,13 +104,13 @@ function renderCartPage() {
     row.className = 'border-b border-gray-200 dark:border-gray-800'
     row.innerHTML = `
       <td class="py-5 flex items-center gap-4">
-        <img src="${item.image || 'https://via.placeholder.com/80'}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg" />
+        <img loading="lazy" src="${item.image || 'https://via.placeholder.com/80'}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg" />
         <div>
           <h4 class="font-bold text-gray-900 dark:text-white">${item.name}</h4>
           ${renderStars(item.rating)}
         </div>
       </td>
-      <td class="py-5 font-medium text-gray-700 dark:text-gray-300">$${Number(item.price).toFixed(2)}</td>
+      <td class="py-5 font-medium text-gray-700 dark:text-gray-300">${formatPrice(Number(item.price))}</td>
       <td class="py-5">
         <div class="flex items-center border border-gray-200 dark:border-gray-700 rounded-full w-fit px-3 py-1 gap-3">
           <button class="btn-minus text-gray-400 hover:text-[#FF9F0D] px-1 cursor-pointer" data-id="${item.id}">-</button>
@@ -117,9 +118,9 @@ function renderCartPage() {
           <button class="btn-plus text-gray-400 hover:text-[#FF9F0D] px-1 cursor-pointer" data-id="${item.id}">+</button>
         </div>
       </td>
-      <td class="py-5 font-bold text-gray-900 dark:text-white">$${(item.price * item.quantity).toFixed(2)}</td>
+      <td class="py-5 font-bold text-gray-900 dark:text-white">${formatPrice((item.price * item.quantity))}</td>
       <td class="py-5 text-center">
-        <button class="btn-remove text-gray-400 hover:text-red-500 text-lg cursor-pointer" data-id="${item.id}">✕</button>
+        <button class="btn-remove text-gray-400 hover:text-red-500 text-lg cursor-pointer" data-id="${item.id}"></button>
       </td>
     `
     cartTableBody.appendChild(row)
@@ -140,10 +141,10 @@ function calculateTotal(subtotal) {
   const shippingEl = document.getElementById('cart-shipping')
   const totalEl = document.getElementById('cart-total')
 
-  if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`
-  if (discountEl) discountEl.textContent = `-$${discount.toFixed(2)}`
-  if (shippingEl) shippingEl.textContent = `$${shipping.toFixed(2)}`
-  if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`
+  if (subtotalEl) subtotalEl.textContent = `${formatPrice(subtotal)}`
+  if (discountEl) discountEl.textContent = `${formatPrice(-(discount))}`
+  if (shippingEl) shippingEl.textContent = `${formatPrice(shipping)}`
+  if (totalEl) totalEl.textContent = `${formatPrice(total)}`
 
   // Bang Total Bill trong Figma chi co 2 dong: Cart Subtotal + Shipping Charge.
   // Hang Discount la phan mo rong cua nhom (ma SAVORIA10) nen chi hien khi

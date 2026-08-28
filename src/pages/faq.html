@@ -17,8 +17,24 @@
         transform: rotate(45deg);
       }
     </style>
-  </head>
+    <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
+</head>
   <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-white font-body antialiased">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
     <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
       <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
@@ -121,7 +137,7 @@
     </p>
     <div class="flex items-center gap-4 pt-1">
       <div class="bg-primary text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-        <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+        <img src="/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
       </div>
       <div>
         <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -156,7 +172,7 @@
     <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
     <div id="footer-recent-posts" class="space-y-4">
       <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+        <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
         <div>
           <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
           <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
@@ -165,7 +181,7 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+        <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
         <div>
           <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
           <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
@@ -174,7 +190,7 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+        <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
         <div>
           <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
           <a href="/src/pages/blog.html" class="text-white hover:text-primary transition-colors text-sm font-normal">
@@ -192,19 +208,19 @@
       <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
       <div class="flex space-x-3">
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Facebook">
-          <img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
+          <img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Twitter">
-          <img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
+          <img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Instagram">
-          <img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
+          <img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="YouTube">
-          <img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
+          <img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
         </a>
         <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition group" aria-label="Pinterest">
-          <img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
+          <img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
         </a>
       </div>
     </div>

@@ -9,7 +9,7 @@ export const blogPostsData = [
   author: 'Admin',
   title: '10 Reasons To Do A Digital Detox Challenge',
   title_vi: '10 Lý Do Bạn Nên Thử Thách "Digital Detox"',
-  image: '/public/assets/images/blog/blog1.jpg',
+  image: '/assets/images/blog/blog1.jpg',
   detailImage: 'https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=900',
   innerImage: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600',
   excerpt: 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
@@ -39,7 +39,7 @@ export const blogPostsData = [
       <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing </p>
     </div>
     <div class="rounded-[2px] overflow-hidden">
-      <img src="/public/assets/images/blog/blog1.jpg" class="w-full h-auto object-cover" alt="Ramen Dish" />
+      <img src="/assets/images/blog/blog1.jpg" width="1200" height="800" loading="lazy" class="w-full h-auto object-cover" alt="Ramen Dish" />
     </div>
   </div>
 
@@ -73,7 +73,7 @@ export const blogPostsData = [
       <p>Khi loại bỏ màn hình điện tử, cuộc trò chuyện quanh bàn ăn trở nên chân thực và ấm áp hơn bao giờ hết. Sự gắn kết giữa các thành viên được vun đắp một cách tự nhiên thông qua việc cùng nhau chia sẻ những câu chuyện đời thường.</p>
     </div>
     <div class="rounded-[2px] overflow-hidden">
-      <img src="/public/assets/images/blog/blog1.jpg" class="w-full h-auto object-cover" alt="Ramen Dish" />
+      <img src="/assets/images/blog/blog1.jpg" width="1200" height="800" loading="lazy" class="w-full h-auto object-cover" alt="Ramen Dish" />
     </div>
   </div>
 
@@ -97,9 +97,9 @@ export const blogPostsData = [
     author: 'Admin',
     title: 'Traditional Soft Pretzels with Sweet Beer Cheese',
     title_vi: 'Bánh Pretzel Mềm Truyền Thống Kèm Sốt Phô Mai Bia',
-    image: '/public/assets/images/blog/blog2.jpg',
-    detailImage: '/public/assets/images/blog/blog2.jpg',
-    innerImage: '/public/assets/images/blog/blog2.jpg',
+    image: '/assets/images/blog/blog2.jpg',
+    detailImage: '/assets/images/blog/blog2.jpg',
+    innerImage: '/assets/images/blog/blog2.jpg',
     excerpt: 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     excerpt_vi: 'Có điều gì đó kỳ diệu khi kết hợp chiếc bánh pretzel vàng ươm, nóng hổi với sốt phô mai bia béo ngậy. Bếp trưởng chia sẻ công thức bí truyền.',
     quote: 'The secret to a perfect pretzel lies in the boiling step. A quick dip in alkaline water creates that glossy crust.',
@@ -118,9 +118,9 @@ export const blogPostsData = [
     author: 'Admin',
     title: 'The Ultimate Hangover Burger: Egg in a Hole Burger',
     title_vi: 'Burger "Giải Rượu" Hoàn Hảo: Burger Trứng Lòng Đào',
-    image: '/public/assets/images/blog/blog3.jpg',
-    detailImage: '/public/assets/images/blog/blog3.jpg',
-    innerImage: '/public/assets/images/blog/blog3.jpg ',
+    image: '/assets/images/blog/blog3.jpg',
+    detailImage: '/assets/images/blog/blog3.jpg',
+    innerImage: '/assets/images/blog/blog3.jpg ',
     excerpt: 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     excerpt_vi: 'Mỗi cuối tuần tuyệt vời đều cần một bữa ăn phục hồi hoàn hảo với chiếc burger trứng lòng đào béo ngậy.',
     quote: 'Timing is everything: 90 seconds on the hot flat-top leaves the egg yolk perfectly runny.',
@@ -139,9 +139,9 @@ export const blogPostsData = [
     author: 'Admin',
     title: 'My Favorite Easy Black Pizza Toast Recipe',
     title_vi: 'Công Thức Pizza Toast Than Đen Siêu Dễ Của Tôi',
-    image: '/public/assets/images/blog/blog4.jpg',
-    detailImage: '/public/assets/images/blog/blog4.jpg',
-    innerImage: '/public/assets/images/blog/blog4.jpg',
+    image: '/assets/images/blog/blog4.jpg',
+    detailImage: '/assets/images/blog/blog4.jpg',
+    innerImage: '/assets/images/blog/blog4.jpg',
     excerpt: 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     excerpt_vi: 'Bánh mì nướng than đen giòn rụm kết hợp sốt cà chua ngào đường và phô mai mozzarella tươi ngon.',
     quote: 'Crisp sourdough crust meets velvety buffalo mozzarella with balsamic reduction.',
@@ -160,29 +160,29 @@ export const sidebarData = {
     rating: 5,
     bio: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio eligendi suscipit reprehenderit atque.',
     bio_vi: 'Bếp trưởng kiêm cây viết ẩm thực tại nhà hàng, chia sẻ câu chuyện và bí quyết đằng sau từng món ăn.',
-    avatar: '/public/assets/images/blog/bloger.svg '
+    avatar: '/assets/images/blog/bloger.svg '
   },
   recentPosts: [
-    { id: 'post-1', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Khám phá ẩm thực hữu cơ tốt cho sức khỏe', image: '/public/assets/images/blog/post1.png' },
-    { id: 'post-2', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Bí quyết làm burger chuẩn vị châu Âu', image: '/public/assets/images/blog/post2.png' },
-    { id: 'post-3', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Thưởng thức salad tươi mát mỗi ngày', image: '/public/assets/images/blog/post3.png' },
-    { id: 'post-4', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Cách pha chế mocktail thanh lọc cơ thể', image: '/public/assets/images/blog/post4.png' }
+    { id: 'post-1', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Khám phá ẩm thực hữu cơ tốt cho sức khỏe', image: '/assets/images/blog/post1.png' },
+    { id: 'post-2', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Bí quyết làm burger chuẩn vị châu Âu', image: '/assets/images/blog/post2.png' },
+    { id: 'post-3', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Thưởng thức salad tươi mát mỗi ngày', image: '/assets/images/blog/post3.png' },
+    { id: 'post-4', date: 'June 22, 2020', date_vi: '22 Tháng 6, 2020', title: 'Lorem ipsum dolor sit cing elit, sed do.', title_vi: 'Cách pha chế mocktail thanh lọc cơ thể', image: '/assets/images/blog/post4.png' }
   ],
   filterMenu: [
-    { name: 'Chicken Fry', name_vi: 'Gà rán giòn', count: 26, image: '/public/assets/images/blog/chicken.png' },
-    { name: 'Burger Food', name_vi: 'Burger bò béo', count: 46, image: '/public/assets/images/blog/burger.png' },
-    { name: 'Pizza', name_vi: 'Pizza phô mai', count: 16, image: '/public/assets/images/blog/pizza.png' },
-    { name: 'Fresh Fruits', name_vi: 'Trái cây tươi', count: 36, image: '/public/assets/images/blog/fresh-fruits.png' },
-    { name: 'Vegetables', name_vi: 'Rau củ quả', count: 16, image: '/public/assets/images/blog/veg.png' }
+    { name: 'Chicken Fry', name_vi: 'Gà rán giòn', count: 26, image: '/assets/images/blog/chicken.png' },
+    { name: 'Burger Food', name_vi: 'Burger bò béo', count: 46, image: '/assets/images/blog/burger.png' },
+    { name: 'Pizza', name_vi: 'Pizza phô mai', count: 16, image: '/assets/images/blog/pizza.png' },
+    { name: 'Fresh Fruits', name_vi: 'Trái cây tươi', count: 36, image: '/assets/images/blog/fresh-fruits.png' },
+    { name: 'Vegetables', name_vi: 'Rau củ quả', count: 16, image: '/assets/images/blog/veg.png' }
   ],
   popularTags: ['Sandwich', 'Tikka', 'Bbq', 'Restaurant', 'Chicken Shawarma', 'Health', 'Fastfood', 'Food', 'Pizza', 'Burger', 'Chicken'],
   photoGallery: [
-    '/public/assets/images/blog/ga1.jpg',
-    '/public/assets/images/blog/ga2.jpg',
-    '/public/assets/images/blog/ga3.jpg',
-    '/public/assets/images/blog/ga4.jpg',
-    '/public/assets/images/blog/ga5.jpg',
-    '/public/assets/images/blog/ga6.jpg'
+    '/assets/images/blog/ga1.jpg',
+    '/assets/images/blog/ga2.jpg',
+    '/assets/images/blog/ga3.jpg',
+    '/assets/images/blog/ga4.jpg',
+    '/assets/images/blog/ga5.jpg',
+    '/assets/images/blog/ga6.jpg'
   ]
 };
 

@@ -8,7 +8,7 @@ import '../css/main.css'  // Import Tailwind CSS + custom styles
 // === KHỞI TẠO CÁC MODULE DÙNG CHUNG ===
 
 // Mobile hamburger menu — toggle menu responsive
-import { initMobileMenu } from './dom.js'
+import { initMobileMenu, initHeaderOnScroll } from './dom.js'
 
 // Dark/Light mode — lưu trạng thái vào localStorage
 import { initTheme } from './theme.js'
@@ -48,11 +48,12 @@ function renderFooterRecentPosts() {
 document.addEventListener('DOMContentLoaded', () => {
   applyStaticTranslations()   // Dịch toàn bộ text tĩnh [data-i18n] theo ngôn ngữ đã lưu — chạy TRƯỚC các hàm render khác
   initLangToggle()            // Gắn nút chuyển VN/EN trên header
-  initMobileMenu()            // Bật/tắt menu mobile
+  initMobileMenu()            // Bật/tắt menu mobile (ARIA + ESC + bấm ra ngoài)
+  initHeaderOnScroll()        // Header đổ bóng khi cuộn — IntersectionObserver
   initTheme()                 // Áp dụng theme đã lưu
   updateCartBadge()           // Đồng bộ badge giỏ hàng với localStorage hiện tại
   renderAuthStatus()          // Hiện trạng thái đăng nhập (nếu có)
   renderFooterRecentPosts()   // Footer "Recent Post" — dữ liệu thật, ảnh không vỡ
 
-  console.log('🍽️ Elite Restaurant — Loaded successfully!')
+  console.log('Elite Restaurant — Loaded successfully!')
 })

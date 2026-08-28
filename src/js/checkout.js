@@ -1,4 +1,5 @@
 import { validateForm, showSuccessToast } from './validate.js';
+import { formatPrice } from './format.js';
 import { t } from './i18n.js'; // Chuyển ngôn ngữ VN/EN
 import { isLoggedIn } from './auth.js';
 
@@ -65,7 +66,7 @@ export function renderCheckoutSummary() {
       <div class="min-w-0">
         <h4 class="font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white truncate">${item.name}</h4>
         <p class="mt-2 text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70">${t('checkout.qty')} ${item.quantity || 1}</p>
-        <p class="mt-1 text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70">$${(item.price * (item.quantity || 1)).toFixed(2)}</p>
+        <p class="mt-1 text-[14px] leading-[22px] text-[#4F4F4F] dark:text-white/70">${formatPrice((item.price * (item.quantity || 1)))}</p>
       </div>
     </div>
   `).join('');
@@ -74,9 +75,9 @@ export function renderCheckoutSummary() {
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
 
-  if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-  if (taxEl) taxEl.textContent = `$${tax.toFixed(2)}`;
-  if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
+  if (subtotalEl) subtotalEl.textContent = `${formatPrice(subtotal)}`;
+  if (taxEl) taxEl.textContent = `${formatPrice(tax)}`;
+  if (totalEl) totalEl.textContent = `${formatPrice(total)}`;
 }
 
 export function initCheckoutEvents() {

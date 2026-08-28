@@ -10,8 +10,8 @@ import { t } from './i18n.js' // Chuyển ngôn ngữ VN/EN
  * @returns {boolean} true nếu hợp lệ, false nếu có lỗi
  */
 export function validateForm(form) {
-  let isValid = true
   const fields = form.querySelectorAll('[data-validate]')
+  const invalidFields = []
 
   fields.forEach(field => {
     const rules = field.dataset.validate.split(',')
@@ -20,18 +20,49 @@ export function validateForm(form) {
     clearError(field, errorEl)
 
     for (const rule of rules) {
-      const trimmedRule = rule.trim()
-      const errorMsg = checkRule(field, trimmedRule)
+      const errorMsg = checkRule(field, rule.trim())
 
       if (errorMsg) {
         showError(field, errorEl, errorMsg)
-        isValid = false
+        invalidFields.push(field)
         break
       }
     }
   })
 
-  return isValid
+  if (invalidFields.length === 0) {
+    clearSummary(form)
+    return true
+  }
+
+  // Một dòng tóm tắt ở đầu form — trên form dài, người dùng có thể đang ở
+  // cuối trang và không thấy ô lỗi nằm trên đầu.
+  showSummary(form, invalidFields.length)
+
+  // Đưa tiêu điểm về ô sai ĐẦU TIÊN. Việc này quan trọng hơn vẻ ngoài của nó:
+  // không có nó, người dùng bấm "Gửi" ở cuối form dài sẽ không biết hỏng ở đâu.
+  invalidFields[0].focus()
+  invalidFields[0].scrollIntoView({ block: 'center', behavior: 'smooth' })
+
+  return false
+}
+
+/** showSummary — Dòng tóm tắt số ô còn sai, đặt ngay đầu form. */
+function showSummary(form, count) {
+  let box = form.querySelector('[data-validate-summary]')
+  if (!box) {
+    box = document.createElement('p')
+    box.setAttribute('data-validate-summary', '')
+    box.setAttribute('role', 'alert')
+    box.className = 'mb-4 px-4 py-3 border border-[#EB5757] bg-[#FFF5F5] dark:bg-transparent text-[#EB5757] text-[14px] leading-[22px]'
+    form.prepend(box)
+  }
+  box.textContent = t('validate.summary', { count })
+  box.classList.remove('hidden')
+}
+
+function clearSummary(form) {
+  form.querySelector('[data-validate-summary]')?.classList.add('hidden')
 }
 
 /**
@@ -82,17 +113,28 @@ function checkRule(field, rule) {
   return null
 }
 
+/**
+ * showError — Đánh dấu một ô sai. Phải chạm CẢ HAI lớp:
+ *   · aria-invalid  → cho trình đọc màn hình
+ *   · textContent   → cho người nhìn thấy
+ * Chỉ tô đỏ viền thì với trình đọc màn hình, ô đó vẫn "bình thường".
+ * CSS bắt luôn [aria-invalid="true"] nên không cần class riêng cho viền đỏ.
+ */
 function showError(field, errorEl, message) {
+  field.setAttribute('aria-invalid', 'true')
   field.classList.add('border-red-500')
   field.classList.remove('border-gray-300')
 
   if (errorEl) {
+    // Nối ô nhập với ô báo lỗi để trình đọc màn hình đọc kèm thông báo
+    if (errorEl.id) field.setAttribute('aria-describedby', errorEl.id)
     errorEl.textContent = message
     errorEl.classList.remove('hidden')
   }
 }
 
 function clearError(field, errorEl) {
+  field.removeAttribute('aria-invalid')
   field.classList.remove('border-red-500')
   field.classList.add('border-gray-300')
 

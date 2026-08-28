@@ -40,7 +40,7 @@ export function renderBlogList() {
         <article class="bg-white dark:bg-[#0D0D0D] rounded-[2px] overflow-hidden mb-12">
           <div class="relative overflow-hidden group">
             <a href="/src/pages/blog-details.html?id=${post.id}" class="block overflow-hidden">
-              <img 
+              <img loading="lazy" 
                 src="${post.image}" 
                 class="w-full h-[360px] md:h-[480px] object-cover group-hover:scale-105 transition duration-500" 
                 alt="${title}" 
