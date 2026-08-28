@@ -81,9 +81,13 @@
   </header>
 
   <main class="pt-16">
-    <section class="page-banner">
-      <h1 data-i18n="page.checkout.title">Checkout Page</h1>
-      <nav class="breadcrumb"><span data-i18n="page.home.tab">Home</span> &gt; <span class="current" data-i18n="page.checkout.crumb">Checkout</span></nav>
+    <section class="relative w-full h-[320px] md:h-[410px] bg-cover bg-center flex flex-col items-center justify-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
+      <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.checkout.title">Checkout Page</h1>
+      <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
+        <a href="/" class="hover:text-[#FF9F0D] transition-colors" data-i18n="page.home.tab">Home</a>
+        <span class="mx-2 text-[#FF9F0D]">&gt;</span>
+        <span class="text-[#FF9F0D]" data-i18n="page.checkout.crumb">Checkout</span>
+      </nav>
     </section>
 
     <!-- Chặn thanh toán nếu chưa đăng nhập — chỉ hiện khi checkout.js xác nhận isLoggedIn() === false -->

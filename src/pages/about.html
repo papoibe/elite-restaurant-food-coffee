@@ -43,7 +43,7 @@
   <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
   <!-- ========== HEADER (Copy từ index.html) ========== -->
-  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
+  <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm text-text-white">
     <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="text-2xl font-bold font-heading">Savo<span class="text-primary">ria</span></a>
       <ul class="hidden lg:flex items-center gap-8 text-sm">
@@ -79,12 +79,14 @@
     </div>
   </header>
 
-  <main>
+  <main class="pt-16">
     <!-- ========== PAGE BANNER ========== -->
-    <section class="page-banner" style="background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('/assets/images/banner-bg.jpg'); background-size:cover; background-position:center; padding:80px 0; text-align:center;">
-      <h1 class="text-5xl font-bold text-white font-heading" data-i18n="page.about.title">About Us</h1>
-      <nav class="breadcrumb mt-3">
-        <a href="/" data-i18n="page.home.tab">Home</a> &gt; <span class="current" data-i18n="page.about.crumb">About</span>
+    <section class="relative w-full h-[320px] md:h-[410px] bg-cover bg-center flex flex-col items-center justify-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/banner.jpg');">
+      <h1 class="text-4xl md:text-5xl font-bold text-white font-heading tracking-wide" data-i18n="page.about.title">About Us</h1>
+      <nav class="breadcrumb mt-3 text-sm md:text-base text-white">
+        <a href="/" class="hover:text-[#FF9F0D] transition-colors" data-i18n="page.home.tab">Home</a>
+        <span class="mx-2 text-[#FF9F0D]">&gt;</span>
+        <span class="text-[#FF9F0D]" data-i18n="page.about.crumb">About</span>
       </nav>
     </section>
 
