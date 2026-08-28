@@ -74,32 +74,3 @@ export function addComment(postId, { text, parentId = null }) {
 export function countComments(postId) {
   return getComments(postId).length;
 }
-
-export function renderCommentItem(comment) {
-  const lang = getLang();
-  const commentText = lang === 'vi' ? (comment.comment_vi || comment.comment) : comment.comment;
-  const commentDate = lang === 'vi' ? (comment.date_vi || comment.date) : comment.date;
-  const replyText = lang === 'vi' ? 'Trả lời' : 'Reply';
-
-  return `
-    <div class="flex gap-4 items-start ${comment.parentId ? 'ml-12 mt-4' : 'mt-6'}">
-      <img src="${comment.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150'}" alt="${comment.name}" class="w-12 h-12 rounded-full object-cover shrink-0" />
-      <div class="flex-1 space-y-1">
-        <div class="flex items-center justify-between">
-          <h5 class="font-bold text-sm text-[#333333] dark:text-white">${comment.name}</h5>
-          <button data-parent-id="${comment.id}" class="btn-reply text-xs text-primary hover:underline flex items-center gap-1 font-medium cursor-pointer">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
-            ${replyText}
-          </button>
-        </div>
-        <div class="flex items-center gap-1 text-[11px] text-gray-400">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          <span>${commentDate}</span>
-        </div>
-        <p class="text-xs leading-relaxed text-[#4F4F4F] dark:text-gray-300 pt-1">
-          ${commentText}
-        </p>
-      </div>
-    </div>
-  `;
-}

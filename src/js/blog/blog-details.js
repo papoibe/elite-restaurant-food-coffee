@@ -11,37 +11,89 @@ const DEFAULT_AVATAR_SVG = `
     </svg>
   </div>`;
 
-function renderAvatar(comment) {
-  if (comment.avatar) {
-    return `<img src="${comment.avatar}" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="${comment.name}" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150'">`;
-  }
-  return DEFAULT_AVATAR_SVG;
-}
+// Ảnh đại diện mặc định khi bình luận không có avatar hoặc link ảnh hỏng.
+const DEFAULT_AVATAR_URL = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150';
 
-function renderOneComment(c, lang, isReplyRow, replyText) {
+/**
+ * buildComment — Dựng MỘT bình luận thành node DOM thật.
+ *
+ * Không nối chuỗi vào innerHTML: `name` và `comment` là do người dùng gõ vào
+ * ô bình luận. Nếu ai đó gõ <img src=x onerror=alert(1)> và mình nối vào
+ * innerHTML thì đoạn đó chạy thật — đây chính là lỗ hổng XSS.
+ * textContent coi mọi thứ là chữ, không bao giờ là mã.
+ *
+ * @returns {HTMLElement} node đã điền dữ liệu, sẵn sàng gắn vào DOM
+ */
+function buildComment(c, lang, isReplyRow, replyText) {
+  const tpl = document.getElementById('comment-template');
+  const node = tpl.content.firstElementChild.cloneNode(true);
+
   const commentText = lang === 'vi' ? (c.comment_vi || c.comment) : (c.comment_en || c.comment);
   const commentDate = lang === 'vi' ? (c.date_vi || c.date) : c.date;
+  const cell = (name) => node.querySelector(`[data-cell="${name}"]`);
 
-  return `
-    <div class="flex gap-4 ${isReplyRow ? 'ml-8 md:ml-12 mt-4' : ''}" data-comment-id="${c.id}">
-      ${renderAvatar(c)}
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-3 mb-1 flex-wrap">
-          <h4 class="font-bold text-sm text-[#333333] dark:text-white">${c.name}</h4>
-          ${!isReplyRow ? `
-          <button type="button" class="btn-reply text-xs text-[#FF9F0D] cursor-pointer hover:underline inline-flex items-center gap-1" data-reply-to="${c.id}" data-reply-name="${c.name}">
-            <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17l-5-5 5-5M4 12h10a5 5 0 015 5v1"/></svg> ${replyText}
-          </button>` : ''}
-        </div>
-        <span class="text-[11px] text-gray-400 flex items-center gap-1 mb-2">
-          <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 
-          ${commentDate}
-        </span>
-        <p class="text-xs text-[#4F4F4F] dark:text-gray-300 leading-relaxed">${commentText}</p>
-        ${!isReplyRow ? `<div class="reply-form-slot mt-3" data-slot-for="${c.id}"></div>` : ''}
-      </div>
-    </div>
-  `;
+  node.dataset.commentId = c.id;
+  if (isReplyRow) node.classList.add('ml-8', 'md:ml-12', 'mt-4');
+
+  // Ảnh đại diện: chỉ nhận URL, còn alt là dữ liệu người dùng nên đặt bằng
+  // thuộc tính (trình duyệt tự escape), không nối vào chuỗi HTML.
+  const avatar = cell('avatar');
+  avatar.src = c.avatar || DEFAULT_AVATAR_URL;
+  avatar.alt = c.name;
+  avatar.addEventListener('error', () => { avatar.src = DEFAULT_AVATAR_URL; });
+
+  cell('name').textContent = c.name;
+  cell('date').textContent = commentDate;
+  cell('text').textContent = commentText;
+
+  const replyBtn = cell('reply');
+  if (isReplyRow) {
+    replyBtn.remove();
+    cell('slot').remove();
+  } else {
+    replyBtn.dataset.replyTo = c.id;
+    replyBtn.dataset.replyName = c.name;
+    node.querySelector('[data-cell="reply-label"]').textContent = replyText;
+    cell('slot').dataset.slotFor = c.id;
+  }
+
+  return node;
+}
+
+/**
+ * mountComments — Vẽ toàn bộ danh sách bình luận vào #comments-list.
+ * Gom hết node rồi thay một lần bằng replaceChildren: chỉ chạm DOM đúng
+ * một lần thay vì append từng dòng.
+ */
+function mountComments(postId, lang) {
+  const box = document.getElementById('comments-list');
+  if (!box) return;
+
+  const all = getComments(postId);
+  const topLevel = all.filter(c => !c.parentId);
+  const replyText = t('common.reply');
+
+  if (topLevel.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'text-sm text-gray-500 dark:text-gray-400';
+    p.textContent = t('blog.noComments');
+    box.replaceChildren(p);
+    return;
+  }
+
+  const nodes = [];
+  topLevel.forEach((c, i) => {
+    if (i > 0) {
+      const hr = document.createElement('div');
+      hr.className = 'border-t border-gray-100 dark:border-gray-800 my-6';
+      nodes.push(hr);
+    }
+    nodes.push(buildComment(c, lang, false, replyText));
+    all.filter(r => r.parentId === c.id)
+       .forEach(r => nodes.push(buildComment(r, lang, true, replyText)));
+  });
+
+  box.replaceChildren(...nodes);
 }
 
 function renderReplyForm(parentId, parentName) {
@@ -61,23 +113,6 @@ function renderReplyForm(parentId, parentName) {
       </div>
     </form>
   `;
-}
-
-function renderCommentsSection(postId, lang) {
-  const all = getComments(postId);
-  const topLevel = all.filter(c => !c.parentId);
-  const repliesOf = (id) => all.filter(c => c.parentId === id);
-  const replyText = t('common.reply');
-
-  if (topLevel.length === 0) {
-    return `<p class="text-sm text-gray-500 dark:text-gray-400">${t('blog.noComments')}</p>`;
-  }
-
-  return topLevel.map(c => {
-    const replies = repliesOf(c.id);
-    return renderOneComment(c, lang, false, replyText) +
-      replies.map(r => renderOneComment(r, lang, true, replyText)).join('');
-  }).join('<div class="border-t border-gray-100 dark:border-gray-800 my-6"></div>');
 }
 
 function renderMainForm(postId) {
@@ -121,7 +156,7 @@ export function renderBlogDetail() {
 
   container.innerHTML = `
     <article class="mb-10 text-[#333333] dark:text-white">
-      <img src="${post.detailImage || post.image}" class="w-full h-[380px] md:h-[480px] object-cover rounded-md mb-6" alt="${title}" onerror="this.src='https://placehold.co/900x480?text=Food+Blog'">
+      <img loading="lazy" src="${post.detailImage || post.image}" class="w-full h-[380px] md:h-[480px] object-cover rounded-md mb-6" alt="${title}" onerror="this.src='https://placehold.co/900x480?text=Food+Blog'">
 
       <div class="flex items-center gap-4 text-xs text-gray-500 mb-3">
         <span class="flex items-center gap-1"><svg class="w-3 h-3 text-[#FF9F0D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> ${date}</span>
@@ -156,9 +191,7 @@ export function renderBlogDetail() {
 
       <div class="mb-10">
         <h3 class="text-xl font-bold text-[#333333] dark:text-white mb-6">${commentsLabel} - <span id="comments-heading-count">${countDisplay}</span></h3>
-        <div id="comments-list" class="space-y-6">
-          ${renderCommentsSection(realPostId, lang)}
-        </div>
+        <div id="comments-list" class="space-y-6"></div>
       </div>
 
       <div id="main-comment-form-wrap">
@@ -167,6 +200,7 @@ export function renderBlogDetail() {
     </article>
   `;
 
+  mountComments(realPostId, lang);   // dựng bằng <template> + textContent
   initCommentEvents(realPostId, lang);
 }
 

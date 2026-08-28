@@ -7,6 +7,7 @@
    ============================================================ */
 import { fetchChefs } from './chefs.js'
 import { getLang, t } from './i18n.js'
+import { formatPrice } from './format.js'
 
 /* ------------------------------------------------------------
    1. TEAM MEMBER
@@ -33,7 +34,7 @@ function socialIconsHTML(chefName) {
         <a href="#" aria-label="${s.name} — ${chefName}"
            class="w-9 h-[35px] rounded-[2px] flex items-center justify-center hover:opacity-80 transition-opacity"
            style="background:${s.bg}">
-          <img src="/assets/images/${s.file}" alt="" width="${s.w}" height="${s.h}"
+          <img loading="lazy" src="/assets/images/${s.file}" alt="" width="${s.w}" height="${s.h}"
                style="width:${s.w}px;height:${s.h}px${s.invert ? ';filter:brightness(0) invert(1)' : ''}" />
         </a>`).join('')
 }
@@ -88,8 +89,11 @@ const TESTIMONIALS = [
   { key: 'about.quote4', stars: 5 },
 ]
 
+const AUTOPLAY_MS = 6000
+
 let testimonialChefs = []
-let activeSlide = 0
+let slideIndex = 0
+let autoplayId = null
 
 // Sao 24x24: đầy #FF9F0D, rỗng #E0E0E0 (Figma: 4 đầy + 1 rỗng)
 function starsHTML(filled) {
@@ -99,38 +103,119 @@ function starsHTML(filled) {
       </svg>`).join('')
 }
 
-function renderTestimonial() {
-  const quoteEl = document.getElementById('testimonial-quote')
-  if (!quoteEl || !testimonialChefs.length) return
-
-  const item = TESTIMONIALS[activeSlide]
-  const chef = testimonialChefs[activeSlide % testimonialChefs.length]
+/** Một slide = avatar nhô lên + thẻ trắng, rộng đúng 100% khung nhìn. */
+function slideHTML(item, chef, i, total) {
   const isEn = getLang() === 'en'
+  const role = isEn ? (chef.title_en || chef.title) : chef.title
+  const avatar = chef.image || '/assets/images/chef-1.jpg'
 
-  quoteEl.textContent = t(item.key)
-  document.getElementById('testimonial-stars').innerHTML = starsHTML(item.stars)
-  document.getElementById('testimonial-name').textContent = chef.name
-  document.getElementById('testimonial-role').textContent = isEn ? (chef.title_en || chef.title) : chef.title
+  return `
+    <div class="w-full shrink-0 px-2" role="group" aria-roledescription="slide"
+         aria-label="Nhận xét ${i + 1} trên ${total}">
+      <div class="relative mx-auto w-full max-w-[868px]">
+        <img src="${avatar}" alt="" loading="lazy"
+             class="absolute left-1/2 -translate-x-1/2 -top-[67px] w-[133px] h-[133px] rounded-full object-cover z-10 bg-[#E9E9E9]" />
 
-  const avatar = document.getElementById('testimonial-avatar')
-  if (chef.image) avatar.src = chef.image
+        <div class="relative overflow-hidden min-h-[451px] bg-white dark:bg-[#1A1A1A] shadow-[0_0_80px_0_rgba(205,205,205,0.25)] px-6 pt-[99px] pb-8 text-center">
+          <img loading="lazy" src="/assets/images/unsplash_Ioq6qEibtbU.png" alt=""
+               class="pointer-events-none absolute -right-[60px] -bottom-[60px] w-[502px] h-[580px] object-contain" />
 
-  // 4 chấm: chấm đang chọn #FF9F0D, còn lại #FF9F0D 30%
-  document.getElementById('testimonial-dots').innerHTML = TESTIMONIALS.map((_, i) => `
-      <button type="button" data-slide="${i}" aria-label="Nhận xét ${i + 1}"
+          <img src="/assets/images/Quotes.svg" alt="" class="relative w-12 h-12 mx-auto" />
+
+          <p class="relative mt-8 mx-auto max-w-[697px] text-[18px] leading-[26px] text-[#4F4F4F] dark:text-white/70">${t(item.key)}</p>
+
+          <div class="relative mt-8 flex justify-center gap-2">${starsHTML(item.stars)}</div>
+
+          <h3 class="relative mt-4 font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white">${chef.name}</h3>
+          <p class="relative mt-2 text-[16px] leading-[24px] text-[#828282]">${role}</p>
+        </div>
+      </div>
+    </div>`
+}
+
+function renderTestimonial() {
+  const track = document.getElementById('testimonial-track')
+  if (!track || !testimonialChefs.length) return
+
+  const total = TESTIMONIALS.length
+  track.innerHTML = TESTIMONIALS.map((item, i) =>
+    slideHTML(item, testimonialChefs[i % testimonialChefs.length], i, total)).join('')
+
+  go(slideIndex)
+}
+
+/**
+ * go — Dịch cả dải sang trái đúng index * 100%.
+ * (next + length) % length lo được cả hai đầu chỉ bằng một dòng: từ slide 0
+ * bấm lùi ra -1, cộng length thành 3, chia dư ra slide cuối — không cần if.
+ */
+function go(next) {
+  const track = document.getElementById('testimonial-track')
+  if (!track) return
+
+  const slides = [...track.children]
+  if (!slides.length) return
+
+  slideIndex = (next + slides.length) % slides.length
+  track.style.transform = `translateX(-${slideIndex * 100}%)`
+
+  // inert cho slide đang ẩn: không có nó, người dùng nhấn Tab sẽ rơi vào
+  // những slide vô hình nằm ngoài màn hình — lỗi tiếp cận phổ biến nhất
+  // của mọi slider.
+  slides.forEach((s, i) => s.toggleAttribute('inert', i !== slideIndex))
+
+  renderDots(slides.length)
+}
+
+/** Chấm chỉ dẫn sinh từ SỐ SLIDE THẬT, không viết cứng trong HTML. */
+function renderDots(total) {
+  const box = document.getElementById('testimonial-dots')
+  if (!box) return
+  box.innerHTML = Array.from({ length: total }, (_, i) => `
+      <button type="button" data-slide="${i}"
+              aria-label="Xem nhận xét ${i + 1}"
+              aria-current="${i === slideIndex}"
               class="w-[15px] h-4 rounded-full cursor-pointer transition-colors"
-              style="background:${i === activeSlide ? '#FF9F0D' : 'rgba(255,159,13,.3)'}"></button>`).join('')
+              style="background:${i === slideIndex ? '#FF9F0D' : 'rgba(255,159,13,.3)'}"></button>`).join('')
+}
+
+function startAutoplay() {
+  stopAutoplay()
+  // Tôn trọng prefers-reduced-motion: không tự chạy nếu người dùng đã tắt
+  // hiệu ứng chuyển động ở hệ điều hành.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  autoplayId = setInterval(() => go(slideIndex + 1), AUTOPLAY_MS)
+}
+
+function stopAutoplay() {
+  if (autoplayId) { clearInterval(autoplayId); autoplayId = null }
 }
 
 function initTestimonials() {
-  const dots = document.getElementById('testimonial-dots')
-  if (!dots) return
-  dots.addEventListener('click', (e) => {
+  const root = document.getElementById('testimonial-slider')
+  if (!root) return
+
+  document.getElementById('testimonial-prev')?.addEventListener('click', () => go(slideIndex - 1))
+  document.getElementById('testimonial-next')?.addEventListener('click', () => go(slideIndex + 1))
+
+  // Event delegation cho các chấm
+  document.getElementById('testimonial-dots')?.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-slide]')
-    if (!btn) return
-    activeSlide = Number(btn.dataset.slide)
-    renderTestimonial()
+    if (btn) go(Number(btn.dataset.slide))
   })
+
+  // Tự chạy nhưng biết dừng khi người dùng đang xem.
+  // Cặp focusin/focusout là thứ thường bị quên nhất: ai đó đang dùng bàn phím
+  // mà slide vẫn tự nhảy thì không đọc kịp.
+  root.addEventListener('mouseenter', stopAutoplay)
+  root.addEventListener('mouseleave', startAutoplay)
+  root.addEventListener('focusin', stopAutoplay)
+  root.addEventListener('focusout', startAutoplay)
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stopAutoplay() : startAutoplay()
+  })
+
+  startAutoplay()
 }
 
 /* ------------------------------------------------------------
@@ -182,7 +267,7 @@ function renderMenuList() {
          class="block h-[135px] border-b border-[#E0E0E0] dark:border-white/15 group">
         <div class="flex items-start justify-between gap-6">
           <h3 class="font-heading font-bold text-[24px] leading-[32px] text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition-colors">${name}</h3>
-          <span class="shrink-0 font-heading font-bold text-[24px] leading-[32px] text-[#FF9F0D]">${Math.round(Number(item.price))}$</span>
+          <span class="shrink-0 font-heading font-bold text-[24px] leading-[32px] text-[#FF9F0D]">${formatPrice(item.price)}</span>
         </div>
         <p class="mt-[7px] text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70 line-clamp-1">${desc || ''}</p>
         <p class="mt-2 text-[16px] leading-[24px] text-[#828282]">${item.calories} CAL</p>
@@ -213,7 +298,13 @@ export async function initAboutPage() {
   const [chefs, menu] = await Promise.all([
     fetchChefs(),
     fetch('/src/data/menu.json')
-      .then(res => res.ok ? res.json() : [])
+      .then(res => {
+        // fetch KHÔNG tự ném lỗi khi máy chủ trả về 404/500 — phải tự kiểm tra.
+        // Trước đây chỗ này nuốt lỗi thành mảng rỗng nên khi file hỏng thì
+        // khu "Our Food Menu" trống trơn mà không ai biết vì sao.
+        if (!res.ok) throw new Error(`Máy chủ trả về ${res.status}`)
+        return res.json()
+      })
       .catch(err => { console.error('Không tải được menu.json:', err); return [] }),
   ])
 

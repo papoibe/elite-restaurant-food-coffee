@@ -1,4 +1,5 @@
 import { initScrollReveal, initCounters } from './dom.js'
+import { formatPrice } from './format.js'
 import { fetchChefs } from './chefs.js'
 import { blogPostsData } from './blog/data.js'
 import { getLang } from './i18n.js'
@@ -62,7 +63,7 @@ export async function initMenuPreview() {
       return `
         <div class="flex items-center gap-4 group">
           <a href="/src/pages/shop-details.html?id=${item.id}" class="w-16 h-16 rounded-[4px] overflow-hidden shrink-0">
-            <img 
+            <img loading="lazy" 
               src="${item.image}" 
               alt="${name}" 
               class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
@@ -76,7 +77,7 @@ export async function initMenuPreview() {
             <p class="text-xs text-[#828282] my-1 line-clamp-1">
               ${desc || 'Delicious gourmet recipe with fresh ingredients.'}
             </p>
-            <span class="text-[#FF9F0D] font-bold text-sm">$${parseFloat(item.price).toFixed(1)}</span>
+            <span class="text-[#FF9F0D] font-bold text-sm">${formatPrice(parseFloat(item.price))}</span>
           </div>
         </div>
       `
@@ -87,7 +88,7 @@ export async function initMenuPreview() {
 export function renderChefCard(chef) {
   return `
     <div class="relative w-[312px] h-[391px] rounded-[6px] overflow-hidden group bg-[#1a1a1a]">
-      <img 
+      <img loading="lazy" 
         src="${chef.image}" 
         alt="${chef.name}" 
         class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
@@ -193,7 +194,7 @@ export function initTestimonials() {
 
       let starsHtml = ''
       for (let s = 1; s <= 5; s++) {
-        starsHtml += s <= item.rating ? '★ ' : '<span class="text-gray-300">★</span> '
+        starsHtml += s <= item.rating ? '' : '<span class="text-gray-300"></span> '
       }
       ratingEl.innerHTML = starsHtml.trim()
 
@@ -238,7 +239,7 @@ function renderBlogPreview() {
     return `
   <div class="border border-white/10 rounded-[4px] overflow-hidden group bg-[#1a1a1a]/30">
     <a href="/src/pages/blog-details.html?id=${post.id}" class="block overflow-hidden h-60">
-      <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${title}" onerror="this.src='https://placehold.co/400x240/222/fff?text=Blog'" />
+      <img loading="lazy" src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${title}" onerror="this.src='https://placehold.co/400x240/222/fff?text=Blog'" />
     </a>
     <div class="p-6 space-y-3 text-left">
       <span class="text-primary text-xs font-medium">${date}</span>

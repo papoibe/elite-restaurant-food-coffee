@@ -8,8 +8,24 @@
   <meta name="description" content="Đăng nhập tài khoản Elite Restaurant" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Sign In — Savoria</title>
+  <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
 </head>
 <body class="bg-bg-dark text-text-white">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
   <!-- ========== HEADER ========== -->
   <header class="fixed top-0 w-full z-50 bg-bg-dark/95 backdrop-blur-sm">
@@ -125,7 +141,7 @@
 
         <button type="button"
                 class="mt-4 relative w-full h-11 border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/80 hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors cursor-pointer">
-          <img src="/assets/images/Apple.png" alt="" class="absolute left-4 top-3 w-5 h-5 dark:invert" />
+          <img loading="lazy" src="/assets/images/Apple.png" alt="" class="absolute left-4 top-3 w-5 h-5 dark:invert" />
           <span data-i18n="auth.signinApple">Sign in with Apple</span>
         </button>
 
@@ -168,7 +184,7 @@
       </p>
       <div class="flex items-center gap-4 pt-2">
   <div class="bg-primary text-white p-3 rounded-[3px] flex items-center justify-center w-14 h-14 shrink-0">
-    <img src="/public/assets/images/Clock.svg" alt="Opening Hours" class="w-8 h-8" />
+    <img src="/assets/images/Clock.svg" alt="Opening Hours" class="w-8 h-8" />
   </div>
   <div>
     <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -213,19 +229,19 @@
     <p data-i18n="footer.copyrightAyeman">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
     <div class="flex space-x-3">
       <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-primary transition" aria-label="Facebook">
-        <img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
+        <img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" />
       </a>
       <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-primary transition" aria-label="Twitter">
-        <img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
+        <img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" />
       </a>
       <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-primary transition" aria-label="Instagram">
-        <img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
+        <img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" />
       </a>
       <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-primary transition" aria-label="YouTube">
-        <img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
+        <img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" />
       </a>
       <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-primary transition" aria-label="Pinterest">
-        <img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
+        <img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" />
       </a>
     </div>
   </div>

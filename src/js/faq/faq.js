@@ -63,37 +63,70 @@ export function renderFAQ() {
 
     return `
       <div class="faq-card bg-[#FAF7F2] dark:bg-bg-dark-2 rounded-[2px] p-6 transition-all duration-200" data-id="${item.id}">
-        <div class="faq-header flex justify-between items-center cursor-pointer select-none">
-          <h3 class="font-bold text-[18px] text-[#333333] dark:text-white leading-tight">${question}</h3>
-          <button class="faq-icon text-[#333333] dark:text-white w-6 h-6 flex items-center justify-center pointer-events-none" aria-label="Toggle">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-              ${item.isOpen 
-                ? '<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>' 
-                : '<path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/>'
-              }
-            </svg>
+        <h3 class="m-0">
+          <button type="button" data-faq-trigger
+                  id="faq-btn-${item.id}"
+                  aria-expanded="${item.isOpen}"
+                  aria-controls="faq-panel-${item.id}"
+                  class="faq-header w-full flex justify-between items-center gap-4 text-left cursor-pointer select-none bg-transparent border-0 p-0">
+            <span class="font-bold text-[18px] text-[#333333] dark:text-white leading-tight">${question}</span>
+            <span class="faq-icon text-[#333333] dark:text-white w-6 h-6 flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                ${item.isOpen
+                  ? '<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>'
+                  : '<path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/>'
+                }
+              </svg>
+            </span>
           </button>
-        </div>
-        <div class="faq-body ${item.isOpen ? 'block' : 'hidden'} mt-6 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-gray-300 font-normal">
+        </h3>
+        <div id="faq-panel-${item.id}" role="region" aria-labelledby="faq-btn-${item.id}"
+             class="faq-body ${item.isOpen ? 'block' : 'hidden'} mt-6 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-gray-300 font-normal">
           <p>${answer}</p>
         </div>
       </div>
     `;
   }).join('');
+}
 
-  container.querySelectorAll('.faq-card').forEach(card => {
-    card.querySelector('.faq-header').addEventListener('click', () => {
-      const id = parseInt(card.dataset.id, 10);
-      const targetItem = faqData.find(f => f.id === id);
-      if (targetItem) {
-        targetItem.isOpen = !targetItem.isOpen;
-        renderFAQ();
-      }
-    });
+/**
+ * initFAQ — Gắn MỘT listener duy nhất cho cả nhóm (event delegation) thay vì
+ * mỗi nút một listener. Chỉ gắn một lần, không gắn lại sau mỗi lần render.
+ *
+ * e.target.closest() lo luôn trường hợp người dùng bấm trúng icon SVG bên
+ * trong nút: khi đó e.target là <svg>, closest leo ngược lên tìm đúng <button>.
+ */
+export function initFAQ() {
+  const container = document.getElementById('faq-container');
+  if (!container) return;
+
+  container.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-faq-trigger]');
+    if (!trigger) return;
+
+    const card = trigger.closest('.faq-card');
+    const id = parseInt(card.dataset.id, 10);
+    const target = faqData.find(f => f.id === id);
+    if (!target) return;
+
+    // "Đóng hết rồi mở đúng cái vừa bấm" — đơn giản hơn hẳn việc đi tìm cái
+    // nào đang mở để đóng, và đảm bảo mỗi lúc chỉ một mục được mở.
+    const willOpen = !target.isOpen;
+    faqData.forEach(f => { f.isOpen = false; });
+    if (willOpen) target.isOpen = true;
+
+    renderFAQ();
+
+    // Vẽ lại thì nút cũ biến mất -> trả tiêu điểm về đúng nút vừa bấm,
+    // nếu không người dùng bàn phím sẽ bị văng tiêu điểm về đầu trang.
+    document.getElementById(`faq-btn-${id}`)?.focus();
   });
 }
 
-document.addEventListener('DOMContentLoaded', renderFAQ);
+document.addEventListener('DOMContentLoaded', () => {
+  renderFAQ();
+  initFAQ();   // gắn listener MỘT lần duy nhất
+});
 
 window.addEventListener('languageChanged', () => {
   renderFAQ();

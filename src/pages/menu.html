@@ -6,8 +6,24 @@
   <meta name="description" content="Thực đơn nhà hàng Savoria — Starter, Main Course, Dessert, Drinks" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>Our Menu — Savoria</title>
+  <script>
+    // Chống nháy trắng: chạy đồng bộ TRƯỚC khi trình duyệt vẽ khung hình đầu.
+    // Đặt trong <head> chứ không trong main.js — xem README mục "Dark mode".
+    (function () {
+      try {
+        const saved = localStorage.getItem('elite-theme')
+        const dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch (e) { /* trình duyệt chặn localStorage — bỏ qua, dùng light mode */ }
+    })();
+  </script>
 </head>
 <body class="bg-white text-[#333333] font-sans antialiased">
+  <!-- Mốc rỗng cho initHeaderOnScroll(): khi div này trôi khỏi viewport
+       nghĩa là trang đã cuộn -> header đổ bóng. Dùng IntersectionObserver
+       thay cho sự kiện scroll (scroll bắn hàng trăm lần mỗi giây). -->
+  <div id="nav-sentinel" class="h-px" aria-hidden="true"></div>
 
   <header class="fixed top-0 w-full z-50 bg-[#0D0D0D]/95 backdrop-blur-sm text-white">
     <nav class="max-w-[1320px] mx-auto px-6 py-4 flex items-center justify-between">
@@ -55,7 +71,7 @@
         <div class="lg:col-span-7 space-y-8">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Starter Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Starter Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.starterTitle">Starter Menu</h2>
           </div>
@@ -72,7 +88,7 @@
         <div class="lg:col-span-7 space-y-8 order-2 lg:order-1">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Main Course Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Main Course Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.mainTitle">Main Course</h2>
           </div>
@@ -83,7 +99,7 @@
         </div>
 
         <div class="lg:col-span-5 w-full h-[500px] md:h-[626px] rounded-[6px] overflow-hidden order-1 lg:order-2">
-          <img id="main-course-image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800" alt="Main Course Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+          <img loading="lazy" id="main-course-image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800" alt="Main Course Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
         </div>
       </div>
     </section>
@@ -94,7 +110,7 @@
       <div class="relative z-10 w-full max-w-[1320px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/chef.svg" alt="Chefs Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="420">420</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statChefs">Professional Chefs</p>
@@ -102,7 +118,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/food.svg" alt="Food Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="320">320</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statItems">Items Of Food</p>
@@ -110,7 +126,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/exp.svg" alt="Experience Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="30" data-count-suffix="+">30+</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statExp">Years Of Experienced</p>
@@ -118,7 +134,7 @@
 
         <div class="flex flex-col items-center">
           <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-4">
-            <img src="/public/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
+            <img src="/assets/images/index/customer.svg" alt="Customers Icon" class="w-full h-full object-contain" />
           </div>
           <h3 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white mb-2 leading-tight" data-count-to="220">220</h3>
           <p class="text-xs sm:text-sm md:text-base font-normal text-white" data-i18n="menuPage.statCustomers">Happy Customers</p>
@@ -129,13 +145,13 @@
     <section class="py-24 px-4 sm:px-6 bg-white">
       <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-12 xl:gap-20 items-center">
         <div class="lg:col-span-5 w-full h-[500px] md:h-[626px] rounded-[6px] overflow-hidden">
-          <img id="dessert-image" src="https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=800" alt="Dessert Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+          <img loading="lazy" id="dessert-image" src="https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=800" alt="Dessert Dish" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
         </div>
 
         <div class="lg:col-span-7 space-y-8">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Dessert Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Dessert Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.dessertTitle">Dessert</h2>
           </div>
@@ -152,7 +168,7 @@
         <div class="lg:col-span-7 space-y-8 order-2 lg:order-1">
           <div>
             <div class="w-6 h-6 mb-2">
-              <img src="/public/assets/images/coffee.svg" alt="Drinks Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
+              <img src="/assets/images/coffee.svg" alt="Drinks Icon" class="w-full h-full object-contain" onerror="this.style.display='none'" />
             </div>
             <h2 class="text-4xl lg:text-5xl font-bold font-heading text-[#333333]" data-i18n="menuPage.drinksTitle">Drinks</h2>
           </div>
@@ -163,7 +179,7 @@
         </div>
 
         <div class="lg:col-span-5 w-full h-[500px] md:h-[626px] rounded-[6px] overflow-hidden order-1 lg:order-2">
-          <img id="drinks-image" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800" alt="Drinks Collection" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
+          <img loading="lazy" id="drinks-image" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800" alt="Drinks Collection" class="w-full h-full object-cover rounded-[6px] hover:scale-105 transition duration-500" />
         </div>
       </div>
     </section>
@@ -177,27 +193,27 @@
 
         <div class="grid grid-cols-6 items-center justify-items-center gap-4 md:gap-8 opacity-40 hover:opacity-100 transition duration-300">
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-1.svg" alt="Partner Restaurant" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Restaurant'" />
+            <img src="/assets/images/partner-1.svg" alt="Partner Restaurant" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Restaurant'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-2.svg" alt="Partner Bakery" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Bakery'" />
+            <img src="/assets/images/partner-2.svg" alt="Partner Bakery" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Bakery'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-3.svg" alt="Partner Fork Spoon" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=ForkSpoon'" />
+            <img src="/assets/images/partner-3.svg" alt="Partner Fork Spoon" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=ForkSpoon'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-4.svg" alt="Partner Coffee" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Coffee'" />
+            <img src="/assets/images/partner-4.svg" alt="Partner Coffee" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=Coffee'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-5.svg" alt="Partner Bistro" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BISTRO'" />
+            <img src="/assets/images/partner-5.svg" alt="Partner Bistro" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BISTRO'" />
           </div>
 
           <div class="w-full h-[120px] flex items-center justify-center p-2">
-            <img src="/public/assets/images/partner-6.svg" alt="Partner Bakery Cake" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BakeryCake'" />
+            <img src="/assets/images/partner-6.svg" alt="Partner Bakery Cake" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/180x80/transparent/999?text=BakeryCake'" />
           </div>
         </div>
       </div>
@@ -235,7 +251,7 @@
         </p>
         <div class="flex items-center gap-4 pt-1">
           <div class="bg-[#FF9F0D] text-white rounded-[3px] flex items-center justify-center w-[70px] h-[70px] shrink-0">
-            <img src="/public/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
+            <img src="/assets/images/Clock.svg" alt="Clock" class="w-9 h-9" />
           </div>
           <div>
             <p class="text-white text-sm font-normal" data-i18n="footer.hours">Opening Houres</p>
@@ -270,21 +286,21 @@
         <h5 class="text-white font-bold text-xl font-heading" data-i18n="footer.recentPost">Recent Post</h5>
         <div id="footer-recent-posts" class="space-y-4">
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost1">Keep Your Business</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost2">Keep Your Business</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <img src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
+            <img loading="lazy" src="/assets/images/recent_post.jpg" alt="Post" class="w-16 h-16 object-cover rounded-[3px] shrink-0" onerror="this.src='https://placehold.co/64x64/222/fff?text=Food'" />
             <div>
               <span class="text-xs text-gray-400 block mb-1">20 Feb 2022</span>
               <a href="/src/pages/blog.html" class="text-white hover:text-[#FF9F0D] transition-colors text-sm" data-i18n="footer.recentPost3">Keep Your Business</a>
@@ -298,11 +314,11 @@
       <div class="max-w-[1320px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <p data-i18n="footer.copyright">Copyright © 2022 by Ayeman. All Rights Reserved.</p>
         <div class="flex space-x-3">
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/public/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/public/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/public/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/public/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
-          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/public/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Facebook"><img src="/assets/images/facebook.svg" alt="Facebook" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Twitter"><img src="/assets/images/twitter.svg" alt="Twitter" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Instagram"><img src="/assets/images/instagram.svg" alt="Instagram" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="YouTube"><img src="/assets/images/youtube.svg" alt="YouTube" class="w-4 h-4" /></a>
+          <a href="#" class="w-9 h-9 bg-white rounded-[2px] flex items-center justify-center hover:bg-gray-100 transition" aria-label="Pinterest"><img src="/assets/images/pinterest.svg" alt="Pinterest" class="w-4 h-4" /></a>
         </div>
       </div>
     </div>

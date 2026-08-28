@@ -4,8 +4,18 @@
    ============================================================ */
 
 /**
- * initMobileMenu — Toggle hamburger menu cho responsive mobile
- * Tìm button #mobile-menu-btn và nav #mobile-menu, toggle class 'hidden'
+ * initMobileMenu — Đóng/mở menu hamburger trên mobile.
+ *
+ * Đổi giao diện là phải đổi CẢ trạng thái ARIA đi kèm. Chỉ bật/tắt class
+ * `hidden` thì với trình đọc màn hình, menu vẫn đang đóng mãi mãi.
+ * Vì vậy setOpen() chạm đủ 4 thứ, phục vụ 4 nhóm người dùng khác nhau:
+ *   1. class hidden      → người nhìn thấy
+ *   2. aria-expanded     → người dùng trình đọc màn hình
+ *   3. aria-label        → người ra lệnh bằng giọng nói
+ *   4. body overflow     → người dùng điện thoại (chặn nền cuộn sau lưng menu)
+ *
+ * Có 3 cách đóng vì người dùng không ai giống ai: phím ESC, bấm ra ngoài
+ * vùng header, và khi màn hình phóng lên desktop.
  */
 export function initMobileMenu() {
   const menuBtn = document.getElementById('mobile-menu-btn')
@@ -13,14 +23,75 @@ export function initMobileMenu() {
 
   if (!menuBtn || !mobileMenu) return
 
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden') // Toggle hiển thị menu
-    // Toggle icon hamburger ↔ close
+  const isVi = () => document.documentElement.lang !== 'en'
+
+  function setOpen(open) {
+    mobileMenu.classList.toggle('hidden', !open)
+    menuBtn.setAttribute('aria-expanded', String(open))
+    menuBtn.setAttribute(
+      'aria-label',
+      open ? (isVi() ? 'Đóng menu' : 'Close menu')
+           : (isVi() ? 'Mở menu' : 'Open menu')
+    )
+    document.body.classList.toggle('overflow-hidden', open)
+
     const icon = menuBtn.querySelector('svg')
-    if (icon) {
-      icon.classList.toggle('rotate-90')
+    if (icon) icon.classList.toggle('rotate-90', open)
+  }
+
+  const isOpen = () => menuBtn.getAttribute('aria-expanded') === 'true'
+
+  // Trạng thái ban đầu: menu đóng
+  menuBtn.setAttribute('aria-controls', 'mobile-menu')
+  setOpen(false)
+
+  menuBtn.addEventListener('click', () => setOpen(!isOpen()))
+
+  // Cách đóng 1 — phím ESC. Kèm menuBtn.focus() để trả tiêu điểm về nút,
+  // nếu không người dùng bàn phím sẽ bị "lạc" tiêu điểm ở giữa trang.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) {
+      setOpen(false)
+      menuBtn.focus()
     }
   })
+
+  // Cách đóng 2 — bấm ra ngoài vùng header
+  document.addEventListener('click', (e) => {
+    if (!isOpen()) return
+    if (menuBtn.contains(e.target) || mobileMenu.contains(e.target)) return
+    setOpen(false)
+  })
+
+  // Cách đóng 3 — màn hình phóng lên desktop (breakpoint lg của Tailwind)
+  const desktop = window.matchMedia('(min-width: 1024px)')
+  desktop.addEventListener('change', (e) => {
+    if (e.matches && isOpen()) setOpen(false)
+  })
+}
+
+/**
+ * initHeaderOnScroll — Đổ bóng cho header khi trang đã cuộn xuống.
+ *
+ * Dùng IntersectionObserver chứ KHÔNG dùng sự kiện scroll: sự kiện scroll
+ * bắn hàng trăm lần mỗi giây, còn IntersectionObserver chỉ báo đúng hai lần
+ * — lúc #nav-sentinel rời khỏi màn hình và lúc nó quay lại.
+ *
+ * #nav-sentinel là một <div> rỗng đặt ngay đầu <body>. Khi nó trôi khỏi
+ * viewport nghĩa là trang đã cuộn.
+ */
+export function initHeaderOnScroll() {
+  const sentinel = document.getElementById('nav-sentinel')
+  const header = document.querySelector('header')
+  if (!sentinel || !header) return
+
+  const observer = new IntersectionObserver(([entry]) => {
+    const scrolled = !entry.isIntersecting
+    header.classList.toggle('shadow-lg', scrolled)
+    header.classList.toggle('shadow-black/30', scrolled)
+  })
+
+  observer.observe(sentinel)
 }
 
 /**
@@ -111,6 +182,14 @@ export function initLightbox() {
 export function initScrollReveal() {
   const revealElements = document.querySelectorAll('[data-reveal]')
   if (!revealElements.length) return
+
+  // Người bị rối loạn tiền đình có thể chóng mặt thật sự vì hiệu ứng trượt.
+  // Hệ điều hành có sẵn công tắc, việc của mình là nghe theo: hiện thẳng
+  // nội dung, không đặt opacity 0 và không animate.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealElements.forEach(el => { el.style.opacity = '1' })
+    return
+  }
 
   // Intersection Observer — theo dõi khi phần tử vào viewport
   const observer = new IntersectionObserver((entries) => {

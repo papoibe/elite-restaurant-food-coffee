@@ -1,4 +1,5 @@
 import { initCounters } from './dom.js';
+import { formatPrice } from './format.js';
 import { getLang } from './i18n.js';
 
 let menuData = [];
@@ -26,7 +27,7 @@ function renderCategoryList(containerId, imageId, items) {
             ${name}
           </h4>
           <span class="text-xl md:text-2xl font-bold text-[#FF9F0D] shrink-0">
-            $${parseFloat(item.price).toFixed(0)}
+            ${formatPrice(parseFloat(item.price))}
           </span>
         </div>
         <p class="text-sm text-[#4F4F4F] mt-1.5 line-clamp-1">

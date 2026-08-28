@@ -1,4 +1,5 @@
 import { addToCart } from '/src/js/cart.js'
+import { formatPrice } from '../format.js'
 import { showSuccessToast } from '/src/js/validate.js'
 import { isWishlisted, toggleWishlist } from '/src/js/wishlist.js'
 import { t, getLang } from '/src/js/i18n.js'
@@ -9,9 +10,100 @@ let currentPage = 1
 let itemsPerPage = 15
 let activeTag = null
 
+/**
+ * debounce — Hoãn gọi fn cho tới khi người dùng ngừng gõ `delay` ms.
+ * Gõ "Nguyễn" là 6 lần sự kiện input, tức 6 lần lọc và vẽ lại toàn bộ lưới.
+ * Với 50 món thì chưa thấy gì, nhưng danh sách lớn dần là giao diện khựng.
+ */
+function debounce(fn, delay = 300) {
+  let id
+  return (...args) => {
+    clearTimeout(id)
+    id = setTimeout(() => fn(...args), delay)
+  }
+}
+
+/**
+ * showLoading — Khung xương trong lúc chờ fetch.
+ * Vẽ đúng số ô và đúng chiều cao thẻ thật để danh sách không nhảy khi
+ * dữ liệu về (giữ CLS thấp).
+ */
+function showLoading() {
+  const grid = document.getElementById('product-grid')
+  if (!grid) return
+  grid.setAttribute('aria-busy', 'true')
+  grid.innerHTML = Array.from({ length: 9 }, () => `
+    <div class="animate-pulse">
+      <div class="aspect-square bg-gray-200 dark:bg-[#1a1a1a] rounded-[2px]"></div>
+      <div class="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded mt-4 w-3/4"></div>
+      <div class="h-4 bg-gray-100 dark:bg-[#141414] rounded mt-2 w-1/2"></div>
+    </div>`).join('')
+}
+
+/** showEmpty — Không có món nào khớp bộ lọc hiện tại. */
+function showEmpty() {
+  const grid = document.getElementById('product-grid')
+  if (!grid) return
+  grid.removeAttribute('aria-busy')
+  grid.innerHTML = `
+    <div class="col-span-full py-16 text-center">
+      <svg class="w-12 h-12 mx-auto text-[#BDBDBD]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5"/>
+      </svg>
+      <p class="mt-4 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-gray-400">${t('shop.noResults')}</p>
+      <button type="button" id="btn-reset-filters"
+              class="mt-4 h-11 px-6 border border-[#FF9F0D] text-[#FF9F0D] text-[16px] leading-[24px] hover:bg-[#FF9F0D] hover:text-white transition-colors cursor-pointer">
+        ${t('shop.clearFilters')}
+      </button>
+    </div>`
+  document.getElementById('btn-reset-filters')?.addEventListener('click', resetFilters)
+}
+
+/** showError — Không tải được dữ liệu. Có nút thử lại vì lỗi mạng hay tạm thời. */
+function showError(message) {
+  const grid = document.getElementById('product-grid')
+  if (!grid) return
+  grid.removeAttribute('aria-busy')
+  grid.innerHTML = `
+    <div class="col-span-full py-16 text-center" role="alert">
+      <svg class="w-12 h-12 mx-auto text-[#EB5757]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>
+      </svg>
+      <p class="mt-4 text-[16px] leading-[24px] text-[#EB5757]">${t('shop.loadError')}</p>
+      <p class="mt-1 text-[14px] leading-[22px] text-[#828282]">${message}</p>
+      <button type="button" id="btn-retry"
+              class="mt-4 h-11 px-6 bg-[#FF9F0D] hover:bg-[#E88E00] text-white text-[16px] leading-[24px] transition-colors cursor-pointer">
+        ${t('shop.retry')}
+      </button>
+    </div>`
+  document.getElementById('btn-retry')?.addEventListener('click', initShopList)
+}
+
+/** resetFilters — Bỏ hết bộ lọc, đưa danh sách về trạng thái đầy đủ. */
+function resetFilters() {
+  document.querySelectorAll('.category-checkbox').forEach(cb => { cb.checked = false })
+  const search = document.getElementById('search-input')
+  if (search) search.value = ''
+  activeTag = null
+  currentPage = 1
+  const maxInput = document.getElementById('price-max')
+  const minInput = document.getElementById('price-min')
+  if (minInput) minInput.value = minInput.min || 0
+  if (maxInput) maxInput.value = maxInput.max
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('bg-[#FF9F0D]', 'text-white'))
+  filterProducts()
+}
+
 async function initShopList() {
+  // TRẠNG THÁI 1 — loading: vẽ khung xương TRƯỚC khi gọi fetch
+  showLoading()
+
   try {
     const response = await fetch('/src/data/menu.json')
+    // fetch KHÔNG tự ném lỗi khi máy chủ trả về 404/500 — phải tự kiểm tra,
+    // nếu không thì response.json() mới ném và thông báo lỗi sẽ rất khó hiểu.
+    if (!response.ok) throw new Error(`Máy chủ trả về ${response.status}`)
+
     const menuData = await response.json()
     const lang = getLang()
 
@@ -54,9 +146,13 @@ async function initShopList() {
       if (targetBox) targetBox.checked = true
     }
 
+    // TRẠNG THÁI 2 (có dữ liệu) và 3 (rỗng) do renderProducts() quyết định
     filterProducts()
   } catch (error) {
-    console.error("Lỗi khi tải dữ liệu sản phẩm:", error)
+    // TRẠNG THÁI 4 — lỗi: hiện hẳn ra màn hình kèm nút thử lại,
+    // thay vì chỉ console.error rồi để người dùng nhìn trang trắng.
+    console.error('Lỗi khi tải dữ liệu sản phẩm:', error)
+    showError(error.message)
   }
 }
 
@@ -64,8 +160,11 @@ function renderProducts() {
   const grid = document.getElementById('product-grid')
   if (!grid) return
 
+  grid.removeAttribute('aria-busy')
+
   if (filteredProducts.length === 0) {
-    grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">${t('shop.noResults')}</div>`
+    // TRẠNG THÁI 3 — rỗng: nói rõ không có kết quả và cho lối thoát
+    showEmpty()
     renderPagination(0)
     return
   }
@@ -81,7 +180,7 @@ function renderProducts() {
     return `
       <div class="group cursor-pointer flex flex-col">
         <div class="relative bg-gray-200 aspect-square overflow-hidden rounded-[2px]">
-          <img 
+          <img loading="lazy" 
             src="${item.image}" 
             alt="${item.name}" 
             class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
@@ -102,7 +201,7 @@ function renderProducts() {
             >
               <span 
                 class="w-4 h-4 bg-current transition-colors"
-                style="mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/ProjectStatus.svg') no-repeat center / contain;"
+                style="mask: url('/assets/images/ProjectStatus.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/ProjectStatus.svg') no-repeat center / contain;"
               ></span>
             </a>
 
@@ -113,7 +212,7 @@ function renderProducts() {
             >
               <span 
                 class="w-4 h-4 bg-current transition-colors"
-                style="mask: url('/public/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Tote.svg') no-repeat center / contain;"
+                style="mask: url('/assets/images/Tote.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/Tote.svg') no-repeat center / contain;"
               ></span>
             </button>
 
@@ -128,7 +227,7 @@ function renderProducts() {
             >
               <span 
                 class="w-4 h-4 bg-current transition-colors"
-                style="mask: url('/public/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/public/assets/images/Heart.svg') no-repeat center / contain;"
+                style="mask: url('/assets/images/Heart.svg') no-repeat center / contain; -webkit-mask: url('/assets/images/Heart.svg') no-repeat center / contain;"
               ></span>
             </button>
 
@@ -140,8 +239,8 @@ function renderProducts() {
         </h3>
         
         <div class="mt-1 text-base flex items-center">
-          <span class="text-[#FF9F0D] font-semibold">$${item.price.toFixed(2)}</span>
-          ${item.oldPrice ? `<span class="text-gray-400 line-through ml-2 text-sm font-normal">$${item.oldPrice.toFixed(2)}</span>` : ''}
+          <span class="text-[#FF9F0D] font-semibold">${formatPrice(item.price)}</span>
+          ${item.oldPrice ? `<span class="text-gray-400 line-through ml-2 text-sm font-normal">${formatPrice(item.oldPrice)}</span>` : ''}
         </div>
       </div>
     `
@@ -187,18 +286,18 @@ function renderLatestProducts(items) {
     const starCount = Math.round(item.rating || 5)
     let starsHtml = ''
     for (let i = 1; i <= 5; i++) {
-      starsHtml += `<span class="${i <= starCount ? 'text-[#FF9F0D]' : 'text-gray-300'}">★</span>`
+      starsHtml += `<span class="${i <= starCount ? 'text-[#FF9F0D]' : 'text-gray-300'}"></span>`
     }
 
     return `
       <div class="flex gap-4 items-center cursor-pointer group" onclick="window.location.href='/src/pages/shop-details.html?id=${item.id}'">
         <div class="w-16 h-16 bg-gray-200 overflow-hidden shrink-0 rounded-[2px]">
-          <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" onerror="this.src='https://placehold.co/100x100?text=Dish'" />
+          <img loading="lazy" src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" onerror="this.src='https://placehold.co/100x100?text=Dish'" />
         </div>
         <div>
           <h5 class="text-base font-bold text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition line-clamp-1">${item.name}</h5>
           <div class="flex items-center gap-0.5 mt-0.5 text-xs">${starsHtml}</div>
-          <span class="text-sm text-gray-500 font-normal block mt-1">$${item.price.toFixed(2)}</span>
+          <span class="text-sm text-gray-500 font-normal block mt-1">${formatPrice(item.price)}</span>
         </div>
       </div>
     `
@@ -404,7 +503,9 @@ function setupEventListeners() {
     })
   }
 
-  if (searchInput) searchInput.addEventListener('input', () => { currentPage = 1; filterProducts(); })
+  // Bọc debounce: chỉ lọc sau khi người dùng ngừng gõ 300ms
+  const onSearch = debounce(() => { currentPage = 1; filterProducts() }, 300)
+  if (searchInput) searchInput.addEventListener('input', onSearch)
   if (searchBtn) searchBtn.addEventListener('click', () => { currentPage = 1; filterProducts(); })
   if (sortSelect) sortSelect.addEventListener('change', filterProducts)
 
