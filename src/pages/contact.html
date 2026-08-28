@@ -53,100 +53,204 @@
       <nav class="breadcrumb mt-3"><a href="/" data-i18n="page.home.tab">Home</a> &gt; <span class="current" data-i18n="page.contact.crumb">Contact</span></nav>
     </section>
 
-    <!-- ========== CONTACT FORM + INFO ========== -->
-    <section class="py-20 px-6 bg-white dark:bg-bg-dark" data-reveal>
-      <div class="max-w-[1320px] mx-auto">
-        <!-- Tiêu đề -->
-        <div class="text-center mb-12">
-          <p class="script-text text-xl mb-2">Get in Touch</p>
-          <h2 class="text-4xl font-bold text-text-dark dark:text-text-white font-heading">Contact Us</h2>
+    <!-- ============================================================
+         CONTACT — Figma KHÔNG có frame cho trang này, nên dựng theo đúng
+         design system đã rút từ 16 frame còn lại:
+           · Lưới 872 + 24 + 424 (giống trang Cheek out)
+           · Nhãn viết tay Miniver 18/26 #FF9F0D + gạch 34x1px (giống About us)
+           · Tiêu đề Helvetica Bold 48/56 #333333 (Headingt 2/48)
+           · Ô nhập cao 56px, viền 1px #E0E0E0, KHÔNG bo góc (giống Cheek out)
+           · Huy hiệu icon 56x56 nền #FF9F0D bo 3px (giống ô Clock ở footer)
+           · Icon vẽ theo bộ Phosphor 1.5px — cùng bộ Figma dùng cho cả site
+         ============================================================ -->
+    <section class="py-20 lg:py-[120px] px-4 sm:px-6 bg-white dark:bg-[#0D0D0D]" data-reveal>
+      <div class="max-w-[1368px] mx-auto px-4 sm:px-6">
+
+        <!-- Tiêu đề section -->
+        <div class="max-w-[579px] mx-auto text-center">
+          <div class="flex items-center justify-center gap-[10px]">
+            <span class="block w-[34px] h-px bg-[#FF9F0D]"></span>
+            <span class="text-[18px] leading-[26px] text-[#FF9F0D]" style="font-family:'Miniver',cursive" data-i18n="contact.tag">Get in Touch</span>
+            <span class="block w-[34px] h-px bg-[#FF9F0D]"></span>
+          </div>
+          <h2 class="mt-2 font-heading font-bold text-[36px] leading-[44px] lg:text-[48px] lg:leading-[56px] text-[#333333] dark:text-white" data-i18n="contact.title">
+            Contact Us
+          </h2>
+          <p class="mt-2 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="contact.desc">
+            Đặt bàn, hỏi về thực đơn hay góp ý cho nhà hàng — để lại lời nhắn, chúng tôi phản hồi trong vòng 24 giờ.
+          </p>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-12">
-          <!-- Form liên hệ — sẽ dùng validate.js để kiểm tra -->
-          <form id="contact-form" class="space-y-5" novalidate>
-            <div class="grid md:grid-cols-2 gap-5">
+        <div class="mt-14 flex flex-col lg:flex-row gap-6">
+
+          <!-- ============ CỘT TRÁI — Biểu mẫu (872px) ============ -->
+          <form id="contact-form" class="w-full lg:w-[872px] shrink-0" novalidate>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
               <div>
-                <label for="contact-name" class="block text-sm font-semibold text-text-dark dark:text-text-white mb-1">Name</label>
-                <input type="text" id="contact-name" name="name" placeholder="Your name" required
-                  data-validate="required" aria-describedby="err-contact-name"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-bg-dark-2 rounded-lg text-text-dark dark:text-text-white focus:outline-none focus:border-primary transition-colors" />
-                <p id="err-contact-name" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
+                <label for="contact-name" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.name">Name</label>
+                <input type="text" id="contact-name" name="name" required
+                       data-validate="required" aria-describedby="err-contact-name"
+                       placeholder="Nguyễn Văn A" data-i18n-placeholder="contact.namePlaceholder"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#828282] focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-contact-name" class="error-message text-[#EB5757] text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
               </div>
               <div>
-                <label for="contact-email" class="block text-sm font-semibold text-text-dark dark:text-text-white mb-1">Email</label>
-                <input type="email" id="contact-email" name="email" placeholder="your@email.com" required
-                  autocomplete="email" data-validate="required,email" aria-describedby="err-contact-email"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-bg-dark-2 rounded-lg text-text-dark dark:text-text-white focus:outline-none focus:border-primary transition-colors" />
-                <p id="err-contact-email" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
+                <label for="contact-email" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.email">Email</label>
+                <input type="email" id="contact-email" name="email" required autocomplete="email"
+                       data-validate="required,email" aria-describedby="err-contact-email"
+                       placeholder="ban@example.com" data-i18n-placeholder="contact.emailPlaceholder"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#828282] focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+                <p id="err-contact-email" class="error-message text-[#EB5757] text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
+              </div>
+
+              <div>
+                <label for="contact-phone" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.phone">Phone number</label>
+                <input type="tel" id="contact-phone" name="phone" autocomplete="tel" inputmode="tel"
+                       placeholder="+84 123 456 789"
+                       class="mt-2 w-full h-14 px-[15px] bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#828282] focus:outline-none focus:border-[#FF9F0D] transition-colors" />
+              </div>
+              <div>
+                <label for="contact-topic" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.topic">Subject</label>
+                <select id="contact-topic" name="topic" required data-validate="required" aria-describedby="err-contact-topic"
+                        class="checkout-select mt-2 w-full h-14 pl-[15px] pr-12 bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white focus:outline-none focus:border-[#FF9F0D] transition-colors">
+                  <option value="" data-i18n="contact.chooseTopic">Chọn chủ đề</option>
+                  <option value="booking" data-i18n="contact.topicBooking">Đặt bàn</option>
+                  <option value="menu" data-i18n="contact.topicMenu">Hỏi về thực đơn</option>
+                  <option value="order" data-i18n="contact.topicOrder">Đơn hàng của tôi</option>
+                  <option value="feedback" data-i18n="contact.topicFeedback">Góp ý dịch vụ</option>
+                  <option value="other" data-i18n="contact.topicOther">Khác</option>
+                </select>
+                <p id="err-contact-topic" class="error-message text-[#EB5757] text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
               </div>
             </div>
-            <div>
-              <label for="contact-subject" class="block text-sm font-semibold text-text-dark dark:text-text-white mb-1">Subject</label>
-              <input type="text" id="contact-subject" name="subject" placeholder="Subject"
-                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-bg-dark-2 rounded-lg text-text-dark dark:text-text-white focus:outline-none focus:border-primary transition-colors" />
+
+            <div class="mt-4">
+              <label for="contact-message" class="block text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.message">Message</label>
+              <textarea id="contact-message" name="message" rows="7" required
+                        data-validate="required" aria-describedby="err-contact-message"
+                        placeholder="Nội dung bạn muốn nhắn cho nhà hàng…" data-i18n-placeholder="contact.messagePlaceholder"
+                        class="mt-2 w-full px-[15px] py-4 bg-transparent border border-[#E0E0E0] dark:border-white/15 rounded-none text-[16px] leading-[24px] text-[#333333] dark:text-white placeholder-[#828282] focus:outline-none focus:border-[#FF9F0D] transition-colors resize-y"></textarea>
+              <p id="err-contact-message" class="error-message text-[#EB5757] text-[14px] leading-[22px] mt-1 hidden" role="alert"></p>
             </div>
-            <div>
-              <label for="contact-message" class="block text-sm font-semibold text-text-dark dark:text-text-white mb-1">Message</label>
-              <textarea id="contact-message" name="message" rows="6" placeholder="Write your message..." required
-                data-validate="required" aria-describedby="err-contact-message"
-                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-bg-dark-2 rounded-lg text-text-dark dark:text-text-white focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
-              <p id="err-contact-message" class="error-message text-red-500 text-xs mt-1 hidden" role="alert"></p>
-            </div>
-            <button type="submit" class="btn-primary w-full justify-center">Send Message</button>
+
+            <!-- Nút gửi 424x56 vuông góc, giống nút "Proceed to shipping" trang Cheek out -->
+            <button type="submit"
+                    class="mt-6 w-full md:w-[424px] h-14 flex items-center justify-center gap-2 bg-[#FF9F0D] hover:bg-[#E88E00] rounded-none text-[16px] leading-[24px] text-white transition-colors cursor-pointer">
+              <span data-i18n="contact.send">Send Message</span>
+              <img src="/assets/images/ArrowRight.svg" alt="" class="w-5 h-5" />
+            </button>
           </form>
 
-          <!-- Thông tin liên hệ -->
-          <div class="space-y-8">
-            <div class="flex items-start gap-4">
-              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span class="text-primary text-2xl">&#x1F4CD;</span>
-              </div>
-              <div>
-                <h4 class="font-bold text-text-dark dark:text-text-white text-lg">Address</h4>
-                <p class="text-text-muted">97 Man Thiện, Hiệp Phú, Thủ Đức, TP.HCM</p>
-              </div>
+          <!-- ============ CỘT PHẢI — Thông tin (424px) ============ -->
+          <aside class="w-full lg:w-[424px] shrink-0 h-fit border border-[#E0E0E0] dark:border-white/15 rounded-none p-[23px]">
+            <h3 class="font-heading font-bold text-[20px] leading-[28px] text-[#333333] dark:text-white" data-i18n="contact.infoTitle">
+              Thông tin liên hệ
+            </h3>
+
+            <ul class="mt-6 space-y-6">
+              <!-- Địa chỉ — icon MapPin (bộ Phosphor, nét 1.5px) -->
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 w-14 h-14 rounded-[3px] bg-[#FF9F0D] flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="10.5" r="3" />
+                    <path d="M19.5 10.5c0 6-7.5 11.25-7.5 11.25S4.5 16.5 4.5 10.5a7.5 7.5 0 0 1 15 0Z" />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-heading font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.address">Address</h4>
+                  <address class="mt-1 not-italic text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70">
+                    97 Man Thiện, Hiệp Phú, Thủ Đức, TP.HCM
+                  </address>
+                </div>
+              </li>
+
+              <!-- Điện thoại — icon Phone -->
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 w-14 h-14 rounded-[3px] bg-[#FF9F0D] flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.36 11.7a9.43 9.43 0 0 0 3.94 3.94l1.29-1.81a.75.75 0 0 1 .87-.25l4.1 1.76a.75.75 0 0 1 .44.8A4.5 4.5 0 0 1 15.6 20 12.6 12.6 0 0 1 4 8.4 4.5 4.5 0 0 1 7.86 4a.75.75 0 0 1 .8.44l1.76 4.1a.75.75 0 0 1-.24.88Z" />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-heading font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.phoneLabel">Phone</h4>
+                  <p class="mt-1 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70">
+                    <a href="tel:+84123456789" class="hover:text-[#FF9F0D] transition-colors">+84 123 456 789</a>
+                  </p>
+                </div>
+              </li>
+
+              <!-- Email — icon EnvelopeSimple -->
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 w-14 h-14 rounded-[3px] bg-[#FF9F0D] flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 5.25h18v13.5H3z" />
+                    <path d="M21 5.25 12 13.5 3 5.25" />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-heading font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.emailLabel">Email</h4>
+                  <p class="mt-1 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70">
+                    <a href="mailto:hello@savoria.vn" class="hover:text-[#FF9F0D] transition-colors">hello@savoria.vn</a>
+                  </p>
+                </div>
+              </li>
+
+              <!-- Giờ mở cửa — dùng lại Clock.svg (đã tô trắng sẵn cho nền cam ở footer) -->
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 w-14 h-14 rounded-[3px] bg-[#FF9F0D] flex items-center justify-center">
+                  <img src="/assets/images/Clock.svg" alt="" class="w-7 h-7" />
+                </span>
+                <div>
+                  <h4 class="font-heading font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.hours">Opening Hours</h4>
+                  <p class="mt-1 text-[16px] leading-[24px] text-[#4F4F4F] dark:text-white/70" data-i18n="contact.hoursValue">Thứ 2 – Thứ 7: 8:00 – 22:00</p>
+                  <p class="text-[16px] leading-[24px] text-[#828282]" data-i18n="contact.hoursClosed">Chủ nhật: Nghỉ</p>
+                </div>
+              </li>
+            </ul>
+
+            <!-- Kẻ ngăn 1px #E0E0E0, giống Line 47 / Line 50 của bộ thiết kế -->
+            <div class="mt-6 h-px bg-[#E0E0E0] dark:bg-white/15"></div>
+
+            <!-- Mạng xã hội — dùng lại đúng bộ icon ở footer, ô 36x33 bo 2px -->
+            <h4 class="mt-6 font-heading font-bold text-[16px] leading-[24px] text-[#333333] dark:text-white" data-i18n="contact.follow">
+              Theo dõi chúng tôi
+            </h4>
+            <div class="mt-4 flex gap-[14px]">
+              <a href="#" aria-label="Facebook" class="w-9 h-[33px] rounded-[2px] bg-[#F2F2F2] dark:bg-white/10 flex items-center justify-center hover:bg-[#FF9F0D] transition-colors group">
+                <img src="/assets/images/facebook.svg" alt="" width="9" height="16" style="width:9px;height:16px" class="group-hover:brightness-0 group-hover:invert" />
+              </a>
+              <a href="#" aria-label="Twitter" class="w-9 h-[33px] rounded-[2px] bg-[#F2F2F2] dark:bg-white/10 flex items-center justify-center hover:bg-[#FF9F0D] transition-colors group">
+                <img src="/assets/images/twitter.svg" alt="" width="16" height="13" style="width:16px;height:13px" class="group-hover:brightness-0 group-hover:invert" />
+              </a>
+              <a href="#" aria-label="Instagram" class="w-9 h-[33px] rounded-[2px] bg-[#F2F2F2] dark:bg-white/10 flex items-center justify-center hover:bg-[#FF9F0D] transition-colors group">
+                <img src="/assets/images/instagram.svg" alt="" width="15" height="15" style="width:15px;height:15px" class="group-hover:brightness-0 group-hover:invert" />
+              </a>
+              <a href="#" aria-label="YouTube" class="w-9 h-[33px] rounded-[2px] bg-[#F2F2F2] dark:bg-white/10 flex items-center justify-center hover:bg-[#FF9F0D] transition-colors group">
+                <img src="/assets/images/youtube.svg" alt="" width="18" height="12" style="width:18px;height:12px" class="group-hover:brightness-0 group-hover:invert" />
+              </a>
+              <a href="#" aria-label="Pinterest" class="w-9 h-[33px] rounded-[2px] bg-[#F2F2F2] dark:bg-white/10 flex items-center justify-center hover:bg-[#FF9F0D] transition-colors group">
+                <img src="/assets/images/pinterest.svg" alt="" width="16" height="16" style="width:16px;height:16px" class="group-hover:brightness-0 group-hover:invert" />
+              </a>
             </div>
-            <div class="flex items-start gap-4">
-              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span class="text-primary text-2xl">&#x1F4DE;</span>
-              </div>
-              <div>
-                <h4 class="font-bold text-text-dark dark:text-text-white text-lg">Phone</h4>
-                <p class="text-text-muted">+84 123 456 789</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span class="text-primary text-2xl">&#x2709;</span>
-              </div>
-              <div>
-                <h4 class="font-bold text-text-dark dark:text-text-white text-lg">Email</h4>
-                <p class="text-text-muted">info@eliterestaurant.com</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span class="text-primary text-2xl">&#x1F552;</span>
-              </div>
-              <div>
-                <h4 class="font-bold text-text-dark dark:text-text-white text-lg">Opening Hours</h4>
-                <p class="text-text-muted">Mon - Sat: 8:00 AM - 10:00 PM<br/>Sunday: Closed</p>
-              </div>
-            </div>
-          </div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <!-- ========== GOOGLE MAP ========== -->
-    <section class="bg-bg-section dark:bg-bg-dark-2">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.485398611089!2d106.78491007583857!3d10.848133657737925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752772b245dff1%3A0xb838977f3d419d!2zOTcgTWFuIFRoaeG7h24sIEhp4buHcCBQaMO6LCBUaOG7pyDEkOG7qWMsIEjhu5MgQ2jDrSBNaW5o!5e0!3m2!1svi!2svn!4v1700000000000!5m2!1svi!2svn"
-        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
-        title="Bản đồ Elite Restaurant"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+    <!-- ============================================================
+         BẢN ĐỒ — khung 1320x420 viền 1px #E0E0E0 cho khớp khối bên trên
+         ============================================================ -->
+    <section class="pb-20 lg:pb-[120px] px-4 sm:px-6 bg-white dark:bg-[#0D0D0D]">
+      <div class="max-w-[1368px] mx-auto px-4 sm:px-6">
+        <div class="border border-[#E0E0E0] dark:border-white/15 overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.485398611089!2d106.78491007583857!3d10.848133657737925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752772b245dff1%3A0xb838977f3d419d!2zOTcgTWFuIFRoaeG7h24sIEhp4buHcCBQaMO6LCBUaOG7pyDEkOG7qWMsIEjhu5MgQ2jDrSBNaW5o!5e0!3m2!1svi!2svn!4v1700000000000!5m2!1svi!2svn"
+            width="100%" height="420" style="border:0;display:block" allowfullscreen="" loading="lazy"
+            title="Bản đồ nhà hàng Savoria — 97 Man Thiện, Hiệp Phú, Thủ Đức, TP.HCM"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -277,6 +381,7 @@
     // Import các module cần thiết cho trang Contact
     import { initScrollReveal } from '/src/js/dom.js'
     import { validateForm, showSuccessToast } from '/src/js/validate.js'
+    import { t } from '/src/js/i18n.js'
 
     document.addEventListener('DOMContentLoaded', () => {
       initScrollReveal()
@@ -292,7 +397,7 @@
           if (!validateForm(form)) return // Dừng lại nếu có trường chưa hợp lệ (đã hiện lỗi inline)
 
           // Không có backend thật — mô phỏng gửi thành công bằng toast
-          showSuccessToast('Gửi tin nhắn thành công! Chúng tôi sẽ phản hồi sớm nhất.')
+          showSuccessToast(t('contact.success'))
           form.reset()
         })
       }
