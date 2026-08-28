@@ -1,6 +1,11 @@
-# Elite Restaurant — ĐỀ01: Website Nhà Hàng / Ẩm Thực
+# Savoria — ĐỀ 01: Website nhà hàng & quán cà phê (E-commerce)
+
+> Đây là README kỹ thuật của mã nguồn.
+> **Thông tin nộp bài đầy đủ** (thành viên, phân công, link deploy, ảnh chụp ba
+> breakpoint) nằm ở [README gốc của repo](../README.md).
 
 > **Môn học:** THIẾT KẾ WEB (INTE03010) — ĐH Mở TP.HCM  
+> **Sản phẩm:** <https://elite-restaurant-food-coffee.vercel.app>  
 > **Figma:** [Elite — Food Restaurant & Coffee Free Template](https://www.figma.com/design/8SfLwyfu5cKVMFrUN3ETvm)
 
 ## Thành viên nhóm (Phân công 6-5-5)
