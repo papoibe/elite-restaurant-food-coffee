@@ -23,17 +23,17 @@ function renderCategoryList(containerId, imageId, items) {
     return `
       <div class="border-b border-gray-200/80 pb-4 cursor-pointer group hover:border-[#FF9F0D] transition-colors" data-img="${item.image}">
         <div class="flex justify-between items-baseline gap-4">
-          <h4 class="font-bold text-xl md:text-2xl text-[#333333] group-hover:text-[#FF9F0D] transition-colors">
+          <h4 class="font-bold text-xl md:text-2xl text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition-colors">
             ${name}
           </h4>
           <span class="text-xl md:text-2xl font-bold text-[#FF9F0D] shrink-0">
             ${formatPrice(parseFloat(item.price))}
           </span>
         </div>
-        <p class="text-sm text-[#4F4F4F] mt-1.5 line-clamp-1">
+        <p class="text-sm text-[#4F4F4F] dark:text-white/70 mt-1.5 line-clamp-1">
           ${desc || 'Ground cumin, avocados, peeled and cubed'}
         </p>
-        <span class="text-xs text-[#828282] block mt-1">${item.calories || '1000'} CAL</span>
+        <span class="text-xs text-[#828282] dark:text-white/50 block mt-1">${item.calories || '1000'} CAL</span>
       </div>
     `;
   }).join('');
