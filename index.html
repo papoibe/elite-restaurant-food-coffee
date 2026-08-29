@@ -398,6 +398,24 @@
       </div>
     </section>
 
+    <!-- ========== MÓN MỚI KHÁM PHÁ — dữ liệu lấy từ REST API công khai TheMealDB ==========
+         Khối này không dùng menu.json mà gọi thẳng API bên ngoài (src/js/api.js).
+         Trong lúc chờ mạng thì hiện 6 khung xám giữ chỗ; nếu API lỗi hoặc không
+         có kết quả thì ẩn hẳn cả khối đi chứ không để khoảng trống giữa trang. -->
+    <section id="discover-section" class="bg-white dark:bg-bg-dark py-20 px-4 sm:px-6 text-center">
+      <div class="max-w-[1320px] mx-auto">
+        <p class="text-[#FF9F0D] italic text-2xl font-normal" style="font-family: 'Great Vibes', cursive, serif;" data-i18n="home.discover.tag">Discover</p>
+        <h2 class="text-4xl sm:text-5xl font-bold font-heading text-[#333333] dark:text-white mt-2 mb-4" data-i18n-html="home.discover.title">
+          <span class="text-[#FF9F0D]">Mó</span>n Mới Khám Phá
+        </h2>
+        <p class="text-[#4F4F4F] dark:text-white/70 max-w-2xl mx-auto mb-12" data-i18n="home.discover.desc">
+          Gợi ý món ăn quốc tế, lấy trực tiếp từ kho dữ liệu mở TheMealDB mỗi lần bạn mở trang.
+        </p>
+
+        <div id="discover-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left"></div>
+      </div>
+    </section>
+
     <section class="w-full min-h-[770px] bg-[#0D0D0D] py-20 px-4 sm:px-6 relative overflow-hidden flex flex-col justify-center items-center">
       <div class="w-full max-w-[1273px] mx-auto flex flex-col items-center">
         

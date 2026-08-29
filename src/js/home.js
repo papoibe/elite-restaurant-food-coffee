@@ -2,6 +2,7 @@ import { initScrollReveal, initCounters } from './dom.js'
 import { formatPrice } from './format.js'
 import { fetchChefs } from './chefs.js'
 import { blogPostsData } from './blog/data.js'
+import { fetchRandomMeals, renderMealCard } from './api.js'
 import { getLang } from './i18n.js'
 
 let allMenuItems = []
@@ -279,6 +280,41 @@ function renderBlogPreview() {
   }).join('')
 }
 
+/**
+ * renderDiscover — Khoi "Mon Moi Kham Pha" tren trang chu.
+ *
+ * Khac voi cac khoi con lai (doc tu menu.json trong may chu cua minh), khoi nay
+ * goi REST API cong khai TheMealDB nen phai tinh den chuyen mang cham hoac API
+ * chet: trong luc cho thi hien khung xam giu cho, that bai thi an ca khoi di.
+ */
+export async function renderDiscover() {
+  const grid = document.getElementById('discover-grid')
+  const section = document.getElementById('discover-section')
+  if (!grid) return
+
+  // Khung xam giu cho — dung so luong va chieu cao xap xi the that de trang
+  // khong bi giat khi du lieu ve
+  grid.innerHTML = Array.from({ length: 6 }, () => `
+    <div class="animate-pulse bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden">
+      <div class="h-48 bg-gray-200 dark:bg-white/10"></div>
+      <div class="p-4 space-y-2">
+        <div class="h-4 w-3/4 bg-gray-200 dark:bg-white/10 rounded"></div>
+        <div class="h-3 w-1/2 bg-gray-200 dark:bg-white/10 rounded"></div>
+      </div>
+    </div>`).join('')
+
+  const meals = await fetchRandomMeals(6)
+
+  if (!meals.length) {
+    // API khong tra ve gi: an hang khoi thay vi de mot khoang trong
+    if (section) section.classList.add('hidden')
+    return
+  }
+
+  if (section) section.classList.remove('hidden')
+  grid.innerHTML = meals.map(renderMealCard).join('')
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal()
   initCounters()
@@ -286,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderChefsPreview()
   initTestimonials()
   renderBlogPreview()
+  renderDiscover()
 })
 
 window.addEventListener('languageChanged', () => {
