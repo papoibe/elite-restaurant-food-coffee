@@ -10,7 +10,21 @@ function renderCategoryList(containerId, imageId, items) {
   if (!container || !items || !items.length) return;
 
   const lang = typeof getLang === 'function' ? getLang() : 'vi';
-  const displayItems = items.slice(0, 4);
+  // Chon 4 mon dau co ANH KHAC NHAU. Neu lay thang 4 mon dau thi nhom
+  // Trang mieng va Do uong deu tra ve cung mot anh, re chuot se khong thay doi.
+  const seen = new Set();
+  const displayItems = [];
+  for (const it of items) {
+    if (seen.has(it.image)) continue;
+    seen.add(it.image);
+    displayItems.push(it);
+    if (displayItems.length === 4) break;
+  }
+  // Du phong: nhom nao khong du 4 anh rieng thi bu them cho du 4 dong
+  for (const it of items) {
+    if (displayItems.length === 4) break;
+    if (!displayItems.includes(it)) displayItems.push(it);
+  }
 
   if (imgElement && displayItems[0]) {
     imgElement.src = displayItems[0].image;
@@ -21,7 +35,7 @@ function renderCategoryList(containerId, imageId, items) {
     const desc = lang === 'vi' ? (item.description || item.description_en) : (item.description_en || item.description);
 
     return `
-      <div class="border-b border-gray-200/80 pb-4 cursor-pointer group hover:border-[#FF9F0D] transition-colors" data-img="${item.image}">
+      <a href="/src/pages/shop-details.html?id=${item.id}" class="block border-b border-gray-200/80 dark:border-white/10 pb-4 cursor-pointer group hover:border-[#FF9F0D] transition-colors" data-img="${item.image}">
         <div class="flex justify-between items-baseline gap-4">
           <h4 class="font-bold text-xl md:text-2xl text-[#333333] dark:text-white group-hover:text-[#FF9F0D] transition-colors">
             ${name}
@@ -34,7 +48,7 @@ function renderCategoryList(containerId, imageId, items) {
           ${desc || 'Ground cumin, avocados, peeled and cubed'}
         </p>
         <span class="text-xs text-[#828282] dark:text-white/50 block mt-1">${item.calories || '1000'} CAL</span>
-      </div>
+      </a>
     `;
   }).join('');
 
